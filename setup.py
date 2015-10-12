@@ -31,6 +31,9 @@ setup(
         u'robotframework-selenium2library>=1.7.4',
         u'robotframework-testmanagement',
         u'robotframework-sshlibrary>=2.1.1',
-        u'robotframework-sudslibrary'
+        u'robotframework-sudslibrary',
+        u'gspread',
+        u'oauth2client',
+        u'selenium'
     ]
 )
