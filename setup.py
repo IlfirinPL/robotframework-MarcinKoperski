@@ -8,7 +8,7 @@
 
 from setuptools import setup
 
-version = u'0.0.1'
+version = u'0.0.3'
 
 setup(
     name=u'robotframework-MarcinKoperski',
@@ -22,15 +22,15 @@ setup(
     package_dir={u'': 'src'},
     packages=['TestTools'],
     install_requires=[
-        u'robotframework',
+        u'robotframework>=2.9.2',
         u'robotframework-archivelibrary',
         u'robotframework-databaselibrary',
         u'robotframework-imaplibrary',
         u'robotframework-pabot',
-        u'robotframework-ride',
-        u'robotframework-selenium2library',
+        u'robotframework-ride>=1.5a2',
+        u'robotframework-selenium2library>=1.7.4',
         u'robotframework-testmanagement',
-        u'robotframework-sshlibrary',
+        u'robotframework-sshlibrary>=2.1.1',
         u'robotframework-sudslibrary'
     ]
 )
