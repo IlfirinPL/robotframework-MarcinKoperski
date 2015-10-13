@@ -6,8 +6,15 @@ import re
 
 from oauth2client.client import SignedJwtAssertionCredentials
 
+THIS_DIR = os.path.dirname(os.path.abspath(__file__))
+execfile(os.path.join(THIS_DIR, 'version.py'))
+
+__version__ = VERSION
+
+
 class GoogleSheets:
-    ROBOT_LIBRARY_SCOPE = "GLOBAL"
+    ROBOT_LIBRARY_SCOPE = 'GLOBAL'
+    ROBOT_LIBRARY_VERSION = VERSION
     
     def __init__(self, file='Resources/googlesheet-key.json', id='1RBVyDC-HrUc5Ct0gHU0mlkfhHErmdPz0DJJgGT_XQ_Y',worksheetName='Accounts'):
          json_key = json.load(open(file))
