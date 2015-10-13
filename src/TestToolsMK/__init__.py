@@ -16,7 +16,7 @@ execfile(os.path.join(THIS_DIR, 'version.py'))
 __version__ = VERSION
 
 
-class GoogleSheets:
+class TestToolsMK:
     ROBOT_LIBRARY_SCOPE = 'GLOBAL'
     ROBOT_LIBRARY_VERSION = VERSION
     
