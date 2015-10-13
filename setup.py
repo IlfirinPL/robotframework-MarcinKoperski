@@ -20,7 +20,7 @@ setup(
     download_url=u'https://github.com/IlfirinPL/robotframework-MarcinKoperski/tarball/v{version}'.format(version=version),
     keywords=['robotframework', 'pyral'],
     package_dir={u'': 'src'},
-    packages=['TestTools'],
+    packages=['TestToolsMK'],
     install_requires=[
         u'robotframework>=2.9.2',
         u'robotframework-archivelibrary',
