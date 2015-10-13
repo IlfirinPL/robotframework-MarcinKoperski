@@ -6,6 +6,9 @@ import re
 
 from oauth2client.client import SignedJwtAssertionCredentials
 
+import robot
+from robot.libraries.BuiltIn import BuiltIn
+
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 execfile(os.path.join(THIS_DIR, 'version.py'))
 
