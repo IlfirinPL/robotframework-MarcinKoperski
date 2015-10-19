@@ -40,18 +40,16 @@ class TestToolsMK:
          self.SPREADSHEET = gc.open_by_key(id)
          self.WORKSHEET =  self.SPREADSHEET.sheet1
     def select_worksheet_by_name(self, worksheet_name):
-        self.WORKSHEET = self.SPREADSHEET.worksheet(worksheet_name)
+         self.WORKSHEET = self.SPREADSHEET.worksheet(worksheet_name)
     def get_dictonary_logins_and_passwords(self):
-         self.login_list = self.WORKSHEET.col_values(1)
-         self.password_list = self.WORKSHEET.col_values(2)
-         self.dictionary = dict(zip(self.login_list, self.password_list))
-        return self.dictionary
+         login_list = self.WORKSHEET.col_values(1)
+         password_list = self.WORKSHEET.col_values(2)
+         return dict(zip(self.login_list, self.password_list))
+
     def get_password_for_login(self,login):
-       """Return password for provided login, rise error when login is missing"""
-         self.login_list = self.WORKSHEET.col_values(1)
-         self.password_list = self.WORKSHEET.col_values(2)
-         self.dictionary = dict(zip(self.login_list, self.password_list))
-       return self.dictionary[login] 
+        """Return password for provided login, rise error when login is missing"""
+        self.dictionary = self.get_dictonary_logins_and_passwords()
+        return self.dictionary[login] 
     def find_cell_using_regex(self,regex):
        """Return password for provided login, rise error when login is missing"""
        pattern = r'%s' % regex
