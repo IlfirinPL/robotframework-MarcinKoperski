@@ -5,4 +5,4 @@ To use it add "TestToolsMK" to Library
 
 to install
 
-pip install --force-reinstall https://github.com/IlfirinPL/robotframework-MarcinKoperski/archive/master.zip
+pip install --upgrade https://github.com/IlfirinPL/robotframework-MarcinKoperski/archive/master.zip

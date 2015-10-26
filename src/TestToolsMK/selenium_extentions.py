@@ -9,7 +9,7 @@ from robot.libraries.BuiltIn import BuiltIn
 from Selenium2Library import Selenium2Library
 
 
-class seleniumExtentions(object):
+class SeleniumExtentions(object):
     TIMEOUT_LONG = "60 sec"
     TIMEOUT = "2 sec"
     WIDTH_DEFAULT = "1920"
