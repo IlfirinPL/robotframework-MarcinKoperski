@@ -17,7 +17,8 @@ setup(
     author=u'Marcin Koperski',
     author_email=u'marcin.koperski+github[at].gmail.com',
     url=u'https://github.com/IlfirinPL/robotframework-MarcinKoperski',
-    download_url=u'https://github.com/IlfirinPL/robotframework-MarcinKoperski/tarball/v{version}'.format(version=version),
+    download_url=u'https://github.com/IlfirinPL/robotframework-MarcinKoperski/tarball/v{version}'.format(
+        version=version),
     keywords=['robotframework', 'pyral'],
     package_dir={u'': 'src'},
     packages=['TestToolsMK'],

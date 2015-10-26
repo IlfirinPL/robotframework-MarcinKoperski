@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-#  Copyright (c) 2015 Cutting Edge QA
+# Copyright (c) 2015 Cutting Edge QA
+from robot.version import VERSION
 
 from google_sheets import GoogleSheets
 import os
@@ -14,6 +15,5 @@ __version__ = VERSION
 
 
 class TestToolsMK(GoogleSheets):
-
     ROBOT_LIBRARY_SCOPE = 'GLOBAL'
     ROBOT_LIBRARY_VERSION = VERSION
