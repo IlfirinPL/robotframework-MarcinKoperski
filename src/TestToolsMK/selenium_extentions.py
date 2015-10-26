@@ -19,7 +19,7 @@ class seleniumExtentions(object):
     XPATH2_JS = "if(!window.jQuery){var headID = document.getElementsByTagName(\"head\")[0]; var newScript = document.createElement('script'); newScript.type='text/javascript'; newScript.src='http://code.jquery.com/jquery-2.1.4.min.js'; headID.appendChild(newScript);}"
 
     def __int__(self):
-        SELENIUM_TEST_BROWSER = "ff"
+        self.SELENIUM_TEST_BROWSER = "ff"
 
     def open_browser_custom_size(self, url, width=WIDTH_DEFAULT, heigh=HEIGHT_DEFAULT, alias=None,
                                  browser=SELENIUM_TEST_BROWSER, remote_url=False, desired_capabilities=None):
