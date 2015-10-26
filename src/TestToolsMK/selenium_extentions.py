@@ -32,10 +32,10 @@ class Selenium2LibraryExtensions(object):
 
     def open_browser_custom_size(self, url, width=WIDTH_DEFAULT, heigh=HEIGHT_DEFAULT, alias=None,
                                  browser=SELENIUM_TEST_BROWSER, remote_url=False, desired_capabilities=None):
-        self.s2l.open_browser(self.s2l, url, browser, alias, remote_url,
+        self.s2l.open_browser(self.s2l, browser, alias, remote_url,
                                             desired_capabilities)
         self.s2l.set_window_size(self.s2l, width, heigh)
-        self.s2l.set_selenium_speed(self.s2l, self.SELENIUM_SPEED)
+        self.s2l.set_selenium_speed(self.s2l, self.s2l.SELENIUM_SPEED)
         # add handling rally screenshots
 
     def click_element_extended(self, locator, timeout=None, error=None):
