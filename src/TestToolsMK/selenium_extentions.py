@@ -23,26 +23,26 @@ class SeleniumExtentions(Selenium2Library):
 
     def open_browser_custom_size(self, url, width=WIDTH_DEFAULT, heigh=HEIGHT_DEFAULT, alias=None,
                                  browser=SELENIUM_TEST_BROWSER, remote_url=False, desired_capabilities=None):
-        Selenium2Library.open_browser(self, url, browser, alias, remote_url, desired_capabilities)
-        Selenium2Library.set_window_size(self, width, heigh)
-        Selenium2Library.set_selenium_speed(self, self.SELENIUM_SPEED)
+        self.open_browser(self, url, browser, alias, remote_url, desired_capabilities)
+        self.set_window_size(self, width, heigh)
+        self.set_selenium_speed(self, self.SELENIUM_SPEED)
         # add handling rally screenshots
 
     def click_element_extended(self, locator, timeout=None, error=None):
-        Selenium2Library.wait_until_page_contains_element(self, locator, timeout, error)
-        Selenium2Library.wait_until_element_is_visible(self, locator, timeout, error)
-        Selenium2Library.mouse_over(self, locator)
-        Selenium2Library.click_element(self.locator)
+        self.wait_until_page_contains_element(self, locator, timeout, error)
+        self.wait_until_element_is_visible(self, locator, timeout, error)
+        self.mouse_over(self, locator)
+        self.click_element(self.locator)
 
     def double_click_element_extended(self, locator, timeout=None, error=None):
-        Selenium2Library.wait_until_page_contains_element(self, locator, timeout, error)
-        Selenium2Library.wait_until_element_is_visible(self, locator, timeout, error)
-        Selenium2Library.mouse_over(self, locator)
-        Selenium2Library.double_click_element(self.locator)
+        self.wait_until_page_contains_element(self, locator, timeout, error)
+        self.wait_until_element_is_visible(self, locator, timeout, error)
+        self.mouse_over(self, locator)
+        self.double_click_element(self.locator)
 
     def click_element_extended_and_wait(self, locator, sleep, timeout=None, error=None, reason=None):
         self.click_element_extended(self, locator, timeout, error)
         BuiltIn.sleep(self, sleep, reason)
 
     def import_xpath2(self):
-        Selenium2Library.execute_javascript(self, self.XPATH2_JS)
+        self.execute_javascript(self, self.XPATH2_JS)
