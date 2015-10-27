@@ -6,6 +6,7 @@ from robot.version import VERSION
 
 from selenium_extentions import Selenium2LibraryExtensions
 from google_sheets import GoogleSheets
+from timers import TimerKeywords
 import os
 
 
@@ -15,6 +16,6 @@ execfile(os.path.join(THIS_DIR, 'version.py'))
 __version__ = VERSION
 
 
-class TestToolsMK(GoogleSheets, Selenium2LibraryExtensions):
+class TestToolsMK(GoogleSheets, Selenium2LibraryExtensions, TimerKeywords):
     ROBOT_LIBRARY_SCOPE = 'GLOBAL'
     ROBOT_LIBRARY_VERSION = VERSION
