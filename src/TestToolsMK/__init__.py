@@ -3,6 +3,7 @@
 
 # Copyright (c) 2015 Cutting Edge QA
 from robot.version import VERSION
+from TestToolsMK.collections_keywords import CollectionsKeywordsExtension
 
 from selenium_extentions import Selenium2LibraryExtensions
 from google_sheets import GoogleSheets
@@ -16,6 +17,6 @@ execfile(os.path.join(THIS_DIR, 'version.py'))
 __version__ = VERSION
 
 
-class TestToolsMK(GoogleSheets, Selenium2LibraryExtensions, TimerKeywords):
+class TestToolsMK(GoogleSheets, Selenium2LibraryExtensions, TimerKeywords, CollectionsKeywordsExtension):
     ROBOT_LIBRARY_SCOPE = 'GLOBAL'
     ROBOT_LIBRARY_VERSION = VERSION
