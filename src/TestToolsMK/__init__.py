@@ -4,10 +4,11 @@
 # Copyright (c) 2015 Cutting Edge QA
 from robot.version import VERSION
 from TestToolsMK.collections_keywords import CollectionsKeywordsExtension
+from TestToolsMK.image_magick_keywords import ImageMagickKeywords
 
-from selenium_extentions import Selenium2LibraryExtensions
-from google_sheets import GoogleSheets
-from timers import TimerKeywords
+from TestToolsMK.selenium_extentions import Selenium2LibraryExtensions
+from TestToolsMK.google_sheets import GoogleSheets
+from TestToolsMK.timers import TimerKeywords
 import os
 
 
@@ -17,6 +18,6 @@ execfile(os.path.join(THIS_DIR, 'version.py'))
 __version__ = VERSION
 
 
-class TestToolsMK(GoogleSheets, Selenium2LibraryExtensions, TimerKeywords, CollectionsKeywordsExtension):
+class TestToolsMK(GoogleSheets, Selenium2LibraryExtensions, TimerKeywords, CollectionsKeywordsExtension, ImageMagickKeywords):
     ROBOT_LIBRARY_SCOPE = 'GLOBAL'
     ROBOT_LIBRARY_VERSION = VERSION
