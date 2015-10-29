@@ -81,9 +81,10 @@ class ImageMagickKeywords(object):
 
             return float(delta_percent)
 
-    def image_should_be_difference_less_then(self, file_1_path, file_2_path, difference_percent=1, gif_file_path=None, delta_file_path=None):
+    def image_should_be_difference_less_then(self, file_1_path, file_2_path, difference_percent=1, gif_file_path=None, delta_file_path=None, embedded_gif=True,
+            embedded_delta=False):
         """difference_percent test to 0 mean both images are identical """
-        results = self.compare_image_files(file_1_path, file_2_path, gif_file_path, delta_file_path)
+        results = self.compare_image_files(file_1_path, file_2_path, gif_file_path, delta_file_path, embedded_gif=embedded_gif, embedded_delta=embedded_delta)
 
         difference_percent = float(difference_percent) / float(100)
         if results > difference_percent:
