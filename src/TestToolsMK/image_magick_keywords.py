@@ -16,6 +16,7 @@ import os.path
 import robot.libraries.Screenshot
 import urlparse, urllib
 
+
 class ImageMagickKeywords(object):
     CONVERT_PATH = os.path.normpath(os.environ['MAGICK_HOME'] + "\\" + "convert.exe")
     COMPARE_PATH = os.path.normpath(os.environ['MAGICK_HOME'] + "\\" + "compare.exe")
@@ -89,6 +90,12 @@ class ImageMagickKeywords(object):
         difference_percent = float(difference_percent) / float(100)
         if results > difference_percent:
             message = "Difference between files is greater then expected actual %s > %s expected" % (results, difference_percent)
+            if (embedded_delta):
+                self._embed_screenshot(delta_file_path, "Error")
+
+            if (embedded_gif):
+                self._embed_screenshot(gif_file_path, "Error")
+
             raise AssertionError(message)
         else:
             logger.info("Image check successful ")
@@ -120,5 +127,5 @@ class ImageMagickKeywords(object):
             raise AssertionError(message)
 
     def _embed_screenshot(self, path, level="INFO", width="800px"):
-        link = urlparse.urljoin('file:', urllib.pathname2url(path))
+        link = urlparse.urljoin('file:', urllib.pathname2url(os.path.normpath(path)))
         logger.write('<a href="%s"><img src="%s" width="%s"></a>' % (link, link, width), level, html=True)
