@@ -6,11 +6,15 @@
 import os
 import re
 import robot
-from robot.libraries.BuiltIn import BuiltIn
+from robot import utils
 from robot.api import logger
+from robot.libraries.BuiltIn import BuiltIn
+from robot.version import get_version
+
 import subprocess
 import os.path
-
+import robot.libraries.Screenshot
+import urlparse, urllib
 
 class ImageMagickKeywords(object):
     CONVERT_PATH = os.path.normpath(os.environ['MAGICK_HOME'] + "\\" + "convert.exe")
@@ -51,31 +55,69 @@ class ImageMagickKeywords(object):
         except:
             logger.error("Last exception handler")
 
-    def compare_image_files(self, file_1_path, file_2_path, delta_file_path=None, metric="RMSE"):
+    def compare_image_files(self, file_1_path, file_2_path, gif_file_path=None, delta_file_path=None, metric="RMSE", embedded_gif=True, embedded_delta=False):
         file_1_path_normalized = os.path.normpath(file_1_path)
         file_2_path_normalized = os.path.normpath(file_2_path)
         if delta_file_path is not None:
             delta_file_path_normalized = os.path.normpath(delta_file_path)
         else:
-            delta_file_path = os.path.dirname(file_1_path_normalized) + "\\delta_" + os.path.basename(file_1_path_normalized) + os.path.basename(
+            delta_file_path = os.path.dirname(file_1_path_normalized) + "\\delta_" + os.path.basename(file_1_path_normalized) + "_" + os.path.basename(
                 file_2_path_normalized)
             delta_file_path_normalized = os.path.normpath(delta_file_path)
         if (os.path.isfile(file_1_path_normalized) and os.path.isfile(file_2_path_normalized)):
             argument_list = [self.COMPARE_PATH, "-metric", metric, file_1_path_normalized, file_2_path_normalized, delta_file_path_normalized]
-            procces = subprocess.Popen(argument_list, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            procces.wait()
-            delta_percent = procces.communicate()[1].split("(")[1].replace(")", "")
+            process = subprocess.Popen(argument_list, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            process.wait()
+            delta_percent = process.communicate()[1].split("(")[1].replace(")", "")
+
+            if gif_file_path is not None:
+                self.create_gif_from_three_files(gif_file_path, file_1_path_normalized, file_2_path_normalized, delta_file_path_normalized,
+                    embedded=embedded_gif)
+            if delta_file_path is None:
+                os.remove(delta_file_path_normalized)
+            else:
+                if embedded_delta:
+                    self._embed_screenshot(delta_file_path_normalized)
+
             return float(delta_percent)
 
-    def image_should_be_difference_less_then(self, file_1_path, file_2_path, difference_percent=1, delta_file_path=None):
+    def image_should_be_difference_less_then(self, file_1_path, file_2_path, difference_percent=1, gif_file_path=None, delta_file_path=None):
         """difference_percent test to 0 mean both images are identical """
-        results = self.compare_image_files(file_1_path, file_2_path, delta_file_path)
+        results = self.compare_image_files(file_1_path, file_2_path, gif_file_path, delta_file_path)
 
         difference_percent = float(difference_percent) / float(100)
-
         if results > difference_percent:
             message = "Difference between files is greater then expected actual %s > %s expected" % (results, difference_percent)
             raise AssertionError(message)
         else:
             logger.info("Image check successful ")
         return results
+
+    def create_gif_from_three_files(self, gif_file_path, file_1_path, file_2_path, file_3_path, delay_ms=100, loop=0, embedded=True):
+        files_list = [file_1_path, file_2_path, file_3_path]
+        self.create_gif_from_list_of_files(gif_file_path, files_list, delay_ms, loop, embedded)
+
+    def create_gif_from_list_of_files(self, gif_file_path, files_list_path, delay_ms=100, loop=0, embedded=True):
+        files_list_path_normalized = []
+        for singleFile in files_list_path:
+            files_list_path_normalized.append(os.path.normpath(singleFile))
+        gif_file_path_normalized = os.path.normpath(gif_file_path)
+        if all(os.path.isfile(singleFile) == True for singleFile in files_list_path_normalized):
+            argument_list = [self.CONVERT_PATH, "-delay", str(delay_ms), "-loop", str(loop)]
+            argument_list.extend(files_list_path_normalized)
+            argument_list.append(gif_file_path_normalized)
+            process = subprocess.Popen(argument_list, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            process.wait()
+            if embedded:
+                self._embed_screenshot(gif_file_path_normalized)
+
+        else:
+            message = "Gif Creation failed."
+            for singleFile in files_list_path_normalized:
+                if os.path.isfile(singleFile):
+                    message += "File missing %s." % singleFile
+            raise AssertionError(message)
+
+    def _embed_screenshot(self, path, level="INFO", width="800px"):
+        link = urlparse.urljoin('file:', urllib.pathname2url(path))
+        logger.write('<a href="%s"><img src="%s" width="%s"></a>' % (link, link, width), level, html=True)
