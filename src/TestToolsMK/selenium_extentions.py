@@ -40,7 +40,7 @@ class Selenium2LibraryExtensions(object):
         """Redirect only in on different url"""
         currentUrl = Selenium2Library.get_location(self.s2l)
         if url != currentUrl:
-            Selenium2Library.get_location(self.s2l, url)
+            Selenium2Library.go_to(self.s2l, url)
 
     def click_element_extended(self, locator, timeout=None, error=None):
         """Click element proceed with following steps

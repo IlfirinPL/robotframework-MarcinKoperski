@@ -56,15 +56,22 @@ class ImageMagickKeywords(object):
         except:
             logger.error("Last exception handler")
 
-    def compare_image_files(self, file_1_path, file_2_path, gif_file_path=None, delta_file_path=None, metric="RMSE", embedded_gif=True, embedded_delta=False):
+    def _compare_image_files(self, file_1_path, file_2_path, gif_file_path=None, delta_file_path=None, metric="RMSE", embedded_gif=True, embedded_delta=False):
         file_1_path_normalized = os.path.normpath(file_1_path)
         file_2_path_normalized = os.path.normpath(file_2_path)
         if delta_file_path is not None:
             delta_file_path_normalized = os.path.normpath(delta_file_path)
         else:
-            delta_file_path = os.path.dirname(file_1_path_normalized) + "\\delta_" + os.path.basename(file_1_path_normalized) + "_" + os.path.basename(
-                file_2_path_normalized)
+            delta_file_path = os.path.dirname(file_1_path_normalized) + "\\" + os.path.splitext(os.path.basename(file_1_path_normalized))[0] + "_" + \
+                              os.path.splitext(os.path.basename(file_2_path_normalized))[0] + "_delta.png"
             delta_file_path_normalized = os.path.normpath(delta_file_path)
+
+        if gif_file_path is not None:
+            gif_file_path_normalized = os.path.normpath(gif_file_path)
+        else:
+            gif_file_path = os.path.dirname(file_1_path_normalized) + "\\" + os.path.splitext(os.path.basename(file_1_path_normalized))[0] + "_" + \
+                            os.path.splitext(os.path.basename(file_2_path_normalized))[0] + ".gif"
+            gif_file_path_normalized = os.path.normpath(gif_file_path)
         if (os.path.isfile(file_1_path_normalized) and os.path.isfile(file_2_path_normalized)):
             argument_list = [self.COMPARE_PATH, "-metric", metric, file_1_path_normalized, file_2_path_normalized, delta_file_path_normalized]
             process = subprocess.Popen(argument_list, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -72,7 +79,7 @@ class ImageMagickKeywords(object):
             delta_percent = process.communicate()[1].split("(")[1].replace(")", "")
 
             if gif_file_path is not None:
-                self.create_gif_from_three_files(gif_file_path, file_1_path_normalized, file_2_path_normalized, delta_file_path_normalized,
+                self.create_gif_from_three_files(gif_file_path_normalized, file_1_path_normalized, file_2_path_normalized, delta_file_path_normalized,
                     embedded=embedded_gif)
             if delta_file_path is None:
                 os.remove(delta_file_path_normalized)
@@ -80,24 +87,21 @@ class ImageMagickKeywords(object):
                 if embedded_delta:
                     self._embed_screenshot(delta_file_path_normalized)
 
-            return float(delta_percent)
+            return float(delta_percent) * float(100), delta_file_path_normalized, gif_file_path_normalized
+
+    def compare_image_files(self, file_1_path, file_2_path, gif_file_path=None, delta_file_path=None, metric="RMSE", embedded_gif=True, embedded_delta=False):
+        return self._compare_image_files(file_1_path, file_2_path, gif_file_path, delta_file_path, metric, embedded_gif, embedded_delta)[0]
 
     def image_should_be_difference_less_then(self, file_1_path, file_2_path, difference_percent=1, gif_file_path=None, delta_file_path=None, embedded_gif=True,
             embedded_delta=False):
         """difference_percent test to 0 mean both images are identical """
-        results = self.compare_image_files(file_1_path, file_2_path, gif_file_path, delta_file_path, embedded_gif=embedded_gif, embedded_delta=embedded_delta)
-
-        difference_percent = float(difference_percent) / float(100)
-        if results > difference_percent:
-            message = "Difference between files is greater then expected actual %s > %s expected" % (results, difference_percent)
-            if (embedded_delta):
-                self._embed_screenshot(delta_file_path, "Error")
-            if (embedded_gif):
-                self._embed_screenshot(gif_file_path, "Error")
+        results = self._compare_image_files(file_1_path, file_2_path, gif_file_path, delta_file_path, embedded_gif=embedded_gif, embedded_delta=embedded_delta)
+        if float(results[0]) > float(difference_percent):
+            message = "Difference between files is greater then expected actual %.2f > %.2f expected percent" % (float(results[0]), float(difference_percent))
             raise AssertionError(message)
         else:
             logger.info("Image check successful ")
-        return results
+        return results[0]
 
     def create_gif_from_three_files(self, gif_file_path, file_1_path, file_2_path, file_3_path, delay_ms=100, loop=0, embedded=True):
         files_list = [file_1_path, file_2_path, file_3_path]
