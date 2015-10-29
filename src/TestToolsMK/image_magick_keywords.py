@@ -92,10 +92,8 @@ class ImageMagickKeywords(object):
             message = "Difference between files is greater then expected actual %s > %s expected" % (results, difference_percent)
             if (embedded_delta):
                 self._embed_screenshot(delta_file_path, "Error")
-
             if (embedded_gif):
                 self._embed_screenshot(gif_file_path, "Error")
-
             raise AssertionError(message)
         else:
             logger.info("Image check successful ")
