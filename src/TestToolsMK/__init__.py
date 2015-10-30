@@ -11,7 +11,6 @@ from TestToolsMK.google_sheets import GoogleSheets
 from TestToolsMK.timers import TimerKeywords
 import os
 
-
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 execfile(os.path.join(THIS_DIR, 'version.py'))
 

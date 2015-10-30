@@ -8,6 +8,7 @@ import robot
 from robot.libraries.BuiltIn import BuiltIn
 from Selenium2Library import Selenium2Library
 
+
 class Selenium2LibraryExtensions(object):
     TIMEOUT_LONG = "60 sec"
     TIMEOUT = "2 sec"
@@ -15,10 +16,13 @@ class Selenium2LibraryExtensions(object):
     HEIGHT_DEFAULT = "768"
     SELENIUM_SPEED = "0 sec"
     SELENIUM_TEST_BROWSER = "ff"
-    XPATH2_JS = "if(!window.jQuery){var headID = document.getElementsByTagName(\"head\")[0]; var newScript = document.createElement('script'); newScript.type='text/javascript'; newScript.src='http://code.jquery.com/jquery-2.1.4.min.js'; headID.appendChild(newScript);}"
+    # noinspection PyPep8
+    XPATH2_JS = 'if(!window.jQuery){var headID = document.getElementsByTagName("head")[0]; var newScript = document.createElement(\'script\'); newScript.type=\'text/javascript\'; newScript.src=\'http://code.jquery.com/jquery-2.1.4.min.js\'; headID.appendChild(newScript);}'
+    # noinspection PyPep8
     JQUERY_JS = "if(!window.jQuery){var headID = document.getElementsByTagName(\"head\")[0]; var newScript = document.createElement('script'); newScript.type='text/javascript'; newScript.src='http://code.jquery.com/jquery-2.1.4.min.js'; headID.appendChild(newScript);}"
 
-    def __init__(self, timeout=5.0, implicit_wait=0.0, run_on_failure='Capture Page Screenshot'):
+    # noinspection PyArgumentList
+    def __init__(self):
         for base in Selenium2LibraryExtensions.__bases__:
             if hasattr(base, '__init__'):
                 base.__init__(self)
@@ -38,20 +42,19 @@ class Selenium2LibraryExtensions(object):
 
     def go_to_smart(self, url):
         """Redirect only in on different url"""
-        currentUrl = Selenium2Library.get_location(self.s2l)
-        if url != currentUrl:
+        current_url = Selenium2Library.get_location(self.s2l)
+        if url != current_url:
             Selenium2Library.go_to(self.s2l, url)
 
-    def click_element_extended(self, locator, timeout=None, error=None):
+    def click_element_extended(self, locator, timeout=None, error_msg=None):
         """Click element proceed with following steps
         1.wait_until_page_contains_element
         2.wait_until_element_is_visiblewait_until_element_is_visible
         3.mouse_over"""
-        Selenium2Library.wait_until_page_contains_element(self.s2l, locator, timeout, error)
-        Selenium2Library.wait_until_element_is_visible(self.s2l, locator, timeout, error)
+        Selenium2Library.wait_until_page_contains_element(self.s2l, locator, timeout, error_msg)
+        Selenium2Library.wait_until_element_is_visible(self.s2l, locator, timeout, error_msg)
         Selenium2Library.mouse_over(self.s2l, locator)
         Selenium2Library.click_element(self.s2l, locator)
-
 
     def double_click_element_extended(self, locator, timeout=None, error=None):
         Selenium2Library.wait_until_page_contains_element(self.s2l, locator, timeout, error)
@@ -59,9 +62,8 @@ class Selenium2LibraryExtensions(object):
         Selenium2Library.mouse_over(self.s2l, locator)
         Selenium2Library.double_click_element(self.s2l, locator)
 
-
-    def click_element_extended_and_wait(self, locator, sleep, timeout=None, error=None, reason=None):
-        Selenium2Library.click_element_extended(self.s2l, locator, timeout, error)
+    def click_element_extended_and_wait(self, locator, sleep, timeout=None, error_msg=None, reason=None):
+        self.click_element_extended(locator, timeout, error_msg)
         BuiltIn.sleep(self.bi, sleep, reason)
 
     def import_xpath2(self):

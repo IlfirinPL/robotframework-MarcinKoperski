@@ -16,8 +16,10 @@ class CollectionsKeywordsExtension(object):
     def __init__(self):
         print "Start Collections"
 
-    def create_dictionary_from_list(self, table):
+    @staticmethod
+    def create_dictionary_from_list(table):
         return dict((x, 0) for x in table)
 
-    def create_dictionary_from_two_lists(self, keys, values):
+    @staticmethod
+    def create_dictionary_from_two_lists(keys, values):
         return dict(zip(keys, values))

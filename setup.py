@@ -24,6 +24,7 @@ setup(
     packages=['TestToolsMK'],
     install_requires=[
         u'robotframework>=2.9.2',
+        u'robot',
         u'robotframework-archivelibrary',
         u'robotframework-databaselibrary',
         u'robotframework-imaplibrary',
