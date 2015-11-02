@@ -5,7 +5,6 @@
 
 import json
 import re
-
 import gspread
 from oauth2client.client import SignedJwtAssertionCredentials
 
