@@ -12,9 +12,9 @@ To use it add "TestToolsMK" to Library
 best way to setup is to using https://chocolatey.org/
 choco install python2
 choco install pip
-choco install imagemagick
+choco install imagemagick.tool
 VCForPython27.msi
-setx MAGICK_HOME "C:\Program Files\ImageMagick-6.9.2-Q16"
+setx MAGICK_HOME "C:\ProgramData\chocolatey\lib\imagemagick.tool\tools"
 
 pip install robotframework
 pip install robotframework-MarcinKoperski
