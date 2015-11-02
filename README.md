@@ -19,6 +19,5 @@ setx MAGICK_HOME "C:\ProgramData\chocolatey\lib\imagemagick.tool\tools"
 pip install robotframework
 pip install robotframework-MarcinKoperski
 
-
 to install latest
 pip install --upgrade https://github.com/IlfirinPL/robotframework-MarcinKoperski/archive/master.zip
