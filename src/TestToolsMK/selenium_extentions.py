@@ -2,70 +2,156 @@
 # -*- coding: utf-8 -*-
 
 # Copyright (c) 2015 Cutting Edge QA
-
-import os
-import robot
-from robot.libraries.BuiltIn import BuiltIn
 from Selenium2Library import Selenium2Library
+from robot.libraries import DateTime
+from robot.libraries.BuiltIn import BuiltIn
+from robot.libraries.Collections import Collections
+from robot.libraries.OperatingSystem import OperatingSystem
+import os
+import os.path
+
+
+def s2l():
+    """
+
+        :rtype : Selenium2Library
+        """
+    s2l_instance = BuiltIn().get_library_instance('Selenium2Library')
+    assert isinstance(s2l_instance, Selenium2Library)
+    return s2l_instance
+
+
+def bi():
+    """
+
+        :rtype : BuiltIn
+        """
+    bi_instance = BuiltIn().get_library_instance('BuiltIn')
+    assert isinstance(bi_instance, BuiltIn)
+    return bi_instance
+
+
+def dtl():
+    """
+
+        :rtype : DateTime
+        """
+    dt_instance = BuiltIn().get_library_instance('DateTime')
+    assert isinstance(dt_instance, DateTime)
+    return dt_instance
+
+
+def osl():
+    """
+
+        :rtype : OperatingSystem
+        """
+    os_instance = BuiltIn().get_library_instance('OperatingSystem')
+    assert isinstance(os_instance, OperatingSystem)
+    return os_instance
+
+
+def cl():
+    """
+
+        :rtype : Collections
+        """
+    c_instance = BuiltIn().get_library_instance('Collections')
+    assert isinstance(c_instance, Collections)
+    return c_instance
+
 
 class Selenium2LibraryExtensions(object):
-    TIMEOUT_LONG = "60 sec"
-    TIMEOUT = "2 sec"
     WIDTH_DEFAULT = "1366"
     HEIGHT_DEFAULT = "768"
     SELENIUM_SPEED = "0 sec"
     SELENIUM_TEST_BROWSER = "ff"
-    XPATH2_JS = "if(!window.jQuery){var headID = document.getElementsByTagName(\"head\")[0]; var newScript = document.createElement('script'); newScript.type='text/javascript'; newScript.src='http://code.jquery.com/jquery-2.1.4.min.js'; headID.appendChild(newScript);}"
+    SELENIUM_TIMEOUT = "5 s"
+    # noinspection PyPep8
+    XPATH2_JS = 'if(!window.jQuery){var headID = document.getElementsByTagName("head")[0]; var newScript = document.createElement(\'script\'); newScript.type=\'text/javascript\'; newScript.src=\'http://code.jquery.com/jquery-2.1.4.min.js\'; headID.appendChild(newScript);}'
+    # noinspection PyPep8
     JQUERY_JS = "if(!window.jQuery){var headID = document.getElementsByTagName(\"head\")[0]; var newScript = document.createElement('script'); newScript.type='text/javascript'; newScript.src='http://code.jquery.com/jquery-2.1.4.min.js'; headID.appendChild(newScript);}"
 
-    def __init__(self, timeout=5.0, implicit_wait=0.0, run_on_failure='Capture Page Screenshot'):
+    # noinspection PyArgumentList
+    def __init__(self):
         for base in Selenium2LibraryExtensions.__bases__:
             if hasattr(base, '__init__'):
                 base.__init__(self)
         print "Selenium2LibraryExtensions loaded"
 
-    @property
-    def s2l(self):
-        return BuiltIn().get_library_instance('Selenium2Library')
-
-    @property
-    def bi(self):
-        return BuiltIn().get_library_instance('BuiltIn')
-
     def set_browser_size_and_position(self, width=WIDTH_DEFAULT, height=HEIGHT_DEFAULT, x=0, y=0):
-        Selenium2Library.set_window_size(self.s2l, width, height)
-        Selenium2Library.set_window_position(self.s2l, x, y)
+        s2l().set_window_size(width, height)
+        s2l().set_window_position(x, y)
 
     def go_to_smart(self, url):
         """Redirect only in on different url"""
-        currentUrl = Selenium2Library.get_location(self.s2l)
-        if url != currentUrl:
-            Selenium2Library.go_to(self.s2l, url)
+        current_url = s2l().get_location()
+        if url != current_url:
+            s2l().go_to(url)
 
-    def click_element_extended(self, locator, timeout=None, error=None):
+    def click_element_extended(self, locator, timeout=None, error_msg=None):
         """Click element proceed with following steps
         1.wait_until_page_contains_element
-        2.wait_until_element_is_visiblewait_until_element_is_visible
+        2.wait_until_element_is_visible_wait_until_element_is_visible
         3.mouse_over"""
-        Selenium2Library.wait_until_page_contains_element(self.s2l, locator, timeout, error)
-        Selenium2Library.wait_until_element_is_visible(self.s2l, locator, timeout, error)
-        Selenium2Library.mouse_over(self.s2l, locator)
-        Selenium2Library.click_element(self.s2l, locator)
-
+        s2l().wait_until_page_contains_element(locator, timeout, error_msg)
+        s2l().wait_until_element_is_visible(locator, timeout, error_msg)
+        s2l().mouse_over(locator)
+        s2l().click_element(locator)
 
     def double_click_element_extended(self, locator, timeout=None, error=None):
-        Selenium2Library.wait_until_page_contains_element(self.s2l, locator, timeout, error)
-        Selenium2Library.wait_until_element_is_visible(self.s2l, locator, timeout, error)
-        Selenium2Library.mouse_over(self.s2l, locator)
-        Selenium2Library.double_click_element(self.s2l, locator)
+        s2l().wait_until_page_contains_element(locator, timeout, error)
+        s2l().wait_until_element_is_visible(locator, timeout, error)
+        s2l().mouse_over(locator)
+        s2l().double_click_element(locator)
 
+    def click_element_extended_and_wait(self, locator, sleep, timeout=None, error_msg=None, reason=None):
+        self.click_element_extended(locator, timeout, error_msg)
+        bi().sleep(sleep, reason)
 
-    def click_element_extended_and_wait(self, locator, sleep, timeout=None, error=None, reason=None):
-        Selenium2Library.click_element_extended(self.s2l, locator, timeout, error)
-        BuiltIn.sleep(self.bi, sleep, reason)
+    def open_browser_extension(self, url, browser="ff", width=WIDTH_DEFAULT, height=HEIGHT_DEFAULT, x="0", y="0", alias=None, remote_url=False,
+            desired_capabilities=None, ff_profile_dir=None, selenium_timeout=SELENIUM_TIMEOUT, keyword_to_run_on_failure="Capture Page Screenshot Extension"):
+        s2l().open_browser(url, browser, alias, remote_url, desired_capabilities, ff_profile_dir)
+        s2l().set_window_position(x, y)
+        s2l().set_window_size(width, height)
+        s2l().set_selenium_timeout(selenium_timeout)
+        s2l().register_keyword_to_run_on_failure(keyword_to_run_on_failure)
 
     def import_xpath2(self):
-        Selenium2Library.execute_javascript(self.s2l, self.XPATH2_JS)
+        s2l().execute_javascript(self.XPATH2_JS)
 
     def import_jQuery(self):
-        Selenium2Library.execute_javascript(self.s2l, self.JQUERY_JS)
+        s2l().execute_javascript(self.JQUERY_JS)
+
+    def capture_page_screenshot_extension(self, prefix="", postfix="", add_time_stamp=True, add_test_case_name=True,
+            add_file_path_to_list="${list of screenshots}", output_dir="/Artifacts/Screenshots"):
+        base_dir = bi().get_variable_value("${EXECDIR}")
+        output_dir_normalized = os.path.normpath(base_dir + output_dir)
+        output_file = ""
+        if add_time_stamp:
+            current_time = " " + DateTime.get_current_date(result_format="%Y.%m.%d_%H.%M.%S")
+        else:
+            current_time = ""
+        if add_test_case_name:
+            test_case_name = bi().get_variable_value("${TEST_NAME}")
+        else:
+            test_case_name = ""
+
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+        output_file = output_dir_normalized + "/" + prefix + test_case_name + postfix + current_time + ".png"
+        output_file_normalized = os.path.normpath(output_file)
+
+        s2l().capture_page_screenshot(output_file_normalized)
+
+        results = bi().run_keyword_and_return_status("Variable Should Exist", add_file_path_to_list)
+
+        if not results:
+            list = bi().create_list(output_file_normalized)
+            bi().set_test_variable(add_file_path_to_list, list)
+        else:
+            list = bi().create_list(output_file_normalized)
+            list = bi().run_keyword("Combine Lists", add_file_path_to_list, list)
+            bi().set_test_variable(add_file_path_to_list, list)
+
+        return output_file_normalized

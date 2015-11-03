@@ -14,7 +14,6 @@ from datetime import datetime, timedelta
 import time
 import re
 import datetime
-
 from robot.version import get_version
 from robot.utils import (elapsed_time_to_string, is_falsy, is_number, is_string, secs_to_timestr, timestr_to_secs, type_name, IRONPYTHON)
 
@@ -24,10 +23,7 @@ def get_current_time_for_timers():
 
 
 class TimerKeywords(Time, Date):
-    TIMERS_DICTIONARY = dict()
-
-    def __init__(self):
-        self.TIMERS_DICTIONARY = {}
+    TIMERS_DICTIONARY = {}
 
     def start_timer(self, timer_name="Global"):
         current_time = get_current_time_for_timers()
@@ -48,6 +44,11 @@ class TimerKeywords(Time, Date):
             delta = Time(current_time - self.TIMERS_DICTIONARY[timer_name]).convert(result_format, millis=is_falsy(exclude_millis))
             del self.TIMERS_DICTIONARY[timer_name]
             return delta
+
+    def restart_timer(self, timer_name="Global", result_format="number", exclude_millis="True"):
+        time_results = self.stop_timer(timer_name, result_format, exclude_millis)
+        self.start_timer(timer_name)
+        return time_results
 
     def log_timer(self, timer_name="Global", log_level="INFO", result_format="number", exclude_millis="True"):
         current_time = get_current_time_for_timers()
