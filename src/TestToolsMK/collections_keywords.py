@@ -13,11 +13,17 @@ from oauth2client.client import SignedJwtAssertionCredentials
 
 
 class CollectionsKeywordsExtension(object):
-    def __init__(self):
-        print "Start Collections"
+    @staticmethod
+    def create_dictionary_from_list(table):
+        """
 
-    def create_dictionary_from_list(self, table):
+        :rtype : dict
+        """
         return dict((x, 0) for x in table)
+    @staticmethod
+    def create_dictionary_from_two_lists(keys, values):
+        """
 
-    def create_dictionary_from_two_lists(self, keys, values):
+        :rtype : dict
+        """
         return dict(zip(keys, values))

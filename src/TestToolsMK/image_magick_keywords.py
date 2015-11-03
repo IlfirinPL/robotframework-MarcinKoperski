@@ -71,7 +71,7 @@ class ImageMagickKeywords(object):
 
             if gif_file_path is not None:
                 self.create_gif_from_three_files(gif_file_path_normalized, file_1_path_normalized, file_2_path_normalized, delta_file_path_normalized,
-                    embedded=embedded_gif)
+                                                 embedded=embedded_gif)
             if delta_file_path is None:
                 os.remove(delta_file_path_normalized)
             else:
@@ -84,7 +84,7 @@ class ImageMagickKeywords(object):
         return self._compare_image_files(file_1_path, file_2_path, gif_file_path, delta_file_path, metric, embedded_gif, embedded_delta)[0]
 
     def image_should_be_difference_less_then(self, file_1_path, file_2_path, difference_percent=1, gif_file_path=None, delta_file_path=None, embedded_gif=True,
-            embedded_delta=False):
+                                             embedded_delta=False):
         """difference_percent test to 0 mean both images are identical """
         results = self._compare_image_files(file_1_path, file_2_path, gif_file_path, delta_file_path, embedded_gif=embedded_gif, embedded_delta=embedded_delta)
         if float(results[0]) > float(difference_percent):
