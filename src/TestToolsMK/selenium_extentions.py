@@ -7,58 +7,9 @@ from robot.libraries import DateTime
 from robot.libraries.BuiltIn import BuiltIn
 from robot.libraries.Collections import Collections
 from robot.libraries.OperatingSystem import OperatingSystem
+from robot_instances import *
 import os
 import os.path
-
-
-def s2l():
-    """
-
-        :rtype : Selenium2Library
-        """
-    s2l_instance = BuiltIn().get_library_instance('Selenium2Library')
-    assert isinstance(s2l_instance, Selenium2Library)
-    return s2l_instance
-
-
-def bi():
-    """
-
-        :rtype : BuiltIn
-        """
-    bi_instance = BuiltIn().get_library_instance('BuiltIn')
-    assert isinstance(bi_instance, BuiltIn)
-    return bi_instance
-
-
-def dtl():
-    """
-
-        :rtype : DateTime
-        """
-    dt_instance = BuiltIn().get_library_instance('DateTime')
-    assert isinstance(dt_instance, DateTime)
-    return dt_instance
-
-
-def osl():
-    """
-
-        :rtype : OperatingSystem
-        """
-    os_instance = BuiltIn().get_library_instance('OperatingSystem')
-    assert isinstance(os_instance, OperatingSystem)
-    return os_instance
-
-
-def cl():
-    """
-
-        :rtype : Collections
-        """
-    c_instance = BuiltIn().get_library_instance('Collections')
-    assert isinstance(c_instance, Collections)
-    return c_instance
 
 
 class Selenium2LibraryExtensions(object):
@@ -120,6 +71,7 @@ class Selenium2LibraryExtensions(object):
     def import_xpath2(self):
         s2l().execute_javascript(self.XPATH2_JS)
 
+    # noinspection PyPep8Naming,PyPep8Naming
     def import_jQuery(self):
         s2l().execute_javascript(self.JQUERY_JS)
 
@@ -127,7 +79,6 @@ class Selenium2LibraryExtensions(object):
             add_file_path_to_list="${list of screenshots}", output_dir="/Artifacts/Screenshots"):
         base_dir = bi().get_variable_value("${EXECDIR}")
         output_dir_normalized = os.path.normpath(base_dir + output_dir)
-        output_file = ""
         if add_time_stamp:
             current_time = " " + DateTime.get_current_date(result_format="%Y.%m.%d_%H.%M.%S")
         else:
@@ -147,11 +98,11 @@ class Selenium2LibraryExtensions(object):
         results = bi().run_keyword_and_return_status("Variable Should Exist", add_file_path_to_list)
 
         if not results:
-            list = bi().create_list(output_file_normalized)
-            bi().set_test_variable(add_file_path_to_list, list)
+            list_with_files = bi().create_list(output_file_normalized)
+            bi().set_test_variable(add_file_path_to_list, list_with_files)
         else:
-            list = bi().create_list(output_file_normalized)
-            list = bi().run_keyword("Combine Lists", add_file_path_to_list, list)
-            bi().set_test_variable(add_file_path_to_list, list)
+            list_with_files = bi().create_list(output_file_normalized)
+            list_with_files = bi().run_keyword("Combine Lists", add_file_path_to_list, list_with_files)
+            bi().set_test_variable(add_file_path_to_list, list_with_files)
 
         return output_file_normalized
