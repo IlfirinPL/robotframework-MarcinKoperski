@@ -1,11 +1,23 @@
+import os.path
+
 from Selenium2Library import Selenium2Library
 from robot.libraries import DateTime
 from robot.libraries.BuiltIn import BuiltIn
 from robot.libraries.Collections import Collections
 from robot.libraries.OperatingSystem import OperatingSystem
 
-__all__ = ('s2l', 'bi', 'dtl', 'osl', 'cl')
+__all__ = ('s2l', 'bi', 'dtl', 'osl', 'cl','get_artifacts_dir')
 
+
+def get_artifacts_dir(delta_path):
+    output_path = bi().get_variable_value("${EXECDIR}")
+    output_path += "/Artifacts/"
+    output_path += delta_path
+    output_dir_normalized = os.path.dirname(os.path.abspath(os.path.normpath(output_path)))
+    output_path_normalized = os.path.abspath(os.path.normpath(output_path))
+    if not os.path.exists(output_dir_normalized):
+        os.makedirs(output_dir_normalized)
+    return output_path_normalized
 
 def s2l():
     """

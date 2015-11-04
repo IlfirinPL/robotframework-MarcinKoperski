@@ -76,9 +76,9 @@ class Selenium2LibraryExtensions(object):
         s2l().execute_javascript(self.JQUERY_JS)
 
     def capture_page_screenshot_extension(self, prefix="", postfix="", add_time_stamp=True, add_test_case_name=True,
-            add_file_path_to_list="${list of screenshots}", output_dir="/Artifacts/Screenshots"):
-        base_dir = bi().get_variable_value("${EXECDIR}")
-        output_dir_normalized = os.path.normpath(base_dir + output_dir)
+            add_file_path_to_list="${list of screenshots}", output_dir="Screenshots"):
+        output_dir_normalized = get_artifacts_dir(output_dir)
+
         if add_time_stamp:
             current_time = " " + DateTime.get_current_date(result_format="%Y.%m.%d_%H.%M.%S")
         else:
@@ -88,8 +88,6 @@ class Selenium2LibraryExtensions(object):
         else:
             test_case_name = ""
 
-        if not os.path.exists(output_dir):
-            os.makedirs(output_dir)
         output_file = output_dir_normalized + "/" + prefix + test_case_name + postfix + current_time + ".png"
         output_file_normalized = os.path.normpath(output_file)
 

@@ -21,7 +21,7 @@ setup(
         version=version),
     keywords=['robotframework', 'pyral'],
     package_dir={u'': 'src'},
-    packages=['TestToolsMK'],
+    packages=['TestToolsMK'], exclude_package_data={'': ['.git', '.git/*', '.idea', '.gitignore']},
     install_requires=[
         u'robotframework>=2.9.2',
         u'robot',
