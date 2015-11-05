@@ -1,7 +1,7 @@
 # robotframework-MarcinKoperski
 
 Bundle contains all useful libraries that are used by me in my projects
-[Keywords documentation](https://github.com/IlfirinPL/robotframework-MarcinKoperski/tree/master/doc/TestToolsMK.html) 
+[Keywords documentation](http://htmlpreview.github.io/?https://github.com/IlfirinPL/robotframework-MarcinKoperski/blob/master/doc/TestToolsMK.html) 
 
 ## Example 
 To use it add Library "TestToolsMK" to your robotframework projects
