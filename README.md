@@ -16,7 +16,8 @@ Library             Collections
 
 *** Test Cases ***
 Example
-      Open Browser Extension      https://www.google.com/search?hl=en&q=test      browser=ff      width=1366       height=768      x=0      y=0
+      Image Self Check
+      Open Browser Extension      https://www.google.com/search?hl=en&q=test      browser=ff      width=1366      height=768      x=0      y=0
       ${path1}      Capture Page Screenshot Extension
       Go To Smart      https://www.google.com/search?hl=en&q=testX
       ${path2}      Capture Page Screenshot Extension
@@ -24,6 +25,7 @@ Example
       Log List      ${list of screenshots}
       ${delta value}      Image Should Be Difference Less Then      ${path1}      ${path2}      difference_percent=2      embedded_gif=True
       [Teardown]      Close All Browsers
+
 
 ```
 
