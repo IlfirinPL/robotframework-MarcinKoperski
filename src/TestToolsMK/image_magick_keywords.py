@@ -36,13 +36,17 @@ class ImageMagickKeywords(object):
             message = "Missing file compare.exe"
             raise AssertionError(message)
 
-        argument_list = [self.CONVERT_PATH]
+        argument_list = [self.CONVERT_PATH, "--version"]
         try:
             procces = subprocess.Popen(argument_list, stdout=subprocess.PIPE, stderr=subprocess.PIPE)  # , shell=True
             procces.wait()
+            output = procces.communicate()
             logger.info("returnCode \t:" + str(procces.returncode))
-            logger.info("stdout \t:" + str(procces.communicate()[0]))
-            logger.info("stderr \t:" + str(procces.communicate()[1]))
+            if procces.returncode != 0:
+                message = "processing failed msg= %s" % str(output)
+                raise AssertionError(message)
+            logger.info("stdout \t:" + str(output[0]))
+            logger.info("stderr \t:" + str(output[1]))
 
         except OSError, e:
             logger.error(e)
@@ -67,13 +71,19 @@ class ImageMagickKeywords(object):
             argument_list = [self.COMPARE_PATH, "-metric", metric, file_1_path_normalized, file_2_path_normalized, delta_file_path_normalized]
             process = subprocess.Popen(argument_list, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             process.wait()
-            delta_percent = process.communicate()[1].split("(")[1].replace(")", "")
+            output = process.communicate()
+            if "error" in str(output):
+                message = "processing failed msg= %s" % str(output)
+                raise AssertionError(message)
+
+            delta_percent = output[1].split("(")[1].replace(")", "")
 
             if gif_file_path is not None:
                 self.create_gif_from_three_files(gif_file_path_normalized, file_1_path_normalized, file_2_path_normalized, delta_file_path_normalized,
                                                  embedded=embedded_gif)
             if delta_file_path is None:
-                os.remove(delta_file_path_normalized)
+                TODO = True
+                # TODO maybe remove files
             else:
                 if embedded_delta:
                     self._embed_screenshot(delta_file_path_normalized)
@@ -81,12 +91,15 @@ class ImageMagickKeywords(object):
             return float(delta_percent) * float(100), delta_file_path_normalized, gif_file_path_normalized
 
     def compare_image_files(self, file_1_path, file_2_path, gif_file_path=None, delta_file_path=None, metric="RMSE", embedded_gif=True, embedded_delta=False):
-        return self._compare_image_files(file_1_path, file_2_path, gif_file_path, delta_file_path, metric, embedded_gif, embedded_delta)[0]
+        results = self._compare_image_files(file_1_path, file_2_path, gif_file_path, delta_file_path, metric, embedded_gif, embedded_delta)
+
+        return results[0]
 
     def image_should_be_difference_less_then(self, file_1_path, file_2_path, difference_percent=1, gif_file_path=None, delta_file_path=None, embedded_gif=True,
                                              embedded_delta=False):
         """difference_percent test to 0 mean both images are identical """
         results = self._compare_image_files(file_1_path, file_2_path, gif_file_path, delta_file_path, embedded_gif=embedded_gif, embedded_delta=embedded_delta)
+        print str(results)
         if float(results[0]) > float(difference_percent):
             message = "Difference between files is greater then expected actual %.2f > %.2f expected percent" % (float(results[0]), float(difference_percent))
             raise AssertionError(message)
