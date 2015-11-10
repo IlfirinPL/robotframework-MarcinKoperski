@@ -8,32 +8,39 @@ import subprocess
 import os.path
 import urlparse
 import urllib
-
 from robot.api import logger
 
 
 class ImageMagickKeywords(object):
     CONVERT_PATH = os.path.normpath(os.environ['MAGICK_HOME'] + "\\" + "convert.exe")
     COMPARE_PATH = os.path.normpath(os.environ['MAGICK_HOME'] + "\\" + "compare.exe")
+    IDENTIFY_PATH = os.path.normpath(os.environ['MAGICK_HOME'] + "\\" + "identify.exe")
 
     def image_self_check(self):
         try:
             os.environ['MAGICK_HOME']
+            logger.info("System variable MAGICK_HOME exists, path used :" + os.environ['MAGICK_HOME'])
         except:
             message = "Missing system variable 'MAGICK_HOME'"
             logger.error(message)
             raise AssertionError(message)
 
         if os.path.isfile(self.CONVERT_PATH):
-            logger.info("Convert file exits")
+            logger.info("Convert file exits path, path used :" + self.CONVERT_PATH)
         else:
             message = "Missing file convert.exe"
             raise AssertionError(message)
 
         if os.path.isfile(self.COMPARE_PATH):
-            logger.info("Compare file exits")
+            logger.info("Compare file exits , path used :" + self.COMPARE_PATH)
         else:
             message = "Missing file compare.exe"
+            raise AssertionError(message)
+
+        if os.path.isfile(self.IDENTIFY_PATH):
+            logger.info("Identify file exits, path used :" + self.IDENTIFY_PATH)
+        else:
+            message = "Missing file identify.exe"
             raise AssertionError(message)
 
         argument_list = [self.CONVERT_PATH, "--version"]
@@ -51,9 +58,14 @@ class ImageMagickKeywords(object):
         except OSError, e:
             logger.error(e)
 
-    def _compare_image_files(self, file_1_path, file_2_path, gif_file_path=None, delta_file_path=None, metric="RMSE", embedded_gif=True, embedded_delta=False):
+    def _compare_image_files(self, file_1_path, file_2_path, gif_file_path=None, delta_file_path=None, metric="RMSE", embedded_gif=True, embedded_delta=False,
+            force_resize=True):
         file_1_path_normalized = os.path.normpath(file_1_path)
         file_2_path_normalized = os.path.normpath(file_2_path)
+
+        if force_resize:
+            file_1_width, file_1_height = self._get_info_for_image(file_1_path_normalized)
+            self._resize_file(file_2_path_normalized, file_1_width, file_1_height)
         if delta_file_path is not None:
             delta_file_path_normalized = os.path.normpath(delta_file_path)
         else:
@@ -80,7 +92,7 @@ class ImageMagickKeywords(object):
 
             if gif_file_path is not None:
                 self.create_gif_from_three_files(gif_file_path_normalized, file_1_path_normalized, file_2_path_normalized, delta_file_path_normalized,
-                                                 embedded=embedded_gif)
+                    embedded=embedded_gif)
             if delta_file_path is None:
                 TODO = True
                 # TODO maybe remove files
@@ -90,16 +102,17 @@ class ImageMagickKeywords(object):
 
             return float(delta_percent) * float(100), delta_file_path_normalized, gif_file_path_normalized
 
-    def compare_image_files(self, file_1_path, file_2_path, gif_file_path=None, delta_file_path=None, metric="RMSE", embedded_gif=True, embedded_delta=False):
-        results = self._compare_image_files(file_1_path, file_2_path, gif_file_path, delta_file_path, metric, embedded_gif, embedded_delta)
+    def compare_image_files(self, file_1_path, file_2_path, gif_file_path=None, delta_file_path=None, metric="RMSE", embedded_gif=True, embedded_delta=False,
+            force_resize=True):
+        results = self._compare_image_files(file_1_path, file_2_path, gif_file_path, delta_file_path, metric, embedded_gif, embedded_delta, force_resize)
 
         return results[0]
 
     def image_should_be_difference_less_then(self, file_1_path, file_2_path, difference_percent=1, gif_file_path=None, delta_file_path=None, embedded_gif=True,
-                                             embedded_delta=False):
+            embedded_delta=False, force_resize=True):
         """difference_percent test to 0 mean both images are identical """
-        results = self._compare_image_files(file_1_path, file_2_path, gif_file_path, delta_file_path, embedded_gif=embedded_gif, embedded_delta=embedded_delta)
-        print str(results)
+        results = self._compare_image_files(file_1_path, file_2_path, gif_file_path, delta_file_path, embedded_gif=embedded_gif, embedded_delta=embedded_delta,
+            force_resize=force_resize)
         if float(results[0]) > float(difference_percent):
             message = "Difference between files is greater then expected actual %.2f > %.2f expected percent" % (float(results[0]), float(difference_percent))
             raise AssertionError(message)
@@ -136,3 +149,29 @@ class ImageMagickKeywords(object):
     def _embed_screenshot(path, level="INFO", width="800px"):
         link = urlparse.urljoin('file:', urllib.pathname2url(os.path.normpath(path)))
         logger.write('<a href="%s"><img src="%s" width="%s"></a>' % (link, link, width), level, html=True)
+
+    def _get_info_for_image(self, file_name):
+        argument_list = [self.IDENTIFY_PATH, "-quiet", "-format", "%[fx:w]\\n%[fx:h]", file_name]
+        try:
+            procces = subprocess.Popen(argument_list, stdout=subprocess.PIPE, stderr=subprocess.PIPE)  # , shell=True
+            procces.wait()
+            output = procces.communicate()
+            if procces.returncode != 0:
+                message = "processing failed msg= %s" % str(output)
+                raise AssertionError(message)
+
+            # logger.info("file Name \t:" + file_name+str(output))
+            table_results = output[0].split()
+            return table_results[0], table_results[1]
+        except OSError, e:
+            logger.error(e)
+
+    def _resize_file(self, file_path_normalized, width, height):
+        if os.path.isfile(file_path_normalized):
+            argument_list = [self.CONVERT_PATH, "-resize", width + "x" + height + "!", file_path_normalized, file_path_normalized]
+            process = subprocess.Popen(argument_list, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            process.wait()
+            output = process.communicate()
+            if process.returncode != 0:
+                message = "processing failed msg= %s" % str(output)
+                raise AssertionError(message)
