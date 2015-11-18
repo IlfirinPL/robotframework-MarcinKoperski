@@ -12,19 +12,32 @@ from robot.api import logger
 
 
 class ImageMagickKeywords(object):
-    CONVERT_PATH = os.path.normpath(os.environ['MAGICK_HOME'] + "\\" + "convert.exe")
-    COMPARE_PATH = os.path.normpath(os.environ['MAGICK_HOME'] + "\\" + "compare.exe")
-    IDENTIFY_PATH = os.path.normpath(os.environ['MAGICK_HOME'] + "\\" + "identify.exe")
-
-    def image_self_check(self):
+    def __int__(self):
         try:
             os.environ['MAGICK_HOME']
             logger.info("System variable MAGICK_HOME exists, path used :" + os.environ['MAGICK_HOME'])
         except:
             message = "Missing system variable 'MAGICK_HOME'"
-            logger.error(message)
-            raise AssertionError(message)
+            logger.warn(message)
 
+        try:
+            self.CONVERT_PATH = os.path.normpath(os.environ['MAGICK_HOME'] + "\\" + "convert.exe")
+        except:
+            self.CONVERT_PATH = "missing"
+            logger.warn("Missing file convert.exe")
+
+        try:
+            self.COMPARE_PATH = os.path.normpath(os.environ['MAGICK_HOME'] + "\\" + "compare.exe")
+        except:
+            self.COMPARE_PATH = "missing"
+            logger.warn("Missing file compare.exe")
+        try:
+            self.IDENTIFY_PATH = os.path.normpath(os.environ['MAGICK_HOME'] + "\\" + "identify.exe")
+        except:
+            self.IDENTIFY_PATH = "missing"
+            logger.warn("Missing file identify.exe")
+
+    def image_self_check(self):
         if os.path.isfile(self.CONVERT_PATH):
             logger.info("Convert file exits path, path used :" + self.CONVERT_PATH)
         else:
