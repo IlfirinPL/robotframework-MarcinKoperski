@@ -30,7 +30,7 @@ setup(
         u'robotframework-pabot',
         u'robotframework-ride>=1.5a2',
         u'robotframework-selenium2library>=1.7.4',
-        u'robotframework-testmanagement',
+        u'robotframework-testmanagement>=0.1.9',
         u'robotframework-sshlibrary>=2.1.1',
         u'robotframework-sudslibrary',
         u'robotframework-appiumlibrary',
