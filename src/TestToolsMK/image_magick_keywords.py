@@ -37,6 +37,7 @@ class ImageMagickKeywords(object):
             return "missing"
 
     def __int__(self, **kwargs):
+        super(ImageMagickKeywords, self).__int__(**kwargs)
         try:
             os.environ['MAGICK_HOME']
             logger.info("System variable MAGICK_HOME exists, path used :" + os.environ['MAGICK_HOME'])
@@ -44,7 +45,6 @@ class ImageMagickKeywords(object):
             message = "Missing system variable 'MAGICK_HOME'"
             logger.warn(message)
 
-        super(ImageMagickKeywords, self).__int__(**kwargs)
 
     def image_self_check(self):
         if os.path.isfile(self.CONVERT_PATH):
