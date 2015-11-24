@@ -10,6 +10,7 @@ from robot.libraries.OperatingSystem import OperatingSystem
 from robot_instances import *
 import os
 import os.path
+from selenium.webdriver.common.keys import Keys
 
 
 class Selenium2LibraryExtensions(object):
@@ -29,6 +30,19 @@ class Selenium2LibraryExtensions(object):
             if hasattr(base, '__init__'):
                 base.__init__(self)
         print "Selenium2LibraryExtensions loaded"
+
+    def open_new_tab(self, url):
+        """Hack it use Control +t to open new tab"""
+        driver = s2l()._current_browser()
+        body = driver.find_element_by_tag_name("body")
+        body.send_keys(Keys.CONTROL + 't')
+        s2l().go_to(url)
+
+    def close_tab(self):
+        """Hack it use Control +w to close tab"""
+        driver = s2l()._current_browser()
+        body = driver.find_element_by_tag_name("body")
+        body.send_keys(Keys.CONTROL + 'w')
 
     def set_browser_size_and_position(self, width=WIDTH_DEFAULT, height=HEIGHT_DEFAULT, x=0, y=0):
         s2l().set_window_size(width, height)
