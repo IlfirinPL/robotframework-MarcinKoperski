@@ -38,6 +38,12 @@ class Selenium2LibraryExtensions(object):
         body.send_keys(Keys.CONTROL + 't')
         s2l().go_to(url)
 
+    def switch_tab_by_id(self, id_tab):
+        """Hack it use Control +1,2,3 etc to switch tab"""
+        driver = s2l()._current_browser()
+        body = driver.find_element_by_tag_name("body")
+        body.send_keys(Keys.CONTROL + id_tab)
+
     def close_tab(self):
         """Hack it use Control +w to close tab"""
         driver = s2l()._current_browser()
