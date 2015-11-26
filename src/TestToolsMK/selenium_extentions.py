@@ -2,15 +2,19 @@
 # -*- coding: utf-8 -*-
 
 # Copyright (c) 2015 Cutting Edge QA
+import time
 from Selenium2Library import Selenium2Library
 from robot.libraries import DateTime
 from robot.libraries.BuiltIn import BuiltIn
 from robot.libraries.Collections import Collections
 from robot.libraries.OperatingSystem import OperatingSystem
+from selenium.webdriver import ActionChains
+from selenium.webdriver.common.by import By
 from robot_instances import *
 import os
 import os.path
 from selenium.webdriver.common.keys import Keys
+from robot.api import logger
 
 
 class Selenium2LibraryExtensions(object):
@@ -36,13 +40,23 @@ class Selenium2LibraryExtensions(object):
         driver = s2l()._current_browser()
         body = driver.find_element_by_tag_name("body")
         body.send_keys(Keys.CONTROL + 't')
+        time.sleep(2)
         s2l().go_to(url)
 
     def switch_tab_by_id(self, id_tab):
-        """Hack it use Control +1,2,3 etc to switch tab"""
+        """Hack it use Control + 1,2,3 etc to switch tab"""
         driver = s2l()._current_browser()
         body = driver.find_element_by_tag_name("body")
         body.send_keys(Keys.CONTROL + id_tab)
+        time.sleep(4)
+        # actions = ActionChains(driver)
+        # actions.key_down(Keys.CONTROL).key_down(Keys.TAB).key_up(Keys.TAB).key_up(Keys.CONTROL).perform()
+
+    def press_key_python(self, command, locator="//body", strategy="XPATH"):
+        """Hack !!!  example argument | Keys.CONTROL + 't' |Keys.TAB + Keys.SHIFT"""
+        driver = s2l()._current_browser()
+        element = driver.find_element(eval("By." + strategy), locator)
+        element.send_keys(eval(command))
 
     def close_tab(self):
         """Hack it use Control +w to close tab"""
@@ -82,11 +96,12 @@ class Selenium2LibraryExtensions(object):
 
     def open_browser_extension(self, url, browser="ff", width=WIDTH_DEFAULT, height=HEIGHT_DEFAULT, x="0", y="0", alias=None, remote_url=False,
             desired_capabilities=None, ff_profile_dir=None, selenium_timeout=SELENIUM_TIMEOUT, keyword_to_run_on_failure="Capture Page Screenshot Extension"):
-        s2l().open_browser(url, browser, alias, remote_url, desired_capabilities, ff_profile_dir)
+        s2l().open_browser("about:blank", browser, alias, remote_url, desired_capabilities, ff_profile_dir)
         s2l().set_window_position(x, y)
         s2l().set_window_size(width, height)
         s2l().set_selenium_timeout(selenium_timeout)
         s2l().register_keyword_to_run_on_failure(keyword_to_run_on_failure)
+        s2l().go_to(url)
 
     def import_xpath2(self):
         s2l().execute_javascript(self.XPATH2_JS)
