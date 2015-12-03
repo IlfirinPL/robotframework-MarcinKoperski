@@ -36,7 +36,8 @@ class Selenium2LibraryExtensions(object):
                 base.__init__(self)
         print "Selenium2LibraryExtensions loaded"
 
-    def open_new_tab(self, url):
+    @staticmethod
+    def open_new_tab(url):
         """Hack it use Control +t to open new tab"""
         driver = s2l()._current_browser()
         body = driver.find_element_by_tag_name("body")
@@ -44,7 +45,8 @@ class Selenium2LibraryExtensions(object):
         time.sleep(2)
         s2l().go_to(url)
 
-    def switch_tab_by_id(self, id_tab):
+    @staticmethod
+    def switch_tab_by_id(id_tab):
         """Hack it use Control + 1,2,3 etc to switch tab"""
         driver = s2l()._current_browser()
         body = driver.find_element_by_tag_name("body")
@@ -53,29 +55,34 @@ class Selenium2LibraryExtensions(object):
         # actions = ActionChains(driver)
         # actions.key_down(Keys.CONTROL).key_down(Keys.TAB).key_up(Keys.TAB).key_up(Keys.CONTROL).perform()
 
-    def press_key_python(self, command, locator="//body", strategy="XPATH"):
+    @staticmethod
+    def press_key_python(command, locator="//body", strategy="XPATH"):
         """Hack !!!  example argument | Keys.CONTROL + 't' |Keys.TAB + Keys.SHIFT"""
         driver = s2l()._current_browser()
         element = driver.find_element(eval("By." + strategy), locator)
         element.send_keys(eval(command))
 
-    def close_tab(self):
+    @staticmethod
+    def close_tab():
         """Hack it use Control +w to close tab"""
         driver = s2l()._current_browser()
         body = driver.find_element_by_tag_name("body")
         body.send_keys(Keys.CONTROL + 'w')
 
-    def set_browser_size_and_position(self, width=WIDTH_DEFAULT, height=HEIGHT_DEFAULT, x=0, y=0):
+    @staticmethod
+    def set_browser_size_and_position(width=WIDTH_DEFAULT, height=HEIGHT_DEFAULT, x=0, y=0):
         s2l().set_window_size(width, height)
         s2l().set_window_position(x, y)
 
-    def go_to_smart(self, url):
+    @staticmethod
+    def go_to_smart(url):
         """Redirect only in on different url"""
         current_url = s2l().get_location()
         if url != current_url:
             s2l().go_to(url)
 
-    def click_element_extended(self, locator, timeout=None, error_msg=None):
+    @staticmethod
+    def click_element_extended(locator, timeout=None, error_msg=None):
         """Click element proceed with following steps
         1.wait_until_page_contains_element
         2.wait_until_element_is_visible_wait_until_element_is_visible
@@ -85,7 +92,8 @@ class Selenium2LibraryExtensions(object):
         s2l().mouse_over(locator)
         s2l().click_element(locator)
 
-    def double_click_element_extended(self, locator, timeout=None, error=None):
+    @staticmethod
+    def double_click_element_extended(locator, timeout=None, error=None):
         s2l().wait_until_page_contains_element(locator, timeout, error)
         s2l().wait_until_element_is_visible(locator, timeout, error)
         s2l().mouse_over(locator)
@@ -95,7 +103,8 @@ class Selenium2LibraryExtensions(object):
         self.click_element_extended(locator, timeout, error_msg)
         bi().sleep(sleep, reason)
 
-    def open_browser_extension(self, url, browser="ff", width=WIDTH_DEFAULT, height=HEIGHT_DEFAULT, x="0", y="0", alias=None, remote_url=False,
+    @staticmethod
+    def open_browser_extension(url, browser="ff", width=WIDTH_DEFAULT, height=HEIGHT_DEFAULT, x="0", y="0", alias=None, remote_url=False,
             desired_capabilities=None, ff_profile_dir=None, selenium_timeout=SELENIUM_TIMEOUT, keyword_to_run_on_failure="Capture Page Screenshot Extension"):
         s2l().open_browser("about:blank", browser, alias, remote_url, desired_capabilities, ff_profile_dir)
         s2l().set_window_position(x, y)
@@ -111,7 +120,8 @@ class Selenium2LibraryExtensions(object):
     def import_jQuery(self):
         s2l().execute_javascript(self.JQUERY_JS)
 
-    def capture_page_screenshot_extension(self, prefix="", postfix="", add_time_stamp=True, add_test_case_name=True,
+    @staticmethod
+    def capture_page_screenshot_extension(prefix="", postfix="", add_time_stamp=True, add_test_case_name=True,
             add_file_path_to_list="${list of screenshots}", output_dir="Screenshots"):
         output_dir_normalized = get_artifacts_dir(output_dir)
 
@@ -141,7 +151,8 @@ class Selenium2LibraryExtensions(object):
 
         return output_file_normalized
 
-    def element_attribute_should_be(self, locator, attribute, attribute_value_expected, msg=None, values=True):
+    @staticmethod
+    def element_attribute_should_be(locator, attribute, attribute_value_expected, msg=None, values=True):
         actual_value = s2l().get_element_attribute(locator + "@" + attribute)
         actual_value, attribute_value_expected = [bi()._convert_to_string(i) for i in actual_value, attribute_value_expected]
         bi()._should_be_equal(actual_value, attribute_value_expected, msg, values)

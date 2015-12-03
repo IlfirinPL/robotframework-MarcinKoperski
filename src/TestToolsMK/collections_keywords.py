@@ -5,8 +5,7 @@
 
 
 class CollectionsKeywordsExtension(object):
-
-    def __int__(self,**kwargs):
+    def __int__(self, **kwargs):
         super(CollectionsKeywordsExtension, self).__int__(**kwargs)
 
     @staticmethod

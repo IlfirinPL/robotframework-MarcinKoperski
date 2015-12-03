@@ -118,7 +118,7 @@ class ImageMagickKeywords(object):
                 self.create_gif_from_three_files(gif_file_path_normalized, file_1_path_normalized, file_2_path_normalized, delta_file_path_normalized,
                     embedded=embedded_gif)
             if delta_file_path is None:
-                TODO = True
+                todo = True
                 # TODO maybe remove files
             else:
                 if embedded_delta:

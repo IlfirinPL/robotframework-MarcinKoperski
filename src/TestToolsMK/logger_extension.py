@@ -3,31 +3,18 @@
 
 # Copyright (c) 2015 Cutting Edge QA
 
-import os
-import robot
-from robot.libraries import DateTime
-from robot.libraries.BuiltIn import BuiltIn
-import robot.libraries.DateTime
-from robot.libraries.DateTime import Time
-from robot.libraries.DateTime import Date
-from robot.api import logger
-from datetime import datetime, timedelta
-import time
-import re
-import datetime
-from robot.version import get_version
-from robot.utils import (elapsed_time_to_string, is_falsy, is_number, is_string, secs_to_timestr, timestr_to_secs, type_name, IRONPYTHON)
-from robotide.lib.robot.errors import DataError
-from robot.libraries.BuiltIn import _Variables
-from robot_instances import *
-
 import csv
+import os
+
+from robot.libraries import DateTime
+
+from robot_instances import *
 
 
 class LoggerKeywordsExtension(object):
     OUTPUT_FILE = None
 
-    def __init__(self,**kwargs):
+    def __init__(self, **kwargs):
         super(LoggerKeywordsExtension, self).__init__(**kwargs)
         self.OUTPUT_FILE = bi().get_variable_value("${EXECDIR}")
 
@@ -41,13 +28,13 @@ class LoggerKeywordsExtension(object):
         suite_name = str(bi().get_variable_value("${SUITE_NAME}"))
         variable_value = name
 
-        #TODO
-        #get variable name is not working
+        # TODO
+        # get variable name is not working
         # variable_name = _Variables._get_var_name(bi(),str(name))
-        #bi().get_variable_value("${" + variable_name + "}", "Missing!!!")
+        # bi().get_variable_value("${" + variable_name + "}", "Missing!!!")
 
         with open(log_file, 'ab') as  csvfile:
             writer_csv = csv.writer(csvfile, dialect='excel')
             if os.stat(log_file).st_size < 10:
                 writer_csv.writerow(fieldnames)
-            writer_csv.writerow([current_time, suite_name + "." + test_case_name,name , variable_value, comment])
+            writer_csv.writerow([current_time, suite_name + "." + test_case_name, name, variable_value, comment])

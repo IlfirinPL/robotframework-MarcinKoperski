@@ -14,7 +14,7 @@ class GoogleSheets(object):
     WORKSHEET = None
     JSON_KEY = None
 
-    def __init__(self, key_json_file=None, google_document_id=None, worksheet_name=None,**kwargs):
+    def __init__(self, key_json_file=None, google_document_id=None, worksheet_name=None, **kwargs):
         super(GoogleSheets, self).__init__(**kwargs)
         if key_json_file is not None:
             if google_document_id is not None:

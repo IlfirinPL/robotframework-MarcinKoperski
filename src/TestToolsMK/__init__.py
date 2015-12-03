@@ -21,7 +21,6 @@ class TestToolsMK(GoogleSheets, Selenium2LibraryExtensions, TimerKeywords, Colle
     ROBOT_LIBRARY_SCOPE = 'GLOBAL'
     ROBOT_LIBRARY_VERSION = VERSION
 
-    def __init__(self,**kwargs):
-        # super(TestToolsMK, self).__init__(**kwargs)
+    def __init__(self):
         print "TestToolsMK loaded"
-
+        # super(TestToolsMK, self).__init__(**kwargs)

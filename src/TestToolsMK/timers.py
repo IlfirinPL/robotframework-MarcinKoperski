@@ -24,8 +24,8 @@ def get_current_time_for_timers():
 
 class TimerKeywords(Time, Date):
     TIMERS_DICTIONARY = {}
-    
-    def __int__(self,**kwargs):
+
+    def __int__(self, **kwargs):
         super(TimerKeywords, self).__int__(**kwargs)
 
     def start_timer(self, timer_name="Global"):
