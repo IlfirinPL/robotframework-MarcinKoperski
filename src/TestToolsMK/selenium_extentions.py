@@ -29,7 +29,8 @@ class Selenium2LibraryExtensions(object):
     JQUERY_JS = "if(!window.jQuery){var headID = document.getElementsByTagName(\"head\")[0]; var newScript = document.createElement('script'); newScript.type='text/javascript'; newScript.src='http://code.jquery.com/jquery-2.1.4.min.js'; headID.appendChild(newScript);}"
 
     # noinspection PyArgumentList
-    def __init__(self):
+    def __init__(self, **kwargs):
+        super(Selenium2LibraryExtensions, self).__init__(**kwargs)
         for base in Selenium2LibraryExtensions.__bases__:
             if hasattr(base, '__init__'):
                 base.__init__(self)
@@ -139,3 +140,8 @@ class Selenium2LibraryExtensions(object):
             bi().set_test_variable(add_file_path_to_list, list_with_files)
 
         return output_file_normalized
+
+    def element_attribute_should_be(self, locator, attribute, attribute_value_expected, msg=None, values=True):
+        actual_value = s2l().get_element_attribute(locator + "@" + attribute)
+        actual_value, attribute_value_expected = [bi()._convert_to_string(i) for i in actual_value, attribute_value_expected]
+        bi()._should_be_equal(actual_value, attribute_value_expected, msg, values)
