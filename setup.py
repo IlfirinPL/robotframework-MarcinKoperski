@@ -23,7 +23,7 @@ setup(
     package_dir={u'': 'src'},
     packages=['TestToolsMK'], exclude_package_data={'': ['.git', '.git/*', '.idea', '.gitignore']},
     install_requires=[
-        u'robotframework>=2.9.2',
+        u'robotframework>=3.0',
         u'robotframework-archivelibrary',
         u'robotframework-databaselibrary',
         u'robotframework-imaplibrary',
