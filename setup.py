@@ -35,5 +35,8 @@ setup(
         u'gspread',
         u'oauth2client',
         u'selenium'
+        u'lxml'
+        u'robotframework-httplibrary'
+        
     ]
 )
