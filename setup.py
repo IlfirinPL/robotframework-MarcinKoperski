@@ -34,8 +34,8 @@ setup(
         u'robotframework-appiumlibrary',
         u'gspread',
         u'oauth2client',
-        u'selenium'
-        u'lxml'
+        u'selenium',
+        u'lxml',
         u'robotframework-httplibrary'
         
     ]
