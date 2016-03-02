@@ -156,3 +156,20 @@ class Selenium2LibraryExtensions(object):
         actual_value = s2l().get_element_attribute(locator + "@" + attribute)
         actual_value, attribute_value_expected = [bi()._convert_to_string(i) for i in actual_value, attribute_value_expected]
         bi()._should_be_equal(actual_value, attribute_value_expected, msg, values)
+
+    @staticmethod
+    def create_download_dir_profile(path, mimeTypes_file=None):
+        fp = FirefoxProfile()
+        fp.set_preference("browser.download.folderList", 2)
+        fp.set_preference("browser.download.manager.showWhenStarting", False)
+        fp.set_preference("browser.download.manager.alertOnEXEOpen", False)
+        fp.set_preference("browser.download.dir", os.path.normpath(path))
+        fp.set_preference("browser.helperApps.neverAsk.saveToDisk",
+            "application/msword,application/csv,text/csv,image/png ,image/jpeg, application/pdf, text/html,text/plain,application/octet-stream")
+        fp.set_preference("browser.helperApps.alwaysAsk.force", False)
+        fp.update_preferences()
+        os.mkdir(path)
+        if mimeTypes_file != None:
+            from shutil import copy2
+            copy2(os.path.normpath(mimeTypes_file), fp.profile_dir)
+        return fp.profile_dir
