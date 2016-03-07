@@ -8,7 +8,7 @@ from robot.libraries import DateTime
 from robot.libraries.BuiltIn import BuiltIn
 from robot.libraries.Collections import Collections
 from robot.libraries.OperatingSystem import OperatingSystem
-from selenium.webdriver import ActionChains
+from selenium.webdriver import ActionChains, FirefoxProfile
 from selenium.webdriver.common.by import By
 from robot_instances import *
 import os
@@ -125,11 +125,11 @@ class Selenium2LibraryExtensions(object):
             add_file_path_to_list="${list of screenshots}", output_dir="Screenshots"):
         output_dir_normalized = get_artifacts_dir(output_dir)
 
-        if add_time_stamp:
+        if add_time_stamp == True:
             current_time = " " + DateTime.get_current_date(result_format="%Y.%m.%d_%H.%M.%S")
         else:
             current_time = ""
-        if add_test_case_name:
+        if add_test_case_name == True:
             test_case_name = bi().get_variable_value("${TEST_NAME}")
         else:
             test_case_name = ""
@@ -158,17 +158,22 @@ class Selenium2LibraryExtensions(object):
         bi()._should_be_equal(actual_value, attribute_value_expected, msg, values)
 
     @staticmethod
-    def create_download_dir_profile(path, mimeTypes_file=None):
+    def create_download_dir_profile(path, mimeTypes_file=None, *extentionsFiles):
         fp = FirefoxProfile()
         fp.set_preference("browser.download.folderList", 2)
         fp.set_preference("browser.download.manager.showWhenStarting", False)
         fp.set_preference("browser.download.manager.alertOnEXEOpen", False)
         fp.set_preference("browser.download.dir", os.path.normpath(path))
+        fp.set_preference("xpinstall.signatures.required", False)
         fp.set_preference("browser.helperApps.neverAsk.saveToDisk",
             "application/msword,application/csv,text/csv,image/png ,image/jpeg, application/pdf, text/html,text/plain,application/octet-stream")
         fp.set_preference("browser.helperApps.alwaysAsk.force", False)
         fp.update_preferences()
-        os.mkdir(path)
+
+        for singleExtenation in extentionsFiles:
+            fp.add_extension(singleExtenation)
+        if not os.path.exists(path):
+            os.makedirs(path)
         if mimeTypes_file != None:
             from shutil import copy2
             copy2(os.path.normpath(mimeTypes_file), fp.profile_dir)

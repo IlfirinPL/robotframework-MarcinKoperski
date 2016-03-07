@@ -28,7 +28,7 @@ class TimerKeywords(Time, Date):
     def __int__(self, **kwargs):
         super(TimerKeywords, self).__int__(**kwargs)
 
-    def start_timer(self, timer_name="Global"):
+    def timer_start(self, timer_name="Global"):
         current_time = get_current_time_for_timers()
         logger.info(current_time)
         if timer_name in self.TIMERS_DICTIONARY:
@@ -38,7 +38,7 @@ class TimerKeywords(Time, Date):
         msg = "Timer with name \"%s\" stated at %s" % (timer_name, self.TIMERS_DICTIONARY[timer_name].__str__())
         logger.info(msg)
 
-    def stop_timer(self, timer_name="Global", result_format="number", exclude_millis="True"):
+    def timer_stop(self, timer_name="Global", result_format="number", exclude_millis="True"):
         current_time = get_current_time_for_timers()
         if timer_name not in self.TIMERS_DICTIONARY:
             message = "Time '%s' is not started." % timer_name
@@ -48,12 +48,12 @@ class TimerKeywords(Time, Date):
             del self.TIMERS_DICTIONARY[timer_name]
             return delta
 
-    def restart_timer(self, timer_name="Global", result_format="number", exclude_millis="True"):
+    def timer_restart(self, timer_name="Global", result_format="number", exclude_millis="True"):
         time_results = self.stop_timer(timer_name, result_format, exclude_millis)
         self.start_timer(timer_name)
         return time_results
 
-    def log_timer(self, timer_name="Global", log_level="INFO", result_format="number", exclude_millis="True"):
+    def timer_log(self, timer_name="Global", log_level="INFO", result_format="number", exclude_millis="True"):
         current_time = get_current_time_for_timers()
         if timer_name not in self.TIMERS_DICTIONARY:
             message = "Time '%s' is not started." % timer_name
