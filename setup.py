@@ -31,7 +31,7 @@ setup(
         u'robotframework-sshlibrary>=2.1.1',
         u'robotframework-sudslibrary',
         u'robotframework-appiumlibrary',
-        u'gspread',
+        u'gspread', u'unicodecsv',
         u'oauth2client==1.5.2',
         u'selenium',
         u'robotframework-httplibrary'
