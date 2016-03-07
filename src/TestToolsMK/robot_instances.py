@@ -8,7 +8,7 @@ from robot.libraries.OperatingSystem import OperatingSystem
 __all__ = ('s2l', 'bi', 'dtl', 'osl', 'cl', 'get_artifacts_dir')
 
 
-def get_artifacts_dir(delta_path):
+def get_artifacts_dir(delta_path=""):
     output_path = bi().get_variable_value("${EXECDIR}")
     output_path += "/Artifacts/"
     output_path += delta_path
