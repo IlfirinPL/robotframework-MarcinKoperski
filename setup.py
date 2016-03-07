@@ -32,7 +32,7 @@ setup(
         u'robotframework-sudslibrary',
         u'robotframework-appiumlibrary',
         u'gspread',
-        u'oauth2client',
+        u'oauth2client==1.5.2',
         u'selenium',
         u'robotframework-httplibrary'
         
