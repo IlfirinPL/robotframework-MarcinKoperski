@@ -38,3 +38,11 @@ class LoggerKeywordsExtension(object):
             if os.stat(log_file).st_size < 10:
                 writer_csv.writerow(fieldnames)
             writer_csv.writerow([current_time, suite_name + "." + test_case_name, name, variable_value, comment])
+
+    def set_log_level_none(self):
+        temp = bi().set_log_level("None")
+        bi().set_global_variable("${previous log level}", temp)
+
+    def set_log_level_restore(self):
+        temp = bi().get_variable_value("${previous log level}")
+        bi().set_log_level(temp)
