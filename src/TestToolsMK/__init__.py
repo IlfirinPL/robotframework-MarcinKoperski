@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Copyright (c) 2015 Cutting Edge QA
+from TestToolsMK.csv_keywords import CsvKeywords
 from TestToolsMK.logger_extension import LoggerKeywordsExtension
 from robot.version import VERSION
 from TestToolsMK.collections_keywords import CollectionsKeywordsExtension
@@ -17,7 +18,8 @@ execfile(os.path.join(THIS_DIR, 'version.py'))
 __version__ = VERSION
 
 
-class TestToolsMK(GoogleSheets, Selenium2LibraryExtensions, TimerKeywords, CollectionsKeywordsExtension, ImageMagickKeywords, LoggerKeywordsExtension):
+class TestToolsMK(GoogleSheets, Selenium2LibraryExtensions, TimerKeywords, CollectionsKeywordsExtension, ImageMagickKeywords, LoggerKeywordsExtension,
+    CsvKeywords):
     ROBOT_LIBRARY_SCOPE = 'GLOBAL'
     ROBOT_LIBRARY_VERSION = VERSION
 
