@@ -2,9 +2,12 @@
 # -*- coding: utf-8 -*-
 
 # Copyright (c) 2015 Cutting Edge QA
+import os
 
+import time
 import unicodecsv as csv
 from robot.libraries import DateTime
+from robot.utils import asserts
 
 from robot_instances import *
 
@@ -50,3 +53,13 @@ class CsvKeywords(object):
         extra_list = list(values)
         extra_list.insert(0, current_time)
         self.csv_writer(*extra_list)
+
+    def file_should_not_change(self, filename, time_in_sec="1", msg="File was modify during waiting time"):
+        """
+        Methods check mofifation date if date doesnt change after set time return true
+        Best use with method Wait Until Keyword Succeeds
+        """
+        before = os.stat(filename).st_mtime
+        time.sleep(float(time_in_sec))
+        after = os.stat(filename).st_mtime
+        asserts.assert_equal(before, after, msg, values=False)

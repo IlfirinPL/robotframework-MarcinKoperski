@@ -8,7 +8,7 @@
 
 from setuptools import setup
 
-version = u'0.0.9'
+version = u'0.0.10'
 
 setup(
     name=u'robotframework-MarcinKoperski',
