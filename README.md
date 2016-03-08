@@ -33,15 +33,15 @@ Example
 
 * [Microsoft Visual C++ Compiler for Python 2.7] (http://www.microsoft.com/en-us/download/details.aspx?id=44266 )
 * [Chocolatey](https://chocolatey.org/)
-
+* Python 2.7.X  https://www.python.org/downloads/
 
 
 ## Installation 
 
 best way to setup is to use following commands , skip steps that you already have
 
+
 ```
-choco install python2
 choco install pip
 choco install imagemagick.tool
 setx MAGICK_HOME "C:\ProgramData\chocolatey\lib\imagemagick.tool\tools"
