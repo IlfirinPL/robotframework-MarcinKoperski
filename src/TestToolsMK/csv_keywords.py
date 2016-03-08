@@ -63,3 +63,8 @@ class CsvKeywords(object):
         time.sleep(float(time_in_sec))
         after = os.stat(filename).st_mtime
         asserts.assert_equal(before, after, msg, values=False)
+
+    def append_to_file_at_beginning(self, path, content, encoding="UTF-8"):
+        with file(path, 'r') as original: data = original.read()
+        final_content = content + "\n" + data
+        with file(path, 'w') as modified: modified.write(final_content.encode(encoding))
