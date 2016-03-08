@@ -65,6 +65,13 @@ class CsvKeywords(object):
         asserts.assert_equal(before, after, msg, values=False)
 
     def append_to_file_at_beginning(self, path, content, encoding="UTF-8"):
+        path = osl()._absnorm(path)
+        parent = os.path.dirname(path)
+        if not os.path.exists(parent):
+            os.makedirs(parent)
+        if not os.path.isfile(path):
+            open(path, 'w').close()
         with file(path, 'r') as original: data = original.read()
         final_content = content + "\n" + data
         with file(path, 'w') as modified: modified.write(final_content.encode(encoding))
+        osl()._link("Appended to file begin of file '%s'.", path)
