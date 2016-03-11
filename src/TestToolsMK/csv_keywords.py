@@ -22,8 +22,6 @@ class CsvKeywords(object):
         self.OUTPUT_FILE_CSV = file_name
 
     def append_to_csv(self, filename, *values):
-        """
-        """
         with open(filename, 'ab') as csv_file:
             writer_csv = csv.writer(csv_file, dialect='excel')
             writer_csv.writerow(list(values))
