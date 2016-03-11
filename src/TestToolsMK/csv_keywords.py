@@ -21,20 +21,21 @@ class CsvKeywords(object):
     def csv_set_output_file(self, file_name=OUTPUT_FILE_CSV):
         self.OUTPUT_FILE_CSV = file_name
 
+    def append_to_csv(self, filename, *values):
+        """
+        """
+        with open(filename, 'ab') as csv_file:
+            writer_csv = csv.writer(csv_file, dialect='excel')
+            writer_csv.writerow(list(values))
+
     def csv_writer(self, *values):
         """
         Store to default file records in csv
         ${EXECDIR}/Artifacts/output.csv
         change file name using csv change output file
         """
-
         log_file = get_artifacts_dir() + "/" + self.OUTPUT_FILE_CSV
-
-        with open(log_file, 'ab') as csv_file:
-            writer_csv = csv.writer(csv_file, dialect='excel')
-            # if os.stat(log_file).st_size < 10:
-            # writer_csv.writerow(fieldnames)
-            writer_csv.writerow(list(values))
+        self.append_to_csv(log_file, *values)
 
     def csv_writer_with_extra(self, *values):
         """
