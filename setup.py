@@ -15,13 +15,12 @@ setup(
     version=version,
     description=u'RobotFramework Marcin Koperski bundle',
     author=u'Marcin Koperski',
-    author_email=u'marcin.koperski+github[at].gmail.com',
+    author_email=u'marcin.koperski+github[at].gmail.com', license='AGPL',
     url=u'https://github.com/IlfirinPL/robotframework-MarcinKoperski',
-    download_url=u'https://github.com/IlfirinPL/robotframework-MarcinKoperski/tarball/v{version}'.format(
+    download_url=u'https://github.com/IlfirinPL/robotframework-MarcinKoperski/archive/master.zip'.format(
         version=version),
     keywords=['robotframework', 'pyral'],
-    package_dir={u'': 'src'},
-    packages=['TestToolsMK'], exclude_package_data={'': ['.git', '.git/*', '.idea', '.gitignore']},
+    package_dir={u'': 'src'}, packages=['TestToolsMK'], exclude_package_data={'': ['.git', '.git/*', '.idea', '.gitignore', 'doc/*']},
     install_requires=[
         u'robotframework>=3.0',
         u'robotframework-archivelibrary',
