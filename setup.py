@@ -25,6 +25,7 @@ setup(
     url=u'https://github.com/IlfirinPL/robotframework-MarcinKoperski',
     download_url=u'https://github.com/IlfirinPL/robotframework-MarcinKoperski/archive/master.zip'.format(version=__version__), keywords=['robotframework'],
     package_dir={u'': 'src'}, packages=['TestToolsMK'], exclude_package_data={'': ['.git', '.git/*', '.idea', '.gitignore', 'doc/*', 'atest/*']},
+    package_data={'TestToolsMK': ['VERSION']},
     install_requires=[
         u'robotframework>=3.0',
         u'robotframework-archivelibrary',

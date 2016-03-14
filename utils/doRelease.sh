@@ -19,8 +19,9 @@ chmod +711 generate.py
 ./generate.py
 popd > /dev/null
 
-pause Press any key to continue or Crlt-C to stop
+rm dist/*
 python setup.py sdist
+pause Press any key to continue or Crlt-C to stop
 echo Start Upload
 
 twine upload dist/*
