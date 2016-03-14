@@ -14,14 +14,14 @@ pushd "$BASEDIR" > /dev/null
 
 sudo -H pip install -U .
 
-pushd $BASEDIR/doc > /dev/null
+pushd doc > /dev/null
 chmod +711 generate.py
 ./generate.py
 popd > /dev/null
 
+pause Press any key to continue or Crlt-C to stop
 python setup.py sdist
 echo Start Upload
-pause Press any key to continue or Crlt-C to stop
 
 twine upload dist/*
 echo Upload Finished

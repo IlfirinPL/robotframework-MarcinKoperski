@@ -8,19 +8,23 @@
 
 from setuptools import setup
 
-version = u'0.0.12'
+import sys, os
+
+src_path = os.path.join(os.path.dirname(__file__), 'src')
+sys.path.insert(0, src_path)
+
+__version_file_path__ = os.path.join(src_path, 'TestToolsMK', 'VERSION')
+__version__ = open(__version_file_path__, 'r').read().strip()
+
 
 setup(
-    name=u'robotframework-MarcinKoperski',
-    version=version,
+    name=u'robotframework-MarcinKoperski', version=__version__,
     description=u'RobotFramework Marcin Koperski bundle',
     author=u'Marcin Koperski',
     author_email=u'marcin.koperski+github[at].gmail.com', license='AGPL',
     url=u'https://github.com/IlfirinPL/robotframework-MarcinKoperski',
-    download_url=u'https://github.com/IlfirinPL/robotframework-MarcinKoperski/archive/master.zip'.format(
-        version=version),
-    keywords=['robotframework', 'pyral'],
-    package_dir={u'': 'src'}, packages=['TestToolsMK'], exclude_package_data={'': ['.git', '.git/*', '.idea', '.gitignore', 'doc/*']},
+    download_url=u'https://github.com/IlfirinPL/robotframework-MarcinKoperski/archive/master.zip'.format(version=__version__), keywords=['robotframework'],
+    package_dir={u'': 'src'}, packages=['TestToolsMK'], exclude_package_data={'': ['.git', '.git/*', '.idea', '.gitignore', 'doc/*', 'atest/*']},
     install_requires=[
         u'robotframework>=3.0',
         u'robotframework-archivelibrary',
