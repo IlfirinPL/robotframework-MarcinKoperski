@@ -6,16 +6,27 @@
 | Library        | Dialogs |
 | Library        | Screenshot |
 | Library        | ImapLibrary |
-| Library        | XML | use_lxml=True |
+| Library        | XML |
 | Library        | Process |
 | Library        | ArchiveLibrary |
 | Library        | Selenium2Library |
+| Library        | OperatingSystem |
+
 
 
 | *** Variables *** |
 | &{selenium config} | selenium_timeout=65 s | width=1366 | height=1200 | x=1872 | y=-82 |
 
 | *** Test Cases *** |
+| Logger |
+|    | Set Log Level Restore |
+
+| File list |
+|    | ${list}	| List Files In Directory	| ${EXECDIR} |
+|    | ${info}	| get_file_lines_count |	${list[0]} |
+|    | Log To Console    | ${list[0]} / ${info}              |
+
+
 | Using Timer Example |
 |    | Timer Start |
 |    | Timer Start |
@@ -34,3 +45,4 @@
 |    | Input Text | jquery=div.domtree>form>div:nth-child(1)>div:nth-child(1)>input | test2 |
 |    | Click Element | jquery=div.domtree>form>div:nth-child(3)>select>option:nth-child(3) |
 |    | [Teardown] | Close All Browsers |
+

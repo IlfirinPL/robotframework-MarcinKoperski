@@ -45,4 +45,6 @@ class LoggerKeywordsExtension(object):
 
     def set_log_level_restore(self):
         temp = bi().get_variable_value("${previous log level}")
+        if temp is None:
+            temp = "INFO"
         bi()._context.output.set_log_level(temp)

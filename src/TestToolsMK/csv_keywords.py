@@ -74,3 +74,9 @@ class CsvKeywords(object):
         final_content = content + "\n" + data
         with file(path, 'w') as modified: modified.write(final_content.encode(encoding))
         osl()._link("Appended to file begin of file '%s'.", path)
+
+    def get_file_lines_count(self, path):
+        with open(path) as f:
+            for i, l in enumerate(f):
+                pass
+        return i + 1
