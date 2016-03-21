@@ -11,6 +11,8 @@
 | Library        | ArchiveLibrary |
 | Library        | Selenium2Library |
 | Library        | OperatingSystem |
+| Library        | Collections |
+
 
 
 
@@ -34,6 +36,15 @@
 |    | Sleep | 0.5 |
 |    | Timer Log | small | WARN |
 |    | Timer Stop | small | compact |
+
+
+| List Sort By Number |
+|    | ${to sort} | Create List | 6234 | 723 | 82 | 9 |
+|    | Sort List By Number | ${to sort} |
+|    | Should Be Equal | ${to sort[0]} | 9 |
+
+
+
 
 | Jquery2 Example |
 |    | #PLUGIN CHROME | https://chrome.google.com/webstore/detail/jquery-unique-selector/cmdmlphjbobhblimniofbnlfkmpcjlgd?utm_source=chrome-app-launcher-info-dialog |

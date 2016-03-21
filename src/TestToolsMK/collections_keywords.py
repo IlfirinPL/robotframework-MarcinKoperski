@@ -23,3 +23,9 @@ class CollectionsKeywordsExtension(object):
         :rtype : dict
         """
         return dict(zip(keys, values))
+
+    def sort_list_by_number(self, list_):
+        """Sorts the given list in place.
+
+        """
+        list_.sort(key=float)
