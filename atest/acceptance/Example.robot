@@ -50,7 +50,6 @@
 |    | #PLUGIN CHROME | https://chrome.google.com/webstore/detail/jquery-unique-selector/cmdmlphjbobhblimniofbnlfkmpcjlgd?utm_source=chrome-app-launcher-info-dialog |
 |    | Open Browser Extension | http://codylindley.com/jqueryselectors/ |
 |    | Import JQuery |
-|    | Set Selenium Speed | 0 s |
 |    | Input Text | jquery=textarea.left | edit JQUERY |
 |    | Click Element | jquery=input#radio2 |
 |    | Input Text | jquery=div.domtree>form>div:nth-child(1)>div:nth-child(1)>input | test2 |

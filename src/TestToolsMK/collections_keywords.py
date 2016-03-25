@@ -4,9 +4,9 @@
 # Copyright (c) 2015 Cutting Edge QA
 
 
-class CollectionsKeywordsExtension(object):
+class CollectionsKeywords(object):
     def __int__(self, **kwargs):
-        super(CollectionsKeywordsExtension, self).__int__(**kwargs)
+        super(CollectionsKeywords, self).__int__(**kwargs)
 
     @staticmethod
     def create_dictionary_from_list(table):

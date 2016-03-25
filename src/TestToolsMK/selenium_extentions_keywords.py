@@ -17,7 +17,7 @@ from selenium.webdriver.common.keys import Keys
 from robot.api import logger
 
 
-class Selenium2LibraryExtensions(object):
+class Selenium2LibraryKeywords(object):
     WIDTH_DEFAULT = "1366"
     HEIGHT_DEFAULT = "768"
     SELENIUM_SPEED = "0 sec"
@@ -30,8 +30,8 @@ class Selenium2LibraryExtensions(object):
 
     # noinspection PyArgumentList
     def __init__(self, **kwargs):
-        super(Selenium2LibraryExtensions, self).__init__(**kwargs)
-        for base in Selenium2LibraryExtensions.__bases__:
+        super(Selenium2LibraryKeywords, self).__init__(**kwargs)
+        for base in Selenium2LibraryKeywords.__bases__:
             if hasattr(base, '__init__'):
                 base.__init__(self)
         print "Selenium2LibraryExtensions loaded"

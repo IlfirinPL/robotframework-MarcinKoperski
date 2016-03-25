@@ -11,11 +11,11 @@ from robot.libraries import DateTime
 from robot_instances import *
 
 
-class LoggerKeywordsExtension(object):
+class LoggerKeywords(object):
     OUTPUT_FILE = None
 
     def __init__(self, **kwargs):
-        super(LoggerKeywordsExtension, self).__init__(**kwargs)
+        super(LoggerKeywords, self).__init__(**kwargs)
         self.OUTPUT_FILE = bi().get_variable_value("${EXECDIR}")
 
     @staticmethod

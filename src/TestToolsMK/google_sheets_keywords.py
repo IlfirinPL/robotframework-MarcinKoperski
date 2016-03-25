@@ -9,13 +9,13 @@ import gspread
 from oauth2client.client import SignedJwtAssertionCredentials
 
 
-class GoogleSheets(object):
+class GoogleSheetsKeywords(object):
     SPREADSHEET = None
     WORKSHEET = None
     JSON_KEY = None
 
     def __init__(self, key_json_file=None, google_document_id=None, worksheet_name=None, **kwargs):
-        super(GoogleSheets, self).__init__(**kwargs)
+        super(GoogleSheetsKeywords, self).__init__(**kwargs)
         if key_json_file is not None:
             if google_document_id is not None:
                 self.get_spreadsheet_by_id(key_json_file, google_document_id, worksheet_name)
