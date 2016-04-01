@@ -114,14 +114,7 @@ class Selenium2LibraryKeywords(object):
         s2l().register_keyword_to_run_on_failure(keyword_to_run_on_failure)
         s2l().go_to(url)
 
-    def create_download_dir_capabilities_for_chrome(self, path_to_download, **extentionsFiles):
-        chromeOptions = ChromeOptions()
-        prefs = {"download.default_directory": path_to_download}
-        chromeOptions.add_experimental_option("prefs", prefs)
-        chromeOptions.add_argument("--disable-web-security")
-        for singleExtenation in extentionsFiles:
-            chromeOptions.add_extension(singleExtenation)
-        return chromeOptions.to_capabilities()
+
 
     def import_xpath2(self):
         s2l().execute_javascript(self.XPATH2_JS)
@@ -168,23 +161,47 @@ class Selenium2LibraryKeywords(object):
         bi()._should_be_equal(actual_value, attribute_value_expected, msg, values)
 
     @staticmethod
-    def create_download_dir_profile_for_firefox(path, mimeTypes_file=None, *extentionsFiles):
+    def create_download_dir_profile_for_firefox(path_to_download, mimeTypes_file=None, *extentionsFiles):
+        """
+        Example use
+        | ${profile} | create_download_dir_profile_for_firefox | ${EXECDIR}/Artifacts | ${EXECDIR}/Resources/mimeTypes.rdf | ${EXECDIR}/Resources/webdriver_element_locator-2.0-fx.xpi | ${EXECDIR}/Resources/selenium_ide-2.9.1-fx.xpi |
+        | Open Browser Extension | https://support.spatialkey.com/spatialkey-sample-csv-data/ | ff_profile_dir=${profile} |
+        | Click Element | //a[contains(@href,'sample.csv.zip')]  |
+        """
+        if not os.path.exists(path_to_download):
+            os.makedirs(path_to_download)
+
         fp = FirefoxProfile()
         fp.set_preference("browser.download.folderList", 2)
         fp.set_preference("browser.download.manager.showWhenStarting", False)
         fp.set_preference("browser.download.manager.alertOnEXEOpen", False)
-        fp.set_preference("browser.download.dir", os.path.normpath(path))
+        fp.set_preference("browser.download.dir", os.path.normpath(path_to_download))
         fp.set_preference("xpinstall.signatures.required", False)
         fp.set_preference("browser.helperApps.neverAsk.saveToDisk",
             "application/msword,application/csv,text/csv,image/png ,image/jpeg, application/pdf, text/html,text/plain,application/octet-stream")
         fp.set_preference("browser.helperApps.alwaysAsk.force", False)
         fp.update_preferences()
-
         for singleExtenation in extentionsFiles:
             fp.add_extension(singleExtenation)
-        if not os.path.exists(path):
-            os.makedirs(path)
         if mimeTypes_file != None:
             from shutil import copy2
             copy2(os.path.normpath(mimeTypes_file), fp.profile_dir)
         return fp.profile_dir
+
+    def create_download_dir_capabilities_for_chrome(self, path_to_download, **extentionsFiles):
+        """
+        Example use
+        | ${capabilities} |	chrome_capabilities	| ${EXECDIR}\\Artifacts
+        | Open Browser Extension | https://support.spatialkey.com/spatialkey-sample-csv-data/ |	gc | desired_capabilities=${capabilities} |
+        | Click Element	 | //a[contains(@href,'sample.csv.zip')] |
+        """
+        if not os.path.exists(path_to_download):
+            os.makedirs(path_to_download)
+
+        chromeOptions = ChromeOptions()
+        prefs = {"download.default_directory": path_to_download}
+        chromeOptions.add_experimental_option("prefs", prefs)
+        chromeOptions.add_argument("--disable-web-security")
+        for singleExtenation in extentionsFiles:
+            chromeOptions.add_extension(singleExtenation)
+        return chromeOptions.to_capabilities()
