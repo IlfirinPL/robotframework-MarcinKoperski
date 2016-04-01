@@ -55,7 +55,7 @@ class CsvKeywords(object):
 
     def file_should_not_change(self, filename, time_in_sec="1", msg="File was modify during waiting time"):
         """
-        Methods check mofifation date if date doesnt change after set time return true
+        Methods check mofifation date date if date doesnt change after set time return true
         Best use with method Wait Until Keyword Succeeds
         """
         before = os.stat(filename).st_mtime

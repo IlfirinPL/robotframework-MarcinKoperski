@@ -45,7 +45,6 @@
 
 
 
-
 | Jquery2 Example |
 |    | #PLUGIN CHROME | https://chrome.google.com/webstore/detail/jquery-unique-selector/cmdmlphjbobhblimniofbnlfkmpcjlgd?utm_source=chrome-app-launcher-info-dialog |
 |    | Open Browser Extension | http://codylindley.com/jqueryselectors/ |
