@@ -21,7 +21,8 @@ class CsvKeywords(object):
     def csv_set_output_file(self, file_name=OUTPUT_FILE_CSV):
         self.OUTPUT_FILE_CSV = file_name
 
-    def append_to_csv(self, filename, *values):
+    @staticmethod
+    def append_to_csv(filename, *values):
         with open(filename, 'ab') as csv_file:
             writer_csv = csv.writer(csv_file, dialect='excel')
             writer_csv.writerow(list(values))
@@ -53,7 +54,8 @@ class CsvKeywords(object):
         extra_list.insert(0, current_time)
         self.csv_writer(*extra_list)
 
-    def file_should_not_change(self, filename, time_in_sec="1", msg="File was modify during waiting time"):
+    @staticmethod
+    def file_should_not_change(filename, time_in_sec="1", msg="File was modify during waiting time"):
         """
         Methods check mofifation date date if date doesnt change after set time return true
         Best use with method Wait Until Keyword Succeeds
@@ -63,19 +65,21 @@ class CsvKeywords(object):
         after = os.stat(filename).st_mtime
         asserts.assert_equal(before, after, msg, values=False)
 
-    def append_to_file_at_beginning(self, path, content, encoding="UTF-8"):
+    @staticmethod
+    def append_to_file_at_beginning(path, content, encoding="UTF-8"):
         path = osl()._absnorm(path)
         parent = os.path.dirname(path)
         if not os.path.exists(parent):
             os.makedirs(parent)
         if not os.path.isfile(path):
             open(path, 'w').close()
-        with file(path, 'r') as original: data = original.read()
+        with open(path, 'r') as original: data = original.read()
         final_content = content + "\n" + data
-        with file(path, 'w') as modified: modified.write(final_content.encode(encoding))
+        with open(path, 'w') as modified: modified.write(final_content.encode(encoding))
         osl()._link("Appended to file begin of file '%s'.", path)
 
-    def get_file_lines_count(self, path):
+    @staticmethod
+    def get_file_lines_count(path):
         with open(path) as f:
             for i, l in enumerate(f):
                 pass

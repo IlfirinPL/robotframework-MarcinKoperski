@@ -15,7 +15,7 @@ class LoggerKeywords(object):
     OUTPUT_FILE = None
 
     def __init__(self, **kwargs):
-        super(LoggerKeywords, self).__init__(**kwargs)
+        super(LoggerKeywords, self).__init__(self, **kwargs)
         self.OUTPUT_FILE = bi().get_variable_value("${EXECDIR}")
 
     @staticmethod
@@ -39,11 +39,13 @@ class LoggerKeywords(object):
                 writer_csv.writerow(fieldnames)
             writer_csv.writerow([current_time, suite_name + "." + test_case_name, name, variable_value, comment])
 
-    def set_log_level_none(self):
+    @staticmethod
+    def set_log_level_none():
         temp = bi()._context.output.set_log_level("None")
         bi().set_global_variable("${previous log level}", temp)
 
-    def set_log_level_restore(self):
+    @staticmethod
+    def set_log_level_restore():
         temp = bi().get_variable_value("${previous log level}")
         if temp is None:
             temp = "INFO"

@@ -3,6 +3,7 @@
 
 # Copyright (c) 2015 Cutting Edge QA
 
+from __future__ import print_function
 import json
 import re
 import gspread
@@ -15,7 +16,7 @@ class GoogleSheetsKeywords(object):
     JSON_KEY = None
 
     def __init__(self, key_json_file=None, google_document_id=None, worksheet_name=None, **kwargs):
-        super(GoogleSheetsKeywords, self).__init__(**kwargs)
+        super(GoogleSheetsKeywords, self).__init__(self, **kwargs)
         if key_json_file is not None:
             if google_document_id is not None:
                 self.get_spreadsheet_by_id(key_json_file, google_document_id, worksheet_name)
@@ -46,7 +47,7 @@ class GoogleSheetsKeywords(object):
     def find_cell_using_regex(self, regex):
         """Return password for provided login, rise error when login is missing"""
         pattern = r'%s' % regex
-        print pattern
+        print(pattern)
         amount_re = re.compile(pattern)
         return self.WORKSHEET.find(amount_re)
 

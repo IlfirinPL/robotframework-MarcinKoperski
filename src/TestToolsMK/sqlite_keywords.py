@@ -13,6 +13,9 @@ import sqlite3
 
 
 class SQLITE_Keywords(object):
+    conn = None
+    cursor = None
+
     def open_database_sqlite_file(self, path, **kwargs):
         """
         connect(database[, timeout, isolation_level, detect_types, factory])
@@ -37,20 +40,15 @@ class SQLITE_Keywords(object):
 
     def execute_sql_string_sqlite(self, sqlString):
         self.cursor.execute(sqlString)
-        temp = self.cursor.fetchall();
+        temp = self.cursor.fetchall()
         self.conn.commit()
         return temp
 
     def execute_sql_string_script_sqlite(self, sqlScriptString):
         self.cursor.executescript(sqlScriptString)
-        temp = self.cursor.fetchall();
+        temp = self.cursor.fetchall()
         self.conn.commit()
         return temp
-
-    def save_database_sqlite_to_file(self, path):
-        self.cursor(".save "+path)
-
-
 
     def disconnect_database_sqlite(self):
         self.conn.close()

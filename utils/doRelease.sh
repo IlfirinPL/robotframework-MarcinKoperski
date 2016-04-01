@@ -13,7 +13,7 @@ pushd "$BASEDIR"
 pwd
 ./utils/generateReport.sh
 
-rm $BASEDIR/dist/*
+rm ${BASEDIR}/dist/*
 python setup.py sdist
 pause Press any key to continue or Crlt-C to stop
 echo Start Upload

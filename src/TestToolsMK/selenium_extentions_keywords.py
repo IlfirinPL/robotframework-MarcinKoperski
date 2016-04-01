@@ -35,7 +35,7 @@ class Selenium2LibraryKeywords(object):
         for base in Selenium2LibraryKeywords.__bases__:
             if hasattr(base, '__init__'):
                 base.__init__(self)
-        print "Selenium2LibraryExtensions loaded"
+        print ("Selenium2LibraryExtensions loaded")
 
     @staticmethod
     def open_new_tab(url):
@@ -183,15 +183,17 @@ class Selenium2LibraryKeywords(object):
         fp.update_preferences()
         for singleExtenation in extentionsFiles:
             fp.add_extension(singleExtenation)
-        if mimeTypes_file != None:
+        if mimeTypes_file is not None:
             from shutil import copy2
             copy2(os.path.normpath(mimeTypes_file), fp.profile_dir)
+        logger.info("Firefox Profile Created in dir" + fp.profile_dir)
         return fp.profile_dir
 
-    def create_download_dir_capabilities_for_chrome(self, path_to_download, **extentionsFiles):
+    @staticmethod
+    def create_download_dir_capabilities_for_chrome(path_to_download, **extentionsFiles):
         """
         Example use
-        | ${capabilities} |	chrome_capabilities	| ${EXECDIR}\\Artifacts
+        | ${capabilities} |	create_download_dir_capabilities_for_chrome	| ${EXECDIR}\\Artifacts
         | Open Browser Extension | https://support.spatialkey.com/spatialkey-sample-csv-data/ |	gc | desired_capabilities=${capabilities} |
         | Click Element	 | //a[contains(@href,'sample.csv.zip')] |
         """

@@ -6,7 +6,12 @@
 import os
 import subprocess
 import os.path
-import urlparse
+
+try:
+    from urlparse import urlparse
+except ImportError:
+    from urllib.parse import urlparse
+
 import urllib
 from robot.api import logger
 
@@ -16,8 +21,8 @@ class ImageMagickKeywords(object):
     def MAGICK_HOME(self):
         try:
             return os.environ['MAGICK_HOME']
-        except:
-            message = "Missing system variable 'MAGICK_HOME'"
+        except os.error as e:
+            message = "Missing system variable 'MAGICK_HOME'" + e
             logger.warn(message)
             return message
 
@@ -25,24 +30,24 @@ class ImageMagickKeywords(object):
     def COMPARE_PATH(self):
         try:
             return os.path.normpath(self.MAGICK_HOME + "\\" + "compare.exe")
-        except:
-            logger.warn("Missing file compare.exe")
+        except os.error as e:
+            logger.warn("Missing file compare.exe" + e)
             return "missing"
 
     @property
     def IDENTIFY_PATH(self):
         try:
             return os.path.normpath(self.MAGICK_HOME + "\\" + "identify.exe")
-        except:
-            logger.warn("Missing file identify.exe")
+        except os.error as e:
+            logger.warn("Missing file identify.exe" + e)
             return "missing"
 
     @property
     def CONVERT_PATH(self):
         try:
             return os.path.normpath(self.MAGICK_HOME + "\\" + "convert.exe")
-        except:
-            logger.warn("Missing file convert.exe")
+        except os.error as e:
+            logger.warn("Missing file convert.exe" + e)
             return "missing"
 
     def __int__(self, **kwargs):
@@ -79,7 +84,7 @@ class ImageMagickKeywords(object):
             logger.info("stdout \t:" + str(output[0]))
             logger.info("stderr \t:" + str(output[1]))
 
-        except OSError, e:
+        except OSError as e:
             logger.error(e)
 
     def _compare_image_files(self, file_1_path, file_2_path, gif_file_path=None, delta_file_path=None, metric="RMSE", embedded_gif=True, embedded_delta=False,
@@ -187,7 +192,7 @@ class ImageMagickKeywords(object):
             # logger.info("file Name \t:" + file_name+str(output))
             table_results = output[0].split()
             return table_results[0], table_results[1]
-        except OSError, e:
+        except OSError as e:
             logger.error(e)
 
     def _resize_file(self, file_path_normalized, width, height):

@@ -24,7 +24,8 @@ class CollectionsKeywords(object):
         """
         return dict(zip(keys, values))
 
-    def sort_list_by_number(self, list_):
+    @staticmethod
+    def sort_list_by_number(list_):
         """Sorts the given list in place.
 
         """
