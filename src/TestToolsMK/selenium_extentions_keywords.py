@@ -8,7 +8,8 @@ from robot.libraries import DateTime
 from robot.libraries.BuiltIn import BuiltIn
 from robot.libraries.Collections import Collections
 from robot.libraries.OperatingSystem import OperatingSystem
-from selenium.webdriver import ActionChains, FirefoxProfile
+from selenium.webdriver import ActionChains, FirefoxProfile, ChromeOptions, Chrome, DesiredCapabilities
+from selenium.webdriver.chrome import webdriver
 from selenium.webdriver.common.by import By
 from robot_instances import *
 import os
@@ -24,7 +25,7 @@ class Selenium2LibraryKeywords(object):
     SELENIUM_TEST_BROWSER = "ff"
     SELENIUM_TIMEOUT = "5 s"
     # noinspection PyPep8
-    XPATH2_JS = 'if(!window.jQuery){var headID = document.getElementsByTagName("head")[0]; var newScript = document.createElement(\'script\'); newScript.type=\'text/javascript\'; newScript.src=\'http://code.jquery.com/jquery-2.1.4.min.js\'; headID.appendChild(newScript);}'
+    XPATH2_JS = 'if(!window.jQuery){var headID = document.getElementsByTagName("head")[0]; var newScript = document.createElement(\'script\'); newScript.type=\'text/javascript\'; newScript.src=\'http://llamalab.com/js/xpath/minified/XPath.js\'; headID.appendChild(newScript);}'
     # noinspection PyPep8
     JQUERY_JS = "if(!window.jQuery){var headID = document.getElementsByTagName(\"head\")[0]; var newScript = document.createElement('script'); newScript.type='text/javascript'; newScript.src='http://code.jquery.com/jquery-2.1.4.min.js'; headID.appendChild(newScript);}"
 
@@ -113,6 +114,15 @@ class Selenium2LibraryKeywords(object):
         s2l().register_keyword_to_run_on_failure(keyword_to_run_on_failure)
         s2l().go_to(url)
 
+    def create_download_dir_capabilities_for_chrome(self, path_to_download, **extentionsFiles):
+        chromeOptions = ChromeOptions()
+        prefs = {"download.default_directory": path_to_download}
+        chromeOptions.add_experimental_option("prefs", prefs)
+        chromeOptions.add_argument("--disable-web-security")
+        for singleExtenation in extentionsFiles:
+            chromeOptions.add_extension(singleExtenation)
+        return chromeOptions.to_capabilities()
+
     def import_xpath2(self):
         s2l().execute_javascript(self.XPATH2_JS)
 
@@ -121,8 +131,8 @@ class Selenium2LibraryKeywords(object):
         s2l().execute_javascript(self.JQUERY_JS)
 
     @staticmethod
-    def capture_page_screenshot_extension(prefix="", postfix="", add_time_stamp=True, add_test_case_name=True,
-            add_file_path_to_list="${list of screenshots}", output_dir="Screenshots"):
+    def capture_page_screenshot_extension(prefix="", postfix="", add_time_stamp=True, add_test_case_name=True, add_file_path_to_list="${list of screenshots}",
+            output_dir="Screenshots"):
         output_dir_normalized = get_artifacts_dir(output_dir)
 
         if add_time_stamp == True:
@@ -158,7 +168,7 @@ class Selenium2LibraryKeywords(object):
         bi()._should_be_equal(actual_value, attribute_value_expected, msg, values)
 
     @staticmethod
-    def create_download_dir_profile(path, mimeTypes_file=None, *extentionsFiles):
+    def create_download_dir_profile_for_firefox(path, mimeTypes_file=None, *extentionsFiles):
         fp = FirefoxProfile()
         fp.set_preference("browser.download.folderList", 2)
         fp.set_preference("browser.download.manager.showWhenStarting", False)
