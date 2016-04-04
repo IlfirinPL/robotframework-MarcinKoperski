@@ -6,21 +6,45 @@
 import os
 import subprocess
 import os.path
+import platform
 
 try:
-    from urlparse import urlparse
-except ImportError:
-    from urllib.parse import urlparse
+    from urlparse import urljoin
+except ImportError:  # python3
+    from urllib.parse import urljoin
 
 import urllib
 from robot.api import logger
 
 
 class ImageMagickKeywords(object):
+    def __init__(self):
+        if os.path.isfile(self.get_convert_path):
+            logger.debug("Convert file exits path, path used :" + self.get_convert_path)
+        else:
+            message = "Missing file convert.exe"
+            logger.debug(message)
+
+        if os.path.isfile(self.get_compare_path):
+            logger.debug("Compare file exits , path used :" + self.get_compare_path)
+        else:
+            message = "Missing file compare.exe"
+            logger.debug(message)
+
+        if os.path.isfile(self.get_identify_path):
+            logger.debug("Identify file exits, path used :" + self.get_identify_path)
+        else:
+            message = "Missing file identify.exe"
+            logger.debug(message)
+
     @property
     def get_magick_home(self):
         try:
-            return os.environ['MAGICK_HOME']
+            if platform.system() == "Windows":
+                return os.environ['MAGICK_HOME']
+            if platform.system() == "Linux":
+                return "/usr/bin/"
+
         except os.error as e:
             message = "Missing system variable 'MAGICK_HOME'" + e
             logger.warn(message)
@@ -29,23 +53,34 @@ class ImageMagickKeywords(object):
     @property
     def get_compare_path(self):
         try:
-            return os.path.normpath(self.get_magick_home + "\\" + "compare.exe")
+            if platform.system() == "Windows":
+                return os.path.normpath(self.get_magick_home + "\\" + "compare.exe")
+            if platform.system() == "Linux":
+                return os.path.normpath("/usr/bin/compare")
         except os.error as e:
-            logger.warn("Missing file compare.exe" + e)
+            logger.warn("Missing file compare" + e)
             return "missing"
 
     @property
     def get_identify_path(self):
         try:
-            return os.path.normpath(self.get_magick_home + "\\" + "identify.exe")
+            if platform.system() == "Windows":
+                return os.path.normpath(self.get_magick_home + "\\" + "identify.exe")
+            if platform.system() == "Linux":
+                return os.path.normpath("/usr/bin/identify")
+
         except os.error as e:
-            logger.warn("Missing file identify.exe" + e)
+            logger.warn("Missing file identify" + e)
             return "missing"
 
     @property
     def get_convert_path(self):
         try:
-            return os.path.normpath(self.get_magick_home + "\\" + "convert.exe")
+            if platform.system() == "Windows":
+                return os.path.normpath(self.get_magick_home + "\\" + "convert.exe")
+            if platform.system() == "Linux":
+                return os.path.normpath("/usr/bin/convert")
+
         except os.error as e:
             logger.warn("Missing file convert.exe" + e)
             return "missing"
@@ -173,7 +208,7 @@ class ImageMagickKeywords(object):
 
     @staticmethod
     def _embed_screenshot(path, level="INFO", width="800px"):
-        link = urlparse.urljoin('file:', urllib.pathname2url(os.path.normpath(path)))
+        link = urljoin('file:', urllib.pathname2url(os.path.normpath(path)))
         logger.write('<a href="%s"><img src="%s" width="%s"></a>' % (link, link, width), level, html=True)
 
     def _get_info_for_image(self, file_name):

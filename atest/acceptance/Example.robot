@@ -13,9 +13,6 @@
 | Library        | OperatingSystem |
 | Library        | Collections |
 
-
-
-
 | *** Variables *** |
 | &{selenium config} | selenium_timeout=65 s | width=1366 | height=1200 | x=1872 | y=-82 |
 
@@ -24,10 +21,9 @@
 |    | Set Log Level Restore |
 
 | File list |
-|    | ${list}	| List Files In Directory	| ${EXECDIR} |
-|    | ${info}	| get_file_lines_count |	${list[0]} |
-|    | Log To Console    | ${list[0]} / ${info}              |
-
+|    | ${list} | List Files In Directory | ${EXECDIR} |
+|    | ${info} | Get File Lines Count | ${list[0]} |
+|    | Log To Console | ${list[0]} / ${info} |
 
 | Using Timer Example |
 |    | Timer Start |
@@ -36,14 +32,12 @@
 |    | Sleep | 0.5 |
 |    | Timer Log | small | WARN |
 |    | Timer Stop | small | compact |
-
+|    | Timer Should Be Lesser Then | 1 |
 
 | List Sort By Number |
 |    | ${to sort} | Create List | 6234 | 723 | 82 | 9 |
 |    | Sort List By Number | ${to sort} |
 |    | Should Be Equal | ${to sort[0]} | 9 |
-
-
 
 | Jquery2 Example |
 |    | #PLUGIN CHROME | https://chrome.google.com/webstore/detail/jquery-unique-selector/cmdmlphjbobhblimniofbnlfkmpcjlgd?utm_source=chrome-app-launcher-info-dialog |
@@ -55,3 +49,12 @@
 |    | Click Element | jquery=div.domtree>form>div:nth-child(3)>select>option:nth-child(3) |
 |    | [Teardown] | Close All Browsers |
 
+| Compare images |
+|    | [Tags] | WIN |
+|    | Open Browser Extension | http://www.google.pl |
+|    | ${name a} | Capture Page Screenshot Extension |
+|    | Go To | http://www.google.com |
+|    | ${name b} | Capture Page Screenshot Extension |
+|    | ${status} | Run Keyword And Return Status | Image Should Be Difference Less Then | ${name a} | ${name b} | 1 |
+|    | Should Be Equal As Strings | ${status} | False |
+|    | [Teardown] | Close All Browsers |

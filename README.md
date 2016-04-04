@@ -40,7 +40,7 @@ Example
 
 best way to setup is to use following commands , skip steps that you already have
 
-
+windows
 ```
 choco install pip
 choco install imagemagick.tool
@@ -49,6 +49,15 @@ setx MAGICK_HOME "C:\ProgramData\chocolatey\lib\imagemagick.tool\tools"
 pip install robotframework
 pip install robotframework-MarcinKoperski
 ```
+
+linux
+```
+sudo apt-get install imagemagick
+sudo pip install robotframework
+sudo pip install robotframework-MarcinKoperski
+```
+
+ 
 
 to install latest
 
