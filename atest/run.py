@@ -29,6 +29,7 @@ $ atest/run.py /opt/jython27/bin/jython atest/robot/tags/tag_doc.robot
 """
 
 from __future__ import print_function
+
 import os
 import shutil
 import signal

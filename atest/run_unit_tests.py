@@ -1,7 +1,9 @@
-import env
-import os, sys
+import sys
 import unittest
+
 from Selenium2Library import utils
+
+import env
 
 
 def run_unit_tests(modules_to_run=[]):

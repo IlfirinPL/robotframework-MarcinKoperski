@@ -1,7 +1,8 @@
 import unittest
+
 from Selenium2Library.keywords._browsermanagement import _BrowserManagementKeywords
-from selenium import webdriver
 from mockito import *
+from selenium import webdriver
 
 
 class BrowserManagementTests(unittest.TestCase):

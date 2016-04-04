@@ -6,9 +6,10 @@
 
 """Setup script for Robot's Marcin Koperski bundle distributions"""
 
-from setuptools import setup
+import os
+import sys
 
-import sys, os
+from setuptools import setup
 
 src_path = os.path.join(os.path.dirname(__file__), 'src')
 sys.path.insert(0, src_path)

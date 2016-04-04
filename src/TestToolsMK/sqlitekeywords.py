@@ -3,16 +3,10 @@
 
 # Copyright (c) 2015 Cutting Edge QA
 
-import csv
-import os
-
-from robot.libraries import DateTime
-
-from robot_instances import *
 import sqlite3
 
 
-class SQLITE_Keywords(object):
+class SQLiteKeywords(object):
     conn = None
     cursor = None
 

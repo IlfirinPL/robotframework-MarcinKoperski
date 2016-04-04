@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
-import env
 import os
 import sys
 from subprocess import Popen, call
 from tempfile import TemporaryFile
 
+import env
 from run_unit_tests import run_unit_tests
 
 ROBOT_ARGS = ['--doc', 'SeleniumSPacceptanceSPtestsSPwithSP%(browser)s', '--outputdir', '%(outdir)s', '--variable', 'browser:%(browser)s', '--variable',

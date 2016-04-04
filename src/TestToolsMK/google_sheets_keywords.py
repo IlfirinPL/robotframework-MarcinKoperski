@@ -4,8 +4,10 @@
 # Copyright (c) 2015 Cutting Edge QA
 
 from __future__ import print_function
+
 import json
 import re
+
 import gspread
 from oauth2client.client import SignedJwtAssertionCredentials
 

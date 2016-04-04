@@ -3,8 +3,8 @@
 
 # Copyright (c) 2015 Cutting Edge QA
 import os
-
 import time
+
 import unicodecsv as csv
 from robot.libraries import DateTime
 from robot.utils import asserts
@@ -64,7 +64,7 @@ class CsvKeywords(object):
 
     @staticmethod
     def append_to_file_at_beginning(path, content, encoding="UTF-8"):
-        path = osl()._absnorm(path)
+        path = os.path.abspath(path)
         parent = os.path.dirname(path)
         if not os.path.exists(parent):
             os.makedirs(parent)
@@ -80,4 +80,5 @@ class CsvKeywords(object):
         with open(path) as f:
             for i, l in enumerate(f):
                 pass
+            # noinspection PyUnboundLocalVariable
             return i + 1

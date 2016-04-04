@@ -1,5 +1,5 @@
 import unittest
-import os
+
 from Selenium2Library.utils import BrowserCache
 from mockito import *
 

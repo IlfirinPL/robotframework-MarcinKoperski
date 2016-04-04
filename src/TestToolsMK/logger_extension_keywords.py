@@ -6,10 +6,10 @@
 import csv
 import os
 
+from robot.api import logger
 from robot.libraries import DateTime
 
 from robot_instances import *
-from robot.api import logger
 
 
 class LoggerKeywords(object):
@@ -40,11 +40,13 @@ class LoggerKeywords(object):
                 writer_csv.writerow(fieldnames)
             writer_csv.writerow([current_time, suite_name + "." + test_case_name, name, variable_value, comment])
 
+    # noinspection PyProtectedMember
     @staticmethod
     def set_log_level_none():
         temp = bi()._context.output.set_log_level("None")
         bi().set_global_variable("${previous log level}", temp)
 
+    # noinspection PyProtectedMember
     @staticmethod
     def set_log_level_restore():
         temp = bi().get_variable_value("${previous log level}")

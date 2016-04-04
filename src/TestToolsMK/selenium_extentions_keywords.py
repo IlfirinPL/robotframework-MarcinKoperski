@@ -2,20 +2,16 @@
 # -*- coding: utf-8 -*-
 
 # Copyright (c) 2015 Cutting Edge QA
-import time
-from Selenium2Library import Selenium2Library
-from robot.libraries import DateTime
-from robot.libraries.BuiltIn import BuiltIn
-from robot.libraries.Collections import Collections
-from robot.libraries.OperatingSystem import OperatingSystem
-from selenium.webdriver import ActionChains, FirefoxProfile, ChromeOptions, Chrome, DesiredCapabilities
-from selenium.webdriver.chrome import webdriver
-from selenium.webdriver.common.by import By
-from robot_instances import *
 import os
 import os.path
-from selenium.webdriver.common.keys import Keys
+import time
+
 from robot.api import logger
+from robot.libraries import DateTime
+from selenium.webdriver import FirefoxProfile, ChromeOptions
+from selenium.webdriver.common.keys import Keys
+
+from robot_instances import *
 
 
 class Selenium2LibraryKeywords(object):

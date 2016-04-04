@@ -4,13 +4,15 @@
 # Copyright (c) 2015 Cutting Edge QA
 
 import os
-import subprocess
 import os.path
 import platform
+import subprocess
 
 try:
+    # noinspection PyCompatibility
     from urlparse import urljoin
 except ImportError:  # python3
+    # noinspection PyCompatibility,PyUnresolvedReferences
     from urllib.parse import urljoin
 
 import urllib

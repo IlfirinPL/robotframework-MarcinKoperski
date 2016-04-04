@@ -3,23 +3,17 @@
 
 # Copyright (c) 2015 Cutting Edge QA
 
-import os
-import robot
-from robot.libraries.BuiltIn import BuiltIn
-import robot.libraries.DateTime
-from robot.libraries.DateTime import Time
-from robot.libraries.DateTime import Date
-from robot.api import logger
-from datetime import datetime, timedelta
-import time
-import re
 import datetime
-from robot.version import get_version
-from robot.utils import (elapsed_time_to_string, is_falsy, is_number, is_string, secs_to_timestr, timestr_to_secs, type_name, IRONPYTHON)
+from datetime import datetime
+
+from robot.api import logger
+from robot.libraries.DateTime import Date
+from robot.libraries.DateTime import Time
+from robot.utils import (is_falsy)
 
 
 def get_current_time_for_timers():
-    return datetime.datetime.now()
+    return datetime.now()
 
 
 class TimerKeywords(Time, Date):
@@ -46,8 +40,8 @@ class TimerKeywords(Time, Date):
             return delta
 
     def timer_restart(self, timer_name="Global", result_format="number", exclude_millis="True"):
-        time_results = self.stop_timer(timer_name, result_format, exclude_millis)
-        self.start_timer(timer_name)
+        time_results = self.timer_stop(timer_name, result_format, exclude_millis)
+        self.timer_start(timer_name)
         return time_results
 
     def timer_log(self, timer_name="Global", log_level="INFO", result_format="number", exclude_millis="True"):

@@ -1,8 +1,8 @@
 import unittest
-import os
+import uuid
+
 from Selenium2Library.locators import WindowManager
 from mockito import *
-import uuid
 from selenium.common.exceptions import NoSuchWindowException
 
 

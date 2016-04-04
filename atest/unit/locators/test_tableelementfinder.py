@@ -1,4 +1,5 @@
 import unittest
+
 from Selenium2Library.locators import TableElementFinder
 from mockito import *
 
