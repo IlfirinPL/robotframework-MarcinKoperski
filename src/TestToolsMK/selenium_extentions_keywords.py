@@ -164,9 +164,10 @@ class Selenium2LibraryKeywords(object):
         fp.set_preference("browser.download.manager.alertOnEXEOpen", False)
         fp.set_preference("browser.download.dir", os.path.normpath(path_to_download))
         fp.set_preference("xpinstall.signatures.required", False)
-        fp.set_preference("browser.helperApps.neverAsk.saveToDisk",
-            "application/msword,application/csv,text/csv,image/png ,image/jpeg, application/pdf, text/html,text/plain,application/octet-stream")
         fp.set_preference("browser.helperApps.alwaysAsk.force", False)
+        fp.set_preference("browser.helperApps.neverAsk.saveToDisk",
+            "application/msword;application/csv;text/csv;image/png;image/jpeg;application/pdf;text/html;text/plain;application/octet-stream")
+        fp.set_preference("pdfjs.disabled", True)
         fp.update_preferences()
         for single_extension in extensions_files:
             fp.add_extension(single_extension)
@@ -187,10 +188,11 @@ class Selenium2LibraryKeywords(object):
         if not os.path.exists(path_to_download):
             os.makedirs(path_to_download)
 
-        chromeOptions = ChromeOptions()
-        prefs = {"download.default_directory": path_to_download}
-        chromeOptions.add_experimental_option("prefs", prefs)
-        chromeOptions.add_argument("--disable-web-security")
+        chrome_options = ChromeOptions()
+        prefs = {"download.default_directory": path_to_download, "directory_upgrade": "true"}
+
+        chrome_options.add_experimental_option("prefs", prefs)
+        chrome_options.add_argument("--disable-web-security")
         for single_extension in extensions_files:
-            chromeOptions.add_extension(single_extension)
-        return chromeOptions.to_capabilities()
+            chrome_options.add_extension(single_extension)
+        return chrome_options.to_capabilities()
