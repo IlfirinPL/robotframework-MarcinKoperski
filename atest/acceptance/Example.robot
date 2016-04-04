@@ -59,7 +59,7 @@
 |    | Should Be Equal As Strings | ${status} | False |
 |    | [Teardown] | Close All Browsers |
 
-| Download To Folder |
+| Download To Folder GC |
 |    | ${path} | Set Variable | ${TEMPDIR}/Artifacts/download |
 |    | Create Directory | ${path} |
 |    | ${path} | Normalize Path | ${path} |
@@ -68,6 +68,20 @@
 |    | Remove File | ${path}/menuexcel.xls |
 |    | Open Browser Extension | http://www.lancsngfl.ac.uk/cmsmanual/index.php?category_id=14 | gc | desired_capabilities=${capabilities} | remote_url=http://127.0.0.1:4444/wd/hub |
 |    | Click Element | //a[contains(.,'.xls - an Excel spreadsheet file')] |
+|    | Wait Until Keyword Succeeds | 10 | 1 | File Should Not Change | ${path}/menuexcel.xls |
+|    | File Should Not Be Empty | ${path}/menuexcel.xls |
+|    | [Teardown] | Close All Browsers |
+
+| Download To Folder FF |
+|    | ${path} | Set Variable | ${TEMPDIR}/Artifacts/download |
+|    | Create Directory | ${path} |
+|    | ${path} | Normalize Path | ${path} |
+|    | ${capabilities} | Create Download Dir Profile For Firefox | ${path} |
+|    | Log | ${capabilities} |
+|    | Remove File | ${path}/menuexcel.xls |
+|    | Open Browser Extension | http://www.lancsngfl.ac.uk/cmsmanual/index.php?category_id=14 | ff | ff_profile_dir=${capabilities} |
+|    | Click Element | //a[contains(.,'.xls - an Excel spreadsheet file')] |
+|    | Pause Execution |
 |    | Wait Until Keyword Succeeds | 10 | 1 | File Should Not Change | ${path}/menuexcel.xls |
 |    | File Should Not Be Empty | ${path}/menuexcel.xls |
 |    | [Teardown] | Close All Browsers |

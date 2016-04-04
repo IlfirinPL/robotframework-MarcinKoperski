@@ -164,9 +164,10 @@ class Selenium2LibraryKeywords(object):
         fp.set_preference("browser.download.manager.alertOnEXEOpen", False)
         fp.set_preference("browser.download.dir", os.path.normpath(path_to_download))
         fp.set_preference("xpinstall.signatures.required", False)
-        fp.set_preference("browser.helperApps.neverAsk.saveToDisk",
-            "application/msword,application/csv,text/csv,image/png ,image/jpeg, application/pdf, text/html,text/plain,application/octet-stream")
         fp.set_preference("browser.helperApps.alwaysAsk.force", False)
+        fp.set_preference("browser.helperApps.neverAsk.saveToDisk",
+            "application/msword;application/csv;text/csv;image/png;image/jpeg;application/pdf;text/html;text/plain;application/octet-stream")
+        fp.set_preference("pdfjs.disabled", True)
         fp.update_preferences()
         for single_extension in extensions_files:
             fp.add_extension(single_extension)
