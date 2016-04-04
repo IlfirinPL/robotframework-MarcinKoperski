@@ -18,7 +18,7 @@ from robot.api import logger
 
 class ImageMagickKeywords(object):
     @property
-    def MAGICK_HOME(self):
+    def get_magick_home(self):
         try:
             return os.environ['MAGICK_HOME']
         except os.error as e:
@@ -27,52 +27,49 @@ class ImageMagickKeywords(object):
             return message
 
     @property
-    def COMPARE_PATH(self):
+    def get_compare_path(self):
         try:
-            return os.path.normpath(self.MAGICK_HOME + "\\" + "compare.exe")
+            return os.path.normpath(self.get_magick_home + "\\" + "compare.exe")
         except os.error as e:
             logger.warn("Missing file compare.exe" + e)
             return "missing"
 
     @property
-    def IDENTIFY_PATH(self):
+    def get_identify_path(self):
         try:
-            return os.path.normpath(self.MAGICK_HOME + "\\" + "identify.exe")
+            return os.path.normpath(self.get_magick_home + "\\" + "identify.exe")
         except os.error as e:
             logger.warn("Missing file identify.exe" + e)
             return "missing"
 
     @property
-    def CONVERT_PATH(self):
+    def get_convert_path(self):
         try:
-            return os.path.normpath(self.MAGICK_HOME + "\\" + "convert.exe")
+            return os.path.normpath(self.get_magick_home + "\\" + "convert.exe")
         except os.error as e:
             logger.warn("Missing file convert.exe" + e)
             return "missing"
 
-    def __int__(self, **kwargs):
-        super(ImageMagickKeywords, self).__int__(**kwargs)
-
     def image_self_check(self):
-        if os.path.isfile(self.CONVERT_PATH):
-            logger.info("Convert file exits path, path used :" + self.CONVERT_PATH)
+        if os.path.isfile(self.get_convert_path):
+            logger.info("Convert file exits path, path used :" + self.get_convert_path)
         else:
             message = "Missing file convert.exe"
             raise AssertionError(message)
 
-        if os.path.isfile(self.COMPARE_PATH):
-            logger.info("Compare file exits , path used :" + self.COMPARE_PATH)
+        if os.path.isfile(self.get_compare_path):
+            logger.info("Compare file exits , path used :" + self.get_compare_path)
         else:
             message = "Missing file compare.exe"
             raise AssertionError(message)
 
-        if os.path.isfile(self.IDENTIFY_PATH):
-            logger.info("Identify file exits, path used :" + self.IDENTIFY_PATH)
+        if os.path.isfile(self.get_identify_path):
+            logger.info("Identify file exits, path used :" + self.get_identify_path)
         else:
             message = "Missing file identify.exe"
             raise AssertionError(message)
 
-        argument_list = [self.CONVERT_PATH, "--version"]
+        argument_list = [self.get_convert_path, "--version"]
         try:
             procces = subprocess.Popen(argument_list, stdout=subprocess.PIPE, stderr=subprocess.PIPE)  # , shell=True
             procces.wait()
@@ -109,7 +106,7 @@ class ImageMagickKeywords(object):
                             os.path.splitext(os.path.basename(file_2_path_normalized))[0] + ".gif"
             gif_file_path_normalized = os.path.normpath(gif_file_path)
         if os.path.isfile(file_1_path_normalized) and os.path.isfile(file_2_path_normalized):
-            argument_list = [self.COMPARE_PATH, "-metric", metric, file_1_path_normalized, file_2_path_normalized, delta_file_path_normalized]
+            argument_list = [self.get_compare_path, "-metric", metric, file_1_path_normalized, file_2_path_normalized, delta_file_path_normalized]
             process = subprocess.Popen(argument_list, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             process.wait()
             output = process.communicate()
@@ -159,7 +156,7 @@ class ImageMagickKeywords(object):
             files_list_path_normalized.append(os.path.normpath(singleFile))
         gif_file_path_normalized = os.path.normpath(gif_file_path)
         if all(os.path.isfile(singleFile) == True for singleFile in files_list_path_normalized):
-            argument_list = [self.CONVERT_PATH, "-delay", str(delay_ms), "-loop", str(loop)]
+            argument_list = [self.get_convert_path, "-delay", str(delay_ms), "-loop", str(loop)]
             argument_list.extend(files_list_path_normalized)
             argument_list.append(gif_file_path_normalized)
             process = subprocess.Popen(argument_list, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -180,7 +177,7 @@ class ImageMagickKeywords(object):
         logger.write('<a href="%s"><img src="%s" width="%s"></a>' % (link, link, width), level, html=True)
 
     def _get_info_for_image(self, file_name):
-        argument_list = [self.IDENTIFY_PATH, "-quiet", "-format", "%[fx:w]\\n%[fx:h]", file_name]
+        argument_list = [self.get_identify_path, "-quiet", "-format", "%[fx:w]\\n%[fx:h]", file_name]
         try:
             procces = subprocess.Popen(argument_list, stdout=subprocess.PIPE, stderr=subprocess.PIPE)  # , shell=True
             procces.wait()
@@ -197,7 +194,7 @@ class ImageMagickKeywords(object):
 
     def _resize_file(self, file_path_normalized, width, height):
         if os.path.isfile(file_path_normalized):
-            argument_list = [self.CONVERT_PATH, "-resize", width + "x" + height + "!", file_path_normalized, file_path_normalized]
+            argument_list = [self.get_convert_path, "-resize", width + "x" + height + "!", file_path_normalized, file_path_normalized]
             process = subprocess.Popen(argument_list, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             process.wait()
             output = process.communicate()

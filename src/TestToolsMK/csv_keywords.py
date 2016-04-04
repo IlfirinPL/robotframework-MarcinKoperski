@@ -15,9 +15,6 @@ from robot_instances import *
 class CsvKeywords(object):
     OUTPUT_FILE_CSV = "output.csv"
 
-    def __init__(self, **kwargs):
-        super(CsvKeywords, self).__init__(**kwargs)
-
     def csv_set_output_file(self, file_name=OUTPUT_FILE_CSV):
         self.OUTPUT_FILE_CSV = file_name
 
@@ -38,8 +35,8 @@ class CsvKeywords(object):
 
     def csv_writer_with_extra(self, *values):
         """
-        Add extra params at begining
-        1. time of exection
+        Add extra params at beginning
+        1. time of execution
         2. suite + test cases name
         """
         test_case_name = str(bi().get_variable_value("${TEST_NAME}"))
@@ -57,7 +54,7 @@ class CsvKeywords(object):
     @staticmethod
     def file_should_not_change(filename, time_in_sec="1", msg="File was modify during waiting time"):
         """
-        Methods check mofifation date date if date doesnt change after set time return true
+        Methods check modification date date if date doesnt change after set time return true
         Best use with method Wait Until Keyword Succeeds
         """
         before = os.stat(filename).st_mtime
@@ -83,4 +80,4 @@ class CsvKeywords(object):
         with open(path) as f:
             for i, l in enumerate(f):
                 pass
-        return i + 1
+            return i + 1

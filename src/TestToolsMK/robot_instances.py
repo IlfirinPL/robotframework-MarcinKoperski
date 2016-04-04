@@ -21,7 +21,6 @@ def get_artifacts_dir(delta_path=""):
 
 def s2l():
     """
-
         :rtype : Selenium2Library
         """
     s2l_instance = BuiltIn().get_library_instance('Selenium2Library')
@@ -31,7 +30,6 @@ def s2l():
 
 def bi():
     """
-
         :rtype : BuiltIn
         """
     bi_instance = BuiltIn().get_library_instance('BuiltIn')

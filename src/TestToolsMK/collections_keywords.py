@@ -5,9 +5,6 @@
 
 
 class CollectionsKeywords(object):
-    def __int__(self, **kwargs):
-        super(CollectionsKeywords, self).__int__(**kwargs)
-
     @staticmethod
     def create_dictionary_from_list(table):
         """

@@ -29,13 +29,6 @@ class Selenium2LibraryKeywords(object):
     # noinspection PyPep8
     JQUERY_JS = "if(!window.jQuery){var headID = document.getElementsByTagName(\"head\")[0]; var newScript = document.createElement('script'); newScript.type='text/javascript'; newScript.src='http://code.jquery.com/jquery-2.1.4.min.js'; headID.appendChild(newScript);}"
 
-    # noinspection PyArgumentList
-    def __init__(self, **kwargs):
-        super(Selenium2LibraryKeywords, self).__init__(**kwargs)
-        for base in Selenium2LibraryKeywords.__bases__:
-            if hasattr(base, '__init__'):
-                base.__init__(self)
-        print ("Selenium2LibraryExtensions loaded")
 
     @staticmethod
     def open_new_tab(url):
@@ -114,8 +107,6 @@ class Selenium2LibraryKeywords(object):
         s2l().register_keyword_to_run_on_failure(keyword_to_run_on_failure)
         s2l().go_to(url)
 
-
-
     def import_xpath2(self):
         s2l().execute_javascript(self.XPATH2_JS)
 
@@ -128,11 +119,11 @@ class Selenium2LibraryKeywords(object):
             output_dir="Screenshots"):
         output_dir_normalized = get_artifacts_dir(output_dir)
 
-        if add_time_stamp == True:
+        if add_time_stamp:
             current_time = " " + DateTime.get_current_date(result_format="%Y.%m.%d_%H.%M.%S")
         else:
             current_time = ""
-        if add_test_case_name == True:
+        if add_test_case_name:
             test_case_name = bi().get_variable_value("${TEST_NAME}")
         else:
             test_case_name = ""
@@ -157,11 +148,11 @@ class Selenium2LibraryKeywords(object):
     @staticmethod
     def element_attribute_should_be(locator, attribute, attribute_value_expected, msg=None, values=True):
         actual_value = s2l().get_element_attribute(locator + "@" + attribute)
-        actual_value, attribute_value_expected = [bi()._convert_to_string(i) for i in actual_value, attribute_value_expected]
+        actual_value, attribute_value_expected = [bi()._convert_to_string(i) for i in (actual_value, attribute_value_expected)]
         bi()._should_be_equal(actual_value, attribute_value_expected, msg, values)
 
     @staticmethod
-    def create_download_dir_profile_for_firefox(path_to_download, mimeTypes_file=None, *extentionsFiles):
+    def create_download_dir_profile_for_firefox(path_to_download, mime_types_file=None, *extensions_files):
         """
         Example use
         | ${profile} | create_download_dir_profile_for_firefox | ${EXECDIR}/Artifacts | ${EXECDIR}/Resources/mimeTypes.rdf | ${EXECDIR}/Resources/webdriver_element_locator-2.0-fx.xpi | ${EXECDIR}/Resources/selenium_ide-2.9.1-fx.xpi |
@@ -181,16 +172,16 @@ class Selenium2LibraryKeywords(object):
             "application/msword,application/csv,text/csv,image/png ,image/jpeg, application/pdf, text/html,text/plain,application/octet-stream")
         fp.set_preference("browser.helperApps.alwaysAsk.force", False)
         fp.update_preferences()
-        for singleExtenation in extentionsFiles:
-            fp.add_extension(singleExtenation)
-        if mimeTypes_file is not None:
+        for single_extension in extensions_files:
+            fp.add_extension(single_extension)
+        if mime_types_file is not None:
             from shutil import copy2
-            copy2(os.path.normpath(mimeTypes_file), fp.profile_dir)
+            copy2(os.path.normpath(mime_types_file), fp.profile_dir)
         logger.info("Firefox Profile Created in dir" + fp.profile_dir)
         return fp.profile_dir
 
     @staticmethod
-    def create_download_dir_capabilities_for_chrome(path_to_download, **extentionsFiles):
+    def create_download_dir_capabilities_for_chrome(path_to_download, **extensions_files):
         """
         Example use
         | ${capabilities} |	create_download_dir_capabilities_for_chrome	| ${EXECDIR}\\Artifacts
@@ -204,6 +195,6 @@ class Selenium2LibraryKeywords(object):
         prefs = {"download.default_directory": path_to_download}
         chromeOptions.add_experimental_option("prefs", prefs)
         chromeOptions.add_argument("--disable-web-security")
-        for singleExtenation in extentionsFiles:
-            chromeOptions.add_extension(singleExtenation)
+        for single_extension in extensions_files:
+            chromeOptions.add_extension(single_extension)
         return chromeOptions.to_capabilities()
