@@ -23,14 +23,14 @@
 | File list |
 |    | ${list} | List Files In Directory | ${EXECDIR} |
 |    | ${info} | Get File Lines Count | ${list[0]} |
-|    | Log To Console | ${list[0]} / ${info} |
+|    | Should Be Equal As Strings | env.py / 16 | ${list[0]} / ${info} |
+
 
 | Using Timer Example |
 |    | Timer Start |
-|    | Timer Start |
 |    | Timer Start | small |
 |    | Sleep | 0.5 |
-|    | Timer Log | small | WARN |
+|    | Timer Log | small | INFO |
 |    | Timer Stop | small | compact |
 |    | Timer Should Be Lesser Then | 1 |
 
@@ -76,12 +76,11 @@
 |    | ${path} | Set Variable | ${TEMPDIR}/Artifacts/download |
 |    | Create Directory | ${path} |
 |    | ${path} | Normalize Path | ${path} |
-|    | ${capabilities} | Create Download Dir Profile For Firefox | ${path} |
+|    | ${capabilities} | Create Download Dir Profile For Firefox | ${path} | ${EXECDIR}/resources/mimeTypes.rdf |
 |    | Log | ${capabilities} |
 |    | Remove File | ${path}/menuexcel.xls |
 |    | Open Browser Extension | http://www.lancsngfl.ac.uk/cmsmanual/index.php?category_id=14 | ff | ff_profile_dir=${capabilities} |
 |    | Click Element | //a[contains(.,'.xls - an Excel spreadsheet file')] |
-|    | Pause Execution |
 |    | Wait Until Keyword Succeeds | 10 | 1 | File Should Not Change | ${path}/menuexcel.xls |
 |    | File Should Not Be Empty | ${path}/menuexcel.xls |
 |    | [Teardown] | Close All Browsers |
