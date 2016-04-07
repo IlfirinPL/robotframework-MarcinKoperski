@@ -9,13 +9,17 @@ import json
 import re
 
 import gspread
-from oauth2client.client import SignedJwtAssertionCredentials
+from robot.api import logger
+from oauth2client.client import flow_from_clientsecrets
+from oauth2client import client
+from oauth2client.service_account import ServiceAccountCredentials
+import gspread
 
 
 class GoogleSheetsKeywords(object):
-    SPREADSHEET = None
-    WORKSHEET = None
-    JSON_KEY = None
+    SPREADSHEET = None  # type: gspread.SPREADSHEET
+    WORKSHEET = None  # type: gspread.Worksheet
+    JSON_KEY = None  # type: file
 
     def __init__(self, key_json_file=None, google_document_id=None, worksheet_name=None):
         if key_json_file is not None:
@@ -25,7 +29,7 @@ class GoogleSheetsKeywords(object):
     def get_spreadsheet_by_id(self, file_name, google_document_id, worksheet_name=None):
         self.JSON_KEY = json.load(open(file_name))
         scope = ['https://spreadsheets.google.com/feeds']
-        credentials = SignedJwtAssertionCredentials(self.JSON_KEY['client_email'], self.JSON_KEY['private_key'], scope)
+        credentials = ServiceAccountCredentials.from_json_keyfile_name(file_name, scope)
         gc = gspread.authorize(credentials)
         self.SPREADSHEET = gc.open_by_key(google_document_id)
         self.WORKSHEET = self.SPREADSHEET.sheet1
@@ -33,6 +37,9 @@ class GoogleSheetsKeywords(object):
             self.WORKSHEET = self.SPREADSHEET.worksheet(worksheet_name)
         else:
             self.WORKSHEET = self.SPREADSHEET.sheet1
+
+        logger.info("Spreadsheet id opened '" + google_document_id + "'")
+        logger.info("worksheet opened '" + self.WORKSHEET.title + "'")
 
     def select_worksheet_by_name(self, worksheet_name):
         self.WORKSHEET = self.SPREADSHEET.worksheet(worksheet_name)
@@ -57,3 +64,10 @@ class GoogleSheetsKeywords(object):
         pattern = r'%s' % regex
         amount_re = re.compile(pattern)
         return self.WORKSHEET.findall(amount_re)
+
+    def insert_row(self, values, index=1):
+        """
+        first argument is list, second optional index
+        """
+        self.WORKSHEET.insert_row(values, int(index))
+        logger.info("Row inserted to index" + str(index))

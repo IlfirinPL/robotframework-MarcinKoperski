@@ -14,7 +14,7 @@ from TestToolsMK.logger_extension_keywords import LoggerKeywords
 from TestToolsMK.selenium_extentions_keywords import Selenium2LibraryKeywords
 from TestToolsMK.sqlitekeywords import SQLiteKeywords
 from TestToolsMK.timers_keywords import TimerKeywords
-
+from robot.api import logger
 __version_file_path__ = os.path.join(os.path.dirname(__file__), 'VERSION')
 __version__ = open(__version_file_path__, 'r').read().strip()
 
