@@ -9,22 +9,14 @@ import json
 import re
 
 import gspread
-from robot.api import logger
-from oauth2client.client import flow_from_clientsecrets
-from oauth2client import client
 from oauth2client.service_account import ServiceAccountCredentials
-import gspread
+from robot.api import logger
 
 
 class GoogleSheetsKeywords(object):
-    SPREADSHEET = None  # type: gspread.SPREADSHEET
+    SPREADSHEET = None  # type: gspread.Spreadsheet
     WORKSHEET = None  # type: gspread.Worksheet
     JSON_KEY = None  # type: file
-
-    def __init__(self, key_json_file=None, google_document_id=None, worksheet_name=None):
-        if key_json_file is not None:
-            if google_document_id is not None:
-                self.get_spreadsheet_by_id(key_json_file, google_document_id, worksheet_name)
 
     def get_spreadsheet_by_id(self, file_name, google_document_id, worksheet_name=None):
         self.JSON_KEY = json.load(open(file_name))

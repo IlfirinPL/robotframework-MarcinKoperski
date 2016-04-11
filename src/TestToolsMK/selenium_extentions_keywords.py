@@ -25,7 +25,6 @@ class Selenium2LibraryKeywords(object):
     # noinspection PyPep8
     JQUERY_JS = "if(!window.jQuery){var headID = document.getElementsByTagName(\"head\")[0]; var newScript = document.createElement('script'); newScript.type='text/javascript'; newScript.src='http://code.jquery.com/jquery-2.1.4.min.js'; headID.appendChild(newScript);}"
 
-
     @staticmethod
     def open_new_tab(url):
         """Hack it use Control +t to open new tab"""

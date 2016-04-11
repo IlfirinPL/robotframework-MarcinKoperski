@@ -70,9 +70,11 @@ class CsvKeywords(object):
             os.makedirs(parent)
         if not os.path.isfile(path):
             open(path, 'w').close()
-        with open(path, 'r') as original: data = original.read()
+        with open(path, 'r') as original:
+            data = original.read()
         final_content = content + "\n" + data
-        with open(path, 'w') as modified: modified.write(final_content.encode(encoding))
+        with open(path, 'w') as modified:
+            modified.write(final_content.encode(encoding))
         osl()._link("Appended to file begin of file '%s'.", path)
 
     @staticmethod

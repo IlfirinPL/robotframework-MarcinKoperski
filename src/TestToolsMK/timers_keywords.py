@@ -3,7 +3,6 @@
 
 # Copyright (c) 2015 Cutting Edge QA
 
-import datetime
 from datetime import datetime
 
 from robot.api import logger

@@ -30,21 +30,19 @@ class SQLiteKeywords(object):
         self.conn = sqlite3.connect(':memory:')
         self.cursor = self.conn.cursor()
         self.conn.execute(".mode csv")
-        self.conn.execute(".import "+path+" "+table)
+        self.conn.execute(".import " + path + " " + table)
 
-    def execute_sql_string_sqlite(self, sqlString):
-        self.cursor.execute(sqlString)
+    def execute_sql_string_sqlite(self, sql_string):
+        self.cursor.execute(sql_string)
         temp = self.cursor.fetchall()
         self.conn.commit()
         return temp
 
-    def execute_sql_string_script_sqlite(self, sqlScriptString):
-        self.cursor.executescript(sqlScriptString)
+    def execute_sql_string_script_sqlite(self, sql_script_string):
+        self.cursor.executescript(sql_script_string)
         temp = self.cursor.fetchall()
         self.conn.commit()
         return temp
 
     def disconnect_database_sqlite(self):
         self.conn.close()
-
-
