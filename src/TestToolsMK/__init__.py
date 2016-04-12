@@ -22,3 +22,4 @@ class TestToolsMK(GoogleSheetsKeywords, Selenium2LibraryKeywords, TimerKeywords,
     SQLiteKeywords):
     ROBOT_LIBRARY_SCOPE = 'GLOBAL'
     ROBOT_LIBRARY_VERSION = __version__
+
