@@ -6,12 +6,13 @@
 | Library        | Dialogs |
 | Library        | Screenshot |
 | Library        | ImapLibrary |
-| Library        | XML |
+| Library        | XML | use_lxml=True |
 | Library        | Process |
 | Library        | ArchiveLibrary |
 | Library        | Selenium2Library |
 | Library        | OperatingSystem |
 | Library        | Collections |
+| Library        | DatabaseLibrary |
 
 | *** Variables *** |
 | &{selenium config} | selenium_timeout=65 s | width=1366 | height=1200 | x=1872 | y=-82 |
@@ -24,7 +25,6 @@
 |    | ${list} | List Files In Directory | ${EXECDIR} |
 |    | ${info} | Get File Lines Count | ${list[0]} |
 |    | Should Be Equal As Strings | env.py / 16 | ${list[0]} / ${info} |
-
 
 | Using Timer Example |
 |    | Timer Start |
@@ -84,3 +84,21 @@
 |    | Wait Until Keyword Succeeds | 10 | 1 | File Should Not Change | ${path}/menuexcel.xls |
 |    | File Should Not Be Empty | ${path}/menuexcel.xls |
 |    | [Teardown] | Close All Browsers |
+
+| DataBase Extenions |
+|    | ${ db file} | Set Variable | ./example.db |
+|    | Remove File | ${ db file} |
+|    | Connect To Database Using Custom Params | sqlite3 | database='${ db file}' |
+|    | Execute Sql String With Logs | CREATE TABLE [test_data] ( [id] INTEGER \ NOT NULL PRIMARY KEY, [string] VARCHAR(100) \ NULL, [time] TIMESTAMP \ NULL ) |
+|    | ${time} | Get Time |
+|    | Repeat Keyword | 4 | Execute Sql String With Logs | Insert Into test_data (string,time) values ("RF","${time}") |
+|    | ${resutls} | Query Cell | select count(*) from test_data |
+|    | Should Be Equal As Strings | ${resutls} | 4 |
+|    | ${table} | Query Row | select * from test_data where id = 2 |
+|    | List Should Contain Value | ${table} | ${time} |
+|    | ${single value} | Query Cell | select time from test_data where id = 3 |
+|    | Should Be Equal As Strings | ${single value} | ${time} |
+|    | ${resutls} | Query Many Rows | select * from test_data |
+|    | Length Should Be | ${resutls} | 4 |
+|    | Disconnect From Database |
+|    | [Teardown] | Remove File | ${ db file} |

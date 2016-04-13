@@ -70,4 +70,4 @@ class GoogleSheetsKeywords(object):
         first argument is list, second optional index
         """
         self.WORKSHEET.insert_row(values, int(index))
-        logger.info("Row inserted to index" + str(index))
+        logger.info("Row inserted to index " + str(index) + " to Spreadsheet " + self.SPREADSHEET.title)

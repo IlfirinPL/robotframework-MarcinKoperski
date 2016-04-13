@@ -1,5 +1,6 @@
 import os.path
 
+from DatabaseLibrary import DatabaseLibrary
 from Selenium2Library import Selenium2Library
 from robot.libraries import DateTime
 from robot.libraries.BuiltIn import BuiltIn
@@ -17,6 +18,8 @@ def get_artifacts_dir(delta_path=""):
     output_path_normalized = os.path.abspath(os.path.normpath(output_path))
     if not os.path.exists(output_dir_normalized):
         os.makedirs(output_dir_normalized)
+    if not os.path.exists(output_path_normalized):
+        os.makedirs(output_path_normalized)
     return output_path_normalized
 
 
@@ -65,4 +68,14 @@ def cl():
         """
     c_instance = BuiltIn().get_library_instance('Collections')
     assert isinstance(c_instance, Collections)
+    return c_instance
+
+
+def dbl():
+    """
+
+        :rtype : DatabaseLibrary
+        """
+    c_instance = BuiltIn().get_library_instance('DatabaseLibrary')
+    assert isinstance(c_instance, DatabaseLibrary)
     return c_instance
