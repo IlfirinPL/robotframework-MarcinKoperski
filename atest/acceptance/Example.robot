@@ -72,19 +72,6 @@
 |    | File Should Not Be Empty | ${path}/menuexcel.xls |
 |    | [Teardown] | Close All Browsers |
 
-| Download To Folder FF |
-|    | ${path} | Set Variable | ${TEMPDIR}/Artifacts/download |
-|    | Create Directory | ${path} |
-|    | ${path} | Normalize Path | ${path} |
-|    | ${capabilities} | Create Download Dir Profile For Firefox | ${path} | ${EXECDIR}/resources/mimeTypes.rdf |
-|    | Log | ${capabilities} |
-|    | Remove File | ${path}/menuexcel.xls |
-|    | Open Browser Extension | http://www.lancsngfl.ac.uk/cmsmanual/index.php?category_id=14 | ff | ff_profile_dir=${capabilities} |
-|    | Click Element | //a[contains(.,'.xls - an Excel spreadsheet file')] |
-|    | Wait Until Keyword Succeeds | 10 | 1 | File Should Not Change | ${path}/menuexcel.xls |
-|    | File Should Not Be Empty | ${path}/menuexcel.xls |
-|    | [Teardown] | Close All Browsers |
-
 | DataBase Extenions |
 |    | ${ db file} | Set Variable | ./example.db |
 |    | Remove File | ${ db file} |
@@ -102,3 +89,11 @@
 |    | Length Should Be | ${resutls} | 4 |
 |    | Disconnect From Database |
 |    | [Teardown] | Remove File | ${ db file} |
+
+| CSV |
+|    | Remove File | ${EXECDIR}/Artifacts/output.csv |
+|    | Csv Writer | test11 | test12 |
+|    | Csv Writer | test22 | test22 |
+|    | ${table} | Csv Read File | ${EXECDIR}/Artifacts/output.csv |
+|    | Should Be Equal As Strings | test11 | ${table[0][0]} |
+|    | Should Be Equal As Strings | test22 | ${table[1][1]} |
