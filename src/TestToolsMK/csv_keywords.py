@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Copyright (c) 2015 Cutting Edge QA
+import io
 import os
 import time
 
@@ -84,3 +85,16 @@ class CsvKeywords(object):
                 pass
             # noinspection PyUnboundLocalVariable
             return i + 1
+
+    @staticmethod
+    def csv_read_file(path, encoding='UTF-8', encoding_errors='strict'):
+        """
+        returns file CSV content as 2D table
+        """
+        output_table = []
+        encoding = osl()._map_encoding(encoding)
+        with io.open(path, encoding=encoding, errors=encoding_errors) as csv_file:
+            csv_reader = csv.reader(csv_file, dialect='excel', quotechar='"')
+            for row in csv_reader:
+                output_table.append(row)
+            return output_table
