@@ -31,9 +31,9 @@ Example
 
 ## Prerequisites to install
 
-* [Microsoft Visual C++ Compiler for Python 2.7] (http://www.microsoft.com/en-us/download/details.aspx?id=44266 )
-* [Chocolatey](https://chocolatey.org/)
-* Python 2.7.X  https://www.python.org/downloads/
+* [Microsoft Visual C++ Compiler for Python 2.7] (http://www.microsoft.com/en-us/download/details.aspx?id=44266 ) //for windows
+* [Chocolatey](https://chocolatey.org/) //for windows
+* Python 2.7.X  https://www.python.org/downloads/ //for windows
 
 
 ## Installation 
@@ -57,9 +57,12 @@ sudo pip install robotframework
 sudo pip install robotframework-MarcinKoperski
 ```
 
- 
+to update 
+```
+pip install -U robotframework-MarcinKoperski
+```
 
-to install latest
+to install from sources may install unstable release
 
 ```
 pip install --upgrade https://github.com/IlfirinPL/robotframework-MarcinKoperski/archive/master.zip
