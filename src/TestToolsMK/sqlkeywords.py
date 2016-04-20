@@ -4,7 +4,8 @@
 # Copyright (c) 2015 Cutting Edge QA
 import os
 from xmlrpclib import DateTime
-
+import string
+import random
 from TestToolsMK.robot_instances import *
 from datetime import datetime
 
@@ -13,7 +14,7 @@ from robot.libraries.DateTime import Date
 from robot.libraries.DateTime import Time
 from robot.utils import (is_falsy)
 
-from TestToolsMK.robot_instances import dbl
+from TestToolsMK.robot_instances import dbl, ttmkl
 
 
 def get_current_time_for_timers():
@@ -98,3 +99,69 @@ class SQLKeywords(object):
         dbl().execute_sql_string(sql_string)
         if append_to_logs:
             self._add_results_to_log_file(None)
+
+    def insert_data_to_table(self, table_name, data):
+        """
+        return table name, table will have columns with names 'c0', 'c1' for all columns
+        table will be also reindex after insert
+        """
+        cur = dbl()._dbconnection.cursor()
+
+        size = len(data)
+        if size < 1:
+            raise AssertionError("missing data 0 rows")
+
+        row_size = len(data[0])
+        if row_size < 1:
+            raise AssertionError("missing data 0 columns")
+
+        columns_desc = ""
+        for index in range(len(data[0])):
+            columns_desc += """"c""" + str(index) + """" VARCHAR"""
+            if index < (row_size - 1):
+                columns_desc += ","
+
+        create_sql = "CREATE TABLE \"%s\" (%s)" % (table_name, columns_desc)
+
+        logger.info(create_sql)
+        cur.execute(create_sql)
+
+        columns_names = ""
+        values = ""
+        for index in range(len(data[0])):
+            columns_names += "c" + str(index)
+            values += """?"""
+            if index < (row_size - 1):
+                columns_names += ", "
+                values += ", "
+
+        insert_data_sql = "INSERT INTO \"main\".\"%s\" (%s) VALUES (%s) " % (table_name, columns_names, values)
+
+        logger.info(insert_data_sql)
+        cur.executemany(insert_data_sql, data)
+
+        reindex_sql = "REINDEX \"main\".\"%s\"" % table_name
+        cur.execute(reindex_sql)
+
+        dbl()._dbconnection.commit()
+
+        return
+
+    def insert_data_to_generated_table(self, data):
+        table_name = table_name_generator()
+        self.insert_data_to_table(table_name, data)
+        return table_name
+
+    def csv_read_file_to_database(self, table_name, csv_file, encoding='UTF-8', encoding_errors='strict'):
+        """ Use only for temporary use
+        connect to database in memory if not connected, create table with name and import data from csv file"""
+
+        if dbl()._dbconnection is None:
+            dbl().connect_to_database_using_custom_params("sqlite3", "':memory:'")
+        array_table = ttmkl().csv_read_file(csv_file, encoding, encoding_errors)
+        self.insert_data_to_table(table_name, array_table)
+        return table_name
+
+
+def table_name_generator(size=12, chars=string.ascii_lowercase + string.ascii_uppercase):
+    return ''.join(random.choice(chars) for _ in range(size))

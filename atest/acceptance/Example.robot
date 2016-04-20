@@ -75,7 +75,7 @@
 | DataBase Extenions |
 |    | ${ db file} | Set Variable | ./example.db |
 |    | Remove File | ${ db file} |
-|    | Connect To Database Using Custom Params | sqlite3 | database='${ db file}' |
+|    | Connect To Database Using Custom Params | sqlite3 | database='${db file}' |
 |    | Execute Sql String With Logs | CREATE TABLE [test_data] ( [id] INTEGER \ NOT NULL PRIMARY KEY, [string] VARCHAR(100) \ NULL, [time] TIMESTAMP \ NULL ) |
 |    | ${time} | Get Time |
 |    | Repeat Keyword | 4 | Execute Sql String With Logs | Insert Into test_data (string,time) values ("RF","${time}") |
@@ -97,3 +97,13 @@
 |    | ${table} | Csv Read File | ${EXECDIR}/Artifacts/output.csv |
 |    | Should Be Equal As Strings | test11 | ${table[0][0]} |
 |    | Should Be Equal As Strings | test22 | ${table[1][1]} |
+
+| Create Table From Array |
+|    | Remove File | ${EXECDIR}/Artifacts/output.csv |
+|    | Csv Writer | test11 | test12 |
+|    | Csv Writer | test22 | test22 |
+|    | ${table} | Csv Read File | ${EXECDIR}/Artifacts/output.csv |
+|    | Connect To Database Using Custom Params | sqlite3 | database=':memory:' |
+|    | ${table name} | Insert Data To Generated Table | ${table} |
+|    | ${unque} | Query | select * from ${table name} |
+|    | Length Should Be | ${unque} | 2 |

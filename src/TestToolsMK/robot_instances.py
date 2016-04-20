@@ -79,3 +79,13 @@ def dbl():
     c_instance = BuiltIn().get_library_instance('DatabaseLibrary')
     assert isinstance(c_instance, DatabaseLibrary)
     return c_instance
+
+
+def ttmkl():
+    """
+
+        :rtype : TestToolsMK
+        """
+    c_instance = BuiltIn().get_library_instance('TestToolsMK')
+    # assert isinstance(c_instance, TestToolsMK)
+    return c_instance

@@ -88,6 +88,7 @@ class CsvKeywords(object):
 
     @staticmethod
     def csv_read_file(path, encoding='UTF-8', encoding_errors='strict'):
+        # type: (str, str, str) -> array
         """
         returns file CSV content as 2D table
         """
