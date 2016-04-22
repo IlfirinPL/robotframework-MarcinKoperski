@@ -28,6 +28,9 @@ class SQLKeywords(object):
     def set_sql_log_output_file(self, name):
         self.OUTPUT_FILE_LOG_SQL = name
 
+    def set_add_logs_flag(self, flag=False):
+        self.OUTPUT_FILE_LOG_SQL = flag
+
     def query_many_rows(self, select_statement, append_to_logs=ADD_LOGS_FLAG):
         if append_to_logs:
             self._add_query_to_log_file(select_statement)

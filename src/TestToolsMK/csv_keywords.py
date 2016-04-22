@@ -20,10 +20,15 @@ class CsvKeywords(object):
         self.OUTPUT_FILE_CSV = file_name
 
     @staticmethod
-    def append_to_csv(filename, *values):
+    def append_to_csv(filename, values_list, encoding='UTF-8'):
+        """
+        Example usage:
+        | ${list} | Create List	| a | ""1"" |	"é,őáá" | #example with chars utf-8 |
+        | Append To Csv | example.csv   |
+        """
         with open(filename, 'ab') as csv_file:
             writer_csv = csv.writer(csv_file, dialect='excel')
-            writer_csv.writerow(list(values))
+            writer_csv.writerow([item.encode(encoding) for item in values_list])
 
     def csv_writer(self, *values):
         """
