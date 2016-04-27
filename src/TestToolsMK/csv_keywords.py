@@ -37,7 +37,7 @@ class CsvKeywords(object):
         change file name using csv change output file
         """
         log_file = get_artifacts_dir() + "/" + self.OUTPUT_FILE_CSV
-        self.append_to_csv(log_file, *values)
+        self.append_to_csv(log_file, list(values))
 
     def csv_writer_with_extra(self, *values):
         """
