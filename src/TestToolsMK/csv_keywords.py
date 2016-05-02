@@ -98,7 +98,7 @@ class CsvKeywords(object):
         returns file CSV content as 2D table
         """
         output_table = []
-        encoding = osl()._map_encoding(encoding)
+        # encoding = osl()._map_encoding(encoding)
         with io.open(path, encoding=encoding, errors=encoding_errors) as csv_file:
             csv_reader = csv.reader(csv_file, dialect='excel', quotechar='"')
             for row in csv_reader:

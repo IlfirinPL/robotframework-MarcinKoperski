@@ -12,7 +12,7 @@ from selenium.webdriver import FirefoxProfile, ChromeOptions
 from selenium.webdriver.common.keys import Keys
 
 from robot_instances import *
-
+import mimetypes
 
 class Selenium2LibraryKeywords(object):
     WIDTH_DEFAULT = "1366"
