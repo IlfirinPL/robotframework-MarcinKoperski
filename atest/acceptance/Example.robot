@@ -6,7 +6,7 @@
 | Library        | Dialogs |
 | Library        | Screenshot |
 | Library        | ImapLibrary |
-| Library        | XML | use_lxml=True |
+| Library        | XML |
 | Library        | Process |
 | Library        | ArchiveLibrary |
 | Library        | Selenium2Library |
@@ -67,6 +67,19 @@
 |    | Log | ${capabilities} |
 |    | Remove File | ${path}/menuexcel.xls |
 |    | Open Browser Extension | http://www.lancsngfl.ac.uk/cmsmanual/index.php?category_id=14 | gc | desired_capabilities=${capabilities} | remote_url=http://127.0.0.1:4444/wd/hub |
+|    | Click Element | //a[contains(.,'.xls - an Excel spreadsheet file')] |
+|    | Wait Until Keyword Succeeds | 10 | 1 | File Should Not Change | ${path}/menuexcel.xls |
+|    | File Should Not Be Empty | ${path}/menuexcel.xls |
+|    | [Teardown] | Close All Browsers |
+
+| Download To Folder FF |
+|    | ${path} | Set Variable | ${TEMPDIR}/Artifacts/download |
+|    | Create Directory | ${path} |
+|    | ${path} | Normalize Path | ${path} |
+|    | ${capabilities} | Create Download Dir Profile For Firefox | ${path} | ${EXECDIR}/resources/mimeTypes.rdf |
+|    | Log | ${capabilities} |
+|    | Remove File | ${path}/menuexcel.xls |
+|    | Open Browser Extension | http://www.lancsngfl.ac.uk/cmsmanual/index.php?category_id=14 | ff | ff_profile_dir=${capabilities} |
 |    | Click Element | //a[contains(.,'.xls - an Excel spreadsheet file')] |
 |    | Wait Until Keyword Succeeds | 10 | 1 | File Should Not Change | ${path}/menuexcel.xls |
 |    | File Should Not Be Empty | ${path}/menuexcel.xls |

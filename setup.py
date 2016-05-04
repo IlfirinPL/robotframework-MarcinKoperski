@@ -34,8 +34,7 @@ setup(
         'robotframework-sudslibrary',
         'robotframework-appiumlibrary',
         'gspread', 'unicodecsv', 'oauth2client',
-        'selenium',
-        'robotframework-httplibrary', 'lxml'
+        'selenium', 'robotframework-httplibrary'
 
     ]
 )
