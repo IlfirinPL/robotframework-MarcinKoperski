@@ -24,7 +24,7 @@
 | File list |
 |    | ${list} | List Files In Directory | ${EXECDIR} |
 |    | ${info} | Get File Lines Count | ${list[0]} |
-|    | Should Be Equal As Strings | env.py / 16 | ${list[0]} / ${info} |
+|    | Should Be Equal As Strings | .gitignore / 57 | ${list[0]} / ${info} |
 
 | Using Timer Example |
 |    | Timer Start |

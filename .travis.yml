@@ -15,7 +15,7 @@ before_script:
 script:
   - "firefox --version"
   - "pip install -U ."
-  - "python -m robot.run  -r none -l none ./acceptance"
+  - "python -m robot.run  -r none -l none ./atest/acceptance"
 env:
   matrix:
   - BROWSER=firefox
