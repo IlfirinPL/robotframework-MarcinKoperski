@@ -5,7 +5,7 @@ python:
 
 before_install:
   #- apt-get -qq update
-  - apt-get install -yqq imagemagick
+  #- apt-get install -yqq imagemagick
 
 install:
   - pip install robotframework
