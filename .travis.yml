@@ -4,8 +4,8 @@ python:
   - "2.7"
 
 before_install:
-  - sudo apt-get -qq update
-  - sudo apt-get install -yqq imagemagick && rm -rf /var/lib/apt/lists/*
+  #- apt-get -qq update
+  - apt-get install -yqq imagemagick
 
 install:
   - pip install robotframework
@@ -14,10 +14,12 @@ install:
 before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
+  - "chmod +700 ./utils/install_latest_chrome_driver.sh && ./utils/install_latest_chrome_driver.sh"
+  - "pip install -U ."
+
 script:
   - "firefox --version"
-  - "pip install -U ."
-  - "chmod +700 ./utils/install_latest_chrome_driver.sh && ./utils/install_latest_chrome_driver.sh"
+  - "chrome --version"
   - "python -m robot.run -e TODO -r none -l none ./atest/acceptance"
 env:
   matrix:
