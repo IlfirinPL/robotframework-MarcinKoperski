@@ -1,15 +1,22 @@
 # robotframework-MarcinKoperski
 
+
+.. image:: https://travis-ci.org/IlfirinPL/robotframework-MarcinKoperski.png
+    :target: https://travis-ci.org/IlfirinPL/robotframework-MarcinKoperski
+
+.. image:: https://img.shields.io/pypi/v/robotframework-MarcinKoperski.svg
+    :target: https://pypi.python.org/pypi/robotframework-MarcinKoperski
+
+.. image:: https://img.shields.io/pypi/dm/robotframework-MarcinKoperski.svg
+    :target: https://pypi.python.org/pypi/robotframework-MarcinKoperski
+
+.. image:: https://img.shields.io/pypi/l/robotframework-MarcinKoperski.svg
+
+
 Bundle contains all useful libraries that are used by me in my projects
 [Keywords documentation](http://htmlpreview.github.io/?https://github.com/IlfirinPL/robotframework-MarcinKoperski/blob/master/doc/TestToolsMK.html) 
 
 
-# Travis `Travis CI`__
-
-__ https://travis-ci.org/IlfirinPL/robotframework-MarcinKoperski/
-
-.. image:: https://travis-ci.org/IlfirinPL/robotframework-MarcinKoperski.svg?branch=master
-    :target: https://travis-ci.org/IlfirinPL/robotframework-MarcinKoperski
 
 
 
