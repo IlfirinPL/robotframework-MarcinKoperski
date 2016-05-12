@@ -1,11 +1,12 @@
 language: python
-#sudo: false
+sudo: false
 python:
   - "2.7"
 
 before_install:
-  #- apt-get -qq update
-  #- apt-get install -yqq imagemagick
+  - sudo apt-get -qq update
+  - sudo apt-get install -y libxml2-dev
+  - sudo apt-get install -yqq imagemagick
 
 install:
   - pip install robotframework
@@ -14,7 +15,6 @@ install:
 before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
-  - "chmod +700 ./utils/install_latest_chrome_driver.sh && ./utils/install_latest_chrome_driver.sh"
   - "pip install -U ."
 
 script:
