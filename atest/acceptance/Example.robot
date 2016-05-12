@@ -60,6 +60,7 @@
 |    | [Teardown] | Close All Browsers |
 
 | Download To Folder GC |
+|    | [Tags] | TODO |
 |    | ${path} | Set Variable | ${TEMPDIR}/Artifacts/download |
 |    | Create Directory | ${path} |
 |    | ${path} | Normalize Path | ${path} |
