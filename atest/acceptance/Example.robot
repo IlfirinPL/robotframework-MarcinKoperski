@@ -76,7 +76,7 @@
 |    | ${path} | Set Variable | ${TEMPDIR}/Artifacts/download |
 |    | Create Directory | ${path} |
 |    | ${path} | Normalize Path | ${path} |
-|    | ${capabilities} | Create Download Dir Profile For Firefox | ${path} | ${EXECDIR}/resources/mimeTypes.rdf |
+|    | ${capabilities} | Create Download Dir Profile For Firefox | ${path} | ${EXECDIR}/atest/resources/resources/mimeTypes.rdf |
 |    | Log | ${capabilities} |
 |    | Remove File | ${path}/menuexcel.xls |
 |    | Open Browser Extension | http://www.lancsngfl.ac.uk/cmsmanual/index.php?category_id=14 | ff | ff_profile_dir=${capabilities} |

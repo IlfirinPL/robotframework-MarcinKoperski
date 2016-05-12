@@ -2,6 +2,11 @@ language: python
 #sudo: false
 python:
   - "2.7"
+
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -yqq imagemagick && rm -rf /var/lib/apt/lists/*
+
 install:
   - pip install robotframework
   - pip install selenium
