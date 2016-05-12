@@ -1,0 +1,23 @@
+language: python
+#sudo: false
+python:
+  - "2.7"
+install:
+  - pip install robotframework
+  - pip install selenium
+  - pip install decorator
+  - pip install docutils
+  - pip install robotframework-MarcinKoperski
+  #- "if [[ ${BROWSER} == 'ie' ]]; then pip install ie_only_pkg; fi"
+before_script:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+script:
+  - "firefox --version"
+  - "pip install -U ."
+  - "python -m robot.run  -r none -l none ./acceptance"
+env:
+  matrix:
+  - BROWSER=firefox
+  #- BROWSER=ie # will be added when we have completed SauceLabs CI
+  #- BROWSER=safari # will be added after #247 merged
