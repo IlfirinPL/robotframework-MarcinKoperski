@@ -75,10 +75,8 @@
 |    | [Teardown] | Close All Browsers |
 
 | Download To Folder FF |
-|    | ${path} | Set Variable | ${TEMPDIR}/Artifacts/download |
-|    | Create Directory | ${path} |
-|    | ${path} | Normalize Path | ${path} |
-|    | ${capabilities} | Create Download Dir Profile For Firefox | ${path} | ${EXECDIR}/atest/resources/mimeTypes.rdf |
+|    | ${path} | Set Variable | Artifacts/download |
+|    | ${capabilities} | Create Download Dir Profile For Firefox | ${path} | atest/resources/mimeTypes.rdf |
 |    | Log | ${capabilities} |
 |    | Remove File | ${path}/menuexcel.xls |
 |    | Open Browser Extension | http://www.lancsngfl.ac.uk/cmsmanual/index.php?category_id=14 | ff | ff_profile_dir=${capabilities} |

@@ -151,18 +151,17 @@ class Selenium2LibraryKeywords(object):
     def create_download_dir_profile_for_firefox(path_to_download, mime_types_file=None, *extensions_files):
         """
         Example use
-        | ${profile} | create_download_dir_profile_for_firefox | ${EXECDIR}/Artifacts | ${EXECDIR}/Resources/mimeTypes.rdf | ${EXECDIR}/Resources/webdriver_element_locator-2.0-fx.xpi | ${EXECDIR}/Resources/selenium_ide-2.9.1-fx.xpi |
+        | ${profile} | Create Download Dir Profile For Firefox | Artifacts | Resources/mimeTypes.rdf | Resources/webdriver_element_locator-2.0-fx.xpi | Resources/selenium_ide-2.9.1-fx.xpi |
         | Open Browser Extension | https://support.spatialkey.com/spatialkey-sample-csv-data/ | ff_profile_dir=${profile} |
         | Click Element | //a[contains(@href,'sample.csv.zip')]  |
         """
-        if not os.path.exists(path_to_download):
-            os.makedirs(path_to_download)
+        path_to_download_check = validate_create_artifacts_dir(path_to_download)
 
         fp = FirefoxProfile()
         fp.set_preference("browser.download.folderList", 2)
         fp.set_preference("browser.download.manager.showWhenStarting", False)
         fp.set_preference("browser.download.manager.alertOnEXEOpen", False)
-        fp.set_preference("browser.download.dir", os.path.normpath(path_to_download))
+        fp.set_preference("browser.download.dir", path_to_download_check)
         fp.set_preference("xpinstall.signatures.required", False)
         fp.set_preference("browser.helperApps.alwaysAsk.force", False)
         fp.set_preference("browser.helperApps.neverAsk.saveToDisk",
@@ -174,25 +173,27 @@ class Selenium2LibraryKeywords(object):
         if mime_types_file is not None:
             from shutil import copy2
             copy2(os.path.normpath(mime_types_file), fp.profile_dir)
-        logger.info("Firefox Profile Created in dir" + fp.profile_dir)
+        logger.info("Firefox Profile Created in dir '" + fp.profile_dir + "'")
         return fp.profile_dir
 
     @staticmethod
     def create_download_dir_capabilities_for_chrome(path_to_download, **extensions_files):
         """
         Example use
-        | ${capabilities} |	create_download_dir_capabilities_for_chrome	| ${EXECDIR}\\Artifacts
+        | ${capabilities} |	create_download_dir_capabilities_for_chrome	| Artifacts |
         | Open Browser Extension | https://support.spatialkey.com/spatialkey-sample-csv-data/ |	gc | desired_capabilities=${capabilities} |
         | Click Element	 | //a[contains(@href,'sample.csv.zip')] |
         """
-        if not os.path.exists(path_to_download):
-            os.makedirs(path_to_download)
+
+        path_to_download_check = validate_create_artifacts_dir(path_to_download)
 
         chrome_options = ChromeOptions()
-        prefs = {"download.default_directory": path_to_download, "directory_upgrade": "true"}
+        prefs = {"download.default_directory": path_to_download_check, "directory_upgrade": "true"}
 
         chrome_options.add_experimental_option("prefs", prefs)
         chrome_options.add_argument("--disable-web-security")
         for single_extension in extensions_files:
             chrome_options.add_extension(single_extension)
+
+        logger.info("Chrome Capabilities set download dir '" + path_to_download_check + "'")
         return chrome_options.to_capabilities()
