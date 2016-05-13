@@ -25,11 +25,9 @@ before_script:
 
 script:
   - "firefox --version"
-  #- "chrome --version"
   - "python -m robot.run  -b debug.log -e TODO -r none -l none ./atest/acceptance"
   - "cat debug.log"
 env:
   matrix:
   - BROWSER=firefox
-  #- BROWSER=ie # will be added when we have completed SauceLabs CI
-  #- BROWSER=safari # will be added after #247 merged
+

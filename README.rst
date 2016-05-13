@@ -1,10 +1,12 @@
-robotframework-MarcinKoperski library for Robot Framework
+robotframework-MarcinKoperski
 ===============
+library for Robot Framework
+
 
 .. image:: https://travis-ci.org/IlfirinPL/robotframework-MarcinKoperski.png
     :target: https://travis-ci.org/IlfirinPL/robotframework-MarcinKoperski
 
-.. image:: https://travis-ci.org/IlfirinPL/robotframework-MarcinKoperski.svg?branch=master
+.. image:: https://img.shields.io/pypi/v/robotframework-MarcinKoperski.svg
     :target: https://pypi.python.org/pypi/robotframework-MarcinKoperski
 
 .. image:: https://img.shields.io/pypi/dm/robotframework-MarcinKoperski.svg
@@ -20,8 +22,8 @@ robotframework-MarcinKoperski library for Robot Framework
 
 Introduction
 ------------
-Robot framework is great tools but there as always there was some function that were missing to solve it this library were created. 
-Also to make enviroment more consistent.
+Robot framework is great tools but there is always some functions that were missing, to solve it issues this library were created.
+Also to make environment more consistent.
 
 
 Keyword documentation
