@@ -6,6 +6,7 @@ from robot.libraries import DateTime
 from robot.libraries.BuiltIn import BuiltIn
 from robot.libraries.Collections import Collections
 from robot.libraries.OperatingSystem import OperatingSystem
+from robot.api import logger
 
 __all__ = ('s2l', 'bi', 'dtl', 'osl', 'cl', 'get_artifacts_dir')
 
@@ -14,12 +15,21 @@ def get_artifacts_dir(delta_path=""):
     output_path = bi().get_variable_value("${EXECDIR}")
     output_path += "/Artifacts/"
     output_path += delta_path
-    output_dir_normalized = os.path.dirname(os.path.abspath(os.path.normpath(output_path)))
-    output_path_normalized = os.path.abspath(os.path.normpath(output_path))
+    output_path_normalized = validate_create_artifacts_dir(output_path)
+    return output_path_normalized
+
+
+def validate_create_artifacts_dir(path):
+    """
+    As input take path return normalized path,
+    create directory for this path
+    :param path:
+    :return path_normalized:
+    """
+    output_dir_normalized = os.path.dirname(os.path.abspath(os.path.normpath(path)))
+    output_path_normalized = os.path.abspath(os.path.normpath(path))
     if not os.path.exists(output_dir_normalized):
         os.makedirs(output_dir_normalized)
-    if not os.path.exists(output_path_normalized):
-        os.makedirs(output_path_normalized)
     return output_path_normalized
 
 

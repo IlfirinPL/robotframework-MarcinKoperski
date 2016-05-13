@@ -13,6 +13,7 @@
 | Library        | OperatingSystem |
 | Library        | Collections |
 | Library        | DatabaseLibrary |
+| Library        | String |
 
 | *** Variables *** |
 | &{selenium config} | selenium_timeout=65 s | width=1366 | height=1200 | x=1872 | y=-82 |
@@ -87,7 +88,7 @@
 |    | [Teardown] | Close All Browsers |
 
 | DataBase Extenions |
-|    | ${ db file} | Set Variable | ./example.db |
+|    | ${ db file} | Set Variable | Artifacts/example.db |
 |    | Remove File | ${ db file} |
 |    | Connect To Database Using Custom Params | sqlite3 | database='${db file}' |
 |    | Execute Sql String With Logs | CREATE TABLE [test_data] ( [id] INTEGER \ NOT NULL PRIMARY KEY, [string] VARCHAR(100) \ NULL, [time] TIMESTAMP \ NULL ) |
@@ -102,22 +103,38 @@
 |    | ${resutls} | Query Many Rows | select * from test_data |
 |    | Length Should Be | ${resutls} | 4 |
 |    | Disconnect From Database |
-|    | [Teardown] | Remove File | ${ db file} |
+|    | File Should Exist | Artifacts/log_of_sql_execution.sql |
+|    | [Teardown] | Remove Directory | Artifacts | ${True} |
 
 | CSV |
-|    | Remove File | ${EXECDIR}/Artifacts/output.csv |
+|    | Remove File | ${TEMPDIR}/Artifacts/output.csv |
+|    | Csv Set Output File | ${TEMPDIR}/Artifacts/output.csv |
 |    | Csv Writer | test11 | test12 |
 |    | Csv Writer | test22 | test22 |
-|    | ${table} | Csv Read File | ${EXECDIR}/Artifacts/output.csv |
+|    | ${table} | Csv Read File | ${TEMPDIR}/Artifacts/output.csv |
 |    | Should Be Equal As Strings | test11 | ${table[0][0]} |
 |    | Should Be Equal As Strings | test22 | ${table[1][1]} |
+|    | [Teardown] | Remove Directory | ${TEMPDIR}/Artifacts/ | ${true} |
 
 | Create Table From Array |
-|    | Remove File | ${EXECDIR}/Artifacts/output.csv |
+|    | [Setup] | Remove File | ${TEMPDIR}/Artifacts/output.csv |
+|    | Csv Set Output File | ${TEMPDIR}/Artifacts/output.csv |
 |    | Csv Writer | test11 | test12 |
 |    | Csv Writer | test22 | test22 |
-|    | ${table} | Csv Read File | ${EXECDIR}/Artifacts/output.csv |
+|    | ${table} | Csv Read File | ${TEMPDIR}/Artifacts/output.csv |
 |    | Connect To Database Using Custom Params | sqlite3 | database=':memory:' |
 |    | ${table name} | Insert Data To Generated Table | ${table} |
 |    | ${unque} | Query | select * from ${table name} |
 |    | Length Should Be | ${unque} | 2 |
+
+| Image Operations |
+|    | Image Self Check |
+
+| Log Variable To file |
+|    | [Setup] | Remove Files | test1.txt | ${TEMPDIR}/temp1.txt |
+|    | ${test} | Generate Random String |
+|    | Log Variable To File | ${test} | test1 | test1.txt |
+|    | File Should Exist | test1.txt |
+|    | Log Variable To File | ${test} | test2 | ${TEMPDIR}/temp1.txt |
+|    | File Should Exist | ${TEMPDIR}/temp1.txt |
+|    | [Teardown] | Remove Files | test1.txt | ${TEMPDIR}/temp1.txt |

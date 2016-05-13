@@ -14,7 +14,7 @@ from robot.libraries.DateTime import Date
 from robot.libraries.DateTime import Time
 from robot.utils import (is_falsy)
 
-from TestToolsMK.robot_instances import dbl, ttmkl
+from TestToolsMK.robot_instances import dbl, ttmkl, validate_create_artifacts_dir
 
 
 def get_current_time_for_timers():
@@ -22,14 +22,14 @@ def get_current_time_for_timers():
 
 
 class SQLKeywords(object):
-    OUTPUT_FILE_LOG_SQL = "log_of_sql_execution.sql"
+    OUTPUT_FILE_LOG_SQL = "Artifacts/log_of_sql_execution.sql"
     ADD_LOGS_FLAG = True
 
-    def set_sql_log_output_file(self, name):
-        self.OUTPUT_FILE_LOG_SQL = name
+    def set_sql_log_output_file(self, path="Artifacts/log_of_sql_execution.sql"):
+        self.OUTPUT_FILE_LOG_SQL = validate_create_artifacts_dir(path)
 
     def set_add_logs_flag(self, flag=False):
-        self.OUTPUT_FILE_LOG_SQL = flag
+        self.ADD_LOGS_FLAG = flag
 
     def query_many_rows(self, select_statement, append_to_logs=ADD_LOGS_FLAG):
         if append_to_logs:
@@ -91,7 +91,7 @@ class SQLKeywords(object):
         self._append_to_file(final_string)
 
     def _append_to_file(self, text):
-        full_log_file_path = os.path.normpath(get_artifacts_dir() + "/" + self.OUTPUT_FILE_LOG_SQL)
+        full_log_file_path = validate_create_artifacts_dir(self.OUTPUT_FILE_LOG_SQL)
         mode = 'a' if os.path.exists(full_log_file_path) else 'w'
         with open(full_log_file_path, mode) as output:
             output.write(text)

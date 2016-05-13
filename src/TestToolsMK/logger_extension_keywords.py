@@ -9,19 +9,15 @@ import os
 from robot.api import logger
 from robot.libraries import DateTime
 
+from TestToolsMK.robot_instances import validate_create_artifacts_dir
 from robot_instances import *
 
 
 class LoggerKeywords(object):
-    OUTPUT_FILE = None
-
-    def __init__(self):
-        self.OUTPUT_FILE = bi().get_variable_value("${EXECDIR}")
-        logger.debug("Logger folder set " + self.OUTPUT_FILE)
 
     @staticmethod
-    def log_variable_to_file(name, comment="", output_file="variables.csv"):
-        log_file = get_artifacts_dir(output_file)
+    def log_variable_to_file(name, comment="", output_file="Artifacts/variables.csv"):
+        log_file = validate_create_artifacts_dir(output_file)
         logger.debug("Log to file " + log_file)
         fieldnames = ['Time', 'Test Case Name', 'Variable Name', 'Variable Value', 'Comment']
         current_time = DateTime.get_current_date(result_format="%Y.%m.%d %H:%M:%S")

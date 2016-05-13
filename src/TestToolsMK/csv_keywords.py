@@ -5,19 +5,21 @@
 import io
 import os
 import time
+from wsgiref import validate
 
 import unicodecsv as csv
 from robot.libraries import DateTime
 from robot.utils import asserts
 
+from TestToolsMK.robot_instances import validate_create_artifacts_dir
 from robot_instances import *
-
+from robot.api import logger
 
 class CsvKeywords(object):
-    OUTPUT_FILE_CSV = "output.csv"
+    OUTPUT_FILE_CSV = get_artifacts_dir() + "/" + "output.csv"
 
-    def csv_set_output_file(self, file_name=OUTPUT_FILE_CSV):
-        self.OUTPUT_FILE_CSV = file_name
+    def csv_set_output_file(self, file_name="Artifacts/output.csv"):
+        self.OUTPUT_FILE_CSV = validate_create_artifacts_dir(file_name)
 
     @staticmethod
     def append_to_csv(filename, values_list, encoding='UTF-8'):
@@ -36,7 +38,7 @@ class CsvKeywords(object):
         ${EXECDIR}/Artifacts/output.csv
         change file name using csv change output file
         """
-        log_file = get_artifacts_dir() + "/" + self.OUTPUT_FILE_CSV
+        log_file = self.OUTPUT_FILE_CSV
         self.append_to_csv(log_file, list(values))
 
     def csv_writer_with_extra(self, *values):

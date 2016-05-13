@@ -11,6 +11,7 @@ from robot.libraries import DateTime
 from selenium.webdriver import FirefoxProfile, ChromeOptions
 from selenium.webdriver.common.keys import Keys
 
+from TestToolsMK.robot_instances import validate_create_artifacts_dir
 from robot_instances import *
 import mimetypes
 
@@ -111,8 +112,8 @@ class Selenium2LibraryKeywords(object):
 
     @staticmethod
     def capture_page_screenshot_extension(prefix="", postfix="", add_time_stamp=True, add_test_case_name=True, add_file_path_to_list="${list of screenshots}",
-            output_dir="Screenshots"):
-        output_dir_normalized = get_artifacts_dir(output_dir)
+            output_dir="Artifacts/Screenshots"):
+        output_dir_normalized = validate_create_artifacts_dir(output_dir)
 
         if add_time_stamp:
             current_time = " " + DateTime.get_current_date(result_format="%Y.%m.%d_%H.%M.%S")
