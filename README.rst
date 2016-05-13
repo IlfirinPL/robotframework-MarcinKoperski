@@ -30,7 +30,8 @@ Keyword documentation
 ---------------------
 Link to `Keyword Documentation`_
 
-.. _`Keyword Documentation`: http://htmlpreview.github.io/?https://github.com/IlfirinPL/robotframework-MarcinKoperski/blob/master/doc/TestToolsMK.html
+.. _`Keyword Documentation`: http://ilfirinpl.github.io/robotframework-MarcinKoperski/doc/TestToolsMK.html
+
 Example 
 ------------
 
