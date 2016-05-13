@@ -55,7 +55,7 @@
 |    | ${name a} | Capture Page Screenshot Extension |
 |    | Go To | http://www.google.com |
 |    | ${name b} | Capture Page Screenshot Extension |
-|    | ${status} | Run Keyword And Return Status | Image Should Be Difference Less Then | ${name a} | ${name b} | 1 |
+|    | ${status} | Run Keyword And Return Status | Image Should Be Difference Less Then | ${name a} | ${name b} | 0 |
 |    | Should Be Equal As Strings | ${status} | False |
 |    | [Teardown] | Close All Browsers |
 

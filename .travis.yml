@@ -25,8 +25,9 @@ before_script:
 
 script:
   - "firefox --version"
-  - "chrome --version"
-  - "python -m robot.run -e TODO -r none -l none ./atest/acceptance"
+  #- "chrome --version"
+  - "python -m robot.run  -b debug.log -e TODO -r none -l none ./atest/acceptance"
+  - "cat debug.log"
 env:
   matrix:
   - BROWSER=firefox
