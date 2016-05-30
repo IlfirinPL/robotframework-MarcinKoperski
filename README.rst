@@ -9,9 +9,6 @@ library for Robot Framework
 .. image:: https://img.shields.io/pypi/v/robotframework-MarcinKoperski.svg
     :target: https://pypi.python.org/pypi/robotframework-MarcinKoperski
 
-.. image:: https://img.shields.io/pypi/dm/robotframework-MarcinKoperski.svg
-    :target: https://pypi.python.org/pypi/robotframework-MarcinKoperski
-
 .. image:: https://img.shields.io/pypi/l/robotframework-MarcinKoperski.svg
     :target: http://www.gnu.org/licenses/agpl-3.0.html
 
