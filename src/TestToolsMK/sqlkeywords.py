@@ -165,6 +165,16 @@ class SQLKeywords(object):
         self.insert_data_to_table(table_name, array_table)
         return table_name
 
+    def connect_to_database_using_jdbc_driver(self, jdbc_connection_string, user, password, jdbc_driver, jdbc_jar_path):
+        """
+        Example parameters for CIS databases Cisto Integration Services, using java drivers is done using library
+        jdbc_connection_string: jdbc:compositesw:dbapi@localhost:9401?domain=composite&dataSource=Example
+        jdbc_driver: cs.jdbc.driver.CompositeDriver
+        jdbc_jar_path: Binaries/csjdbc.jar
+        """
+        dbl().connect_to_database_using_custom_params("jaydebeapi",
+            "'%s',['%s', '%s', '%s'],'%s'" % (jdbc_driver, jdbc_connection_string, user, password, jdbc_jar_path))
+
 
 def table_name_generator(size=12, chars=string.ascii_lowercase + string.ascii_uppercase):
     return ''.join(random.choice(chars) for _ in range(size))

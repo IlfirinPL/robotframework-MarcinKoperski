@@ -209,9 +209,9 @@ class ImageMagickKeywords(object):
             raise AssertionError(message)
 
     @staticmethod
-    def _embed_screenshot(path, level="INFO", width="800px"):
+    def _embed_screenshot(path, level="INFO", width="1200px"):
         link = urljoin('file:', urllib.pathname2url(os.path.normpath(path)))
-        logger.write('<a href="%s"><img src="%s" width="%s"></a>' % (link, link, width), level, html=True)
+        logger.write('</td></tr><tr><td colspan="3"><a href="%s"><img src="%s" width="%s"></a>' % (link, link, width), level, html=True)
 
     def _get_info_for_image(self, file_name):
         argument_list = [self.get_identify_path, "-quiet", "-format", "%[fx:w]\\n%[fx:h]", file_name]
