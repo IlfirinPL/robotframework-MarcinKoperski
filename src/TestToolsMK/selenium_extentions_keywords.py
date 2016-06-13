@@ -14,6 +14,17 @@ from selenium.webdriver.common.keys import Keys
 from TestToolsMK.robot_instances import validate_create_artifacts_dir
 from robot_instances import *
 import mimetypes
+import image_magick_keywords
+
+try:
+    # noinspection PyCompatibility
+    from urlparse import urljoin
+except ImportError:  # python3
+    # noinspection PyCompatibility,PyUnresolvedReferences
+    from urllib.parse import urljoin
+
+import urllib
+
 
 class Selenium2LibraryKeywords(object):
     WIDTH_DEFAULT = "1366"
@@ -127,11 +138,13 @@ class Selenium2LibraryKeywords(object):
         output_file = output_dir_normalized + "/" + prefix + test_case_name + postfix + current_time + ".png"
         output_file_normalized = os.path.normpath(output_file)
 
+        # s2l()_current_browser().get_screenshot_as_file(output_file_normalized)
         s2l().capture_page_screenshot(output_file_normalized)
 
         results = bi().run_keyword_and_return_status("Variable Should Exist", add_file_path_to_list)
 
         if not results:
+            bi()._get_var_name(add_file_path_to_list)
             list_with_files = bi().create_list(output_file_normalized)
             bi().set_test_variable(add_file_path_to_list, list_with_files)
         else:

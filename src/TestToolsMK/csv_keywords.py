@@ -16,7 +16,7 @@ from robot_instances import *
 from robot.api import logger
 
 class CsvKeywords(object):
-    OUTPUT_FILE_CSV = get_artifacts_dir() + "/" + "output.csv"
+    OUTPUT_FILE_CSV = "Artifacts/output.csv"
 
     def csv_set_output_file(self, file_name="Artifacts/output.csv"):
         self.OUTPUT_FILE_CSV = validate_create_artifacts_dir(file_name)
