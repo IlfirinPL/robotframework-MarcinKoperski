@@ -33,8 +33,7 @@ setup(
         'robotframework-selenium2library', u'robotframework-testmanagement',  # u'robotframework-sshlibrary>=2.1.1',
         'robotframework-sudslibrary',
         'robotframework-appiumlibrary',
-        'gspread', 'unicodecsv', 'oauth2client',
-        'selenium', 'robotframework-httplibrary'
+        'gspread', 'unicodecsv', 'oauth2client', 'selenium', 'robotframework-httplibrary', 'JayDeBeApi'
 
     ]
 )
