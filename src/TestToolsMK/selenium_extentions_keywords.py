@@ -10,6 +10,7 @@ from robot.api import logger
 from robot.libraries import DateTime
 from selenium.webdriver import FirefoxProfile, ChromeOptions
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By   #used in evaluator do not remove
 
 from TestToolsMK.robot_instances import validate_create_artifacts_dir
 from robot_instances import *
