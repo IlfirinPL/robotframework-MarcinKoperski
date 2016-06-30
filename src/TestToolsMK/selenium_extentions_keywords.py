@@ -10,7 +10,7 @@ from robot.api import logger
 from robot.libraries import DateTime
 from selenium.webdriver import FirefoxProfile, ChromeOptions
 from selenium.webdriver.common.keys import Keys
-
+from selenium.webdriver.common.by import By  # used in evaluator do not remove
 from TestToolsMK.robot_instances import validate_create_artifacts_dir
 from robot_instances import *
 import mimetypes
@@ -58,7 +58,16 @@ class Selenium2LibraryKeywords(object):
 
     @staticmethod
     def press_key_python(command, locator="//body", strategy="XPATH"):
-        """Hack !!!  example argument | Keys.CONTROL + 't' |Keys.TAB + Keys.SHIFT"""
+        """Hack !!!  example argument | Keys.CONTROL + 't' |Keys.TAB + Keys.SHIFT
+        ID = "id"
+        XPATH = "xpath"
+        LINK_TEXT = "link text"
+        PARTIAL_LINK_TEXT = "partial link text"
+        NAME = "name"
+        TAG_NAME = "tag name"
+        CLASS_NAME = "class name"
+        CSS_SELECTOR = "css selector"
+        """
         driver = s2l()._current_browser()
         element = driver.find_element(eval("By." + strategy), locator)
         element.send_keys(eval(command))
