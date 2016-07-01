@@ -1,6 +1,5 @@
 #!/bin/bash
 
-source ~/Envs/Venv/bin/activate
 
 function pause(){
    read -p "$*"
@@ -20,4 +19,3 @@ echo Start Upload
 
 twine upload dist/*
 echo Upload Finished
-deactivate
