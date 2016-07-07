@@ -1,10 +1,15 @@
 #!/usr/bin/env bash
 
+if [ $EUID != 0 ]; then
+    sudo "$0" "$@"
+    exit $?
+fi
+
 wget -N http://chromedriver.storage.googleapis.com/LATEST_RELEASE
 lastbuild=`cat LATEST_RELEASE`
 
 wget -N http://chromedriver.storage.googleapis.com/$lastbuild/chromedriver_linux64.zip
-unzip chromedriver_linux64.zip
+unzip -o chromedriver_linux64.zip
 chmod +x chromedriver
 
 rm LATEST_RELEASE
