@@ -41,6 +41,7 @@
 |    | Should Be Equal | ${to sort[0]} | 9 |
 
 | Jquery2 Example |
+|    | [Tags] | TODO |
 |    | #PLUGIN CHROME | https://chrome.google.com/webstore/detail/jquery-unique-selector/cmdmlphjbobhblimniofbnlfkmpcjlgd?utm_source=chrome-app-launcher-info-dialog |
 |    | Open Browser Extension | http://codylindley.com/jqueryselectors/ |
 |    | Import JQuery |
@@ -51,7 +52,7 @@
 |    | [Teardown] | Close All Browsers |
 
 | Compare images |
-|    | [Tags] | WIN |
+|    | [Tags] | WIN | TODO |
 |    | Open Browser Extension | http://www.google.pl |
 |    | ${name a} | Capture Page Screenshot Extension |
 |    | Go To | http://www.google.com |
@@ -76,6 +77,7 @@
 |    | File Should Not Be Empty | ${path}/menuexcel.xls |
 
 | Download To Folder FF |
+|    | [Tags] | TODO |
 |    | ${path} | Set Variable | Artifacts/download |
 |    | ${capabilities} | Create Download Dir Profile For Firefox | ${path} | atest/resources/mimeTypes.rdf |
 |    | Log | ${capabilities} |
