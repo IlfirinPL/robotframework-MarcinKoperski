@@ -16,7 +16,6 @@ addons:
 
 install:
   - pip install robotframework
-  - install geckodriver
   #- pip install selenium
   #- pip install robotframework-MarcinKoperski
 before_script:
