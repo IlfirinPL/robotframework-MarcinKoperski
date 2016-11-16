@@ -62,7 +62,9 @@
 
 | Download To Folder GC |
 |    | [Tags] | TODO |
+|    | [Setup] | Close All Browsers |
 |    | ${path} | Set Variable | ${TEMPDIR}/Artifacts/download |
+|    | Get Chrome Driver Latest |
 |    | Create Directory | ${path} |
 |    | ${path} | Normalize Path | ${path} |
 |    | ${capabilities} | Create Download Dir Capabilities For Chrome | ${path} |
@@ -72,7 +74,6 @@
 |    | Click Element | //a[contains(.,'.xls - an Excel spreadsheet file')] |
 |    | Wait Until Keyword Succeeds | 10 | 1 | File Should Not Change | ${path}/menuexcel.xls |
 |    | File Should Not Be Empty | ${path}/menuexcel.xls |
-|    | [Teardown] | Close All Browsers |
 
 | Download To Folder FF |
 |    | ${path} | Set Variable | Artifacts/download |
