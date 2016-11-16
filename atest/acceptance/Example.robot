@@ -41,6 +41,7 @@
 |    | Should Be Equal | ${to sort[0]} | 9 |
 
 | Jquery2 Example |
+|    | [Tags] | TODO |
 |    | #PLUGIN CHROME | https://chrome.google.com/webstore/detail/jquery-unique-selector/cmdmlphjbobhblimniofbnlfkmpcjlgd?utm_source=chrome-app-launcher-info-dialog |
 |    | Open Browser Extension | http://codylindley.com/jqueryselectors/ |
 |    | Import JQuery |
@@ -51,7 +52,7 @@
 |    | [Teardown] | Close All Browsers |
 
 | Compare images |
-|    | [Tags] | WIN |
+|    | [Tags] | WIN | TODO |
 |    | Open Browser Extension | http://www.google.pl |
 |    | ${name a} | Capture Page Screenshot Extension |
 |    | Go To | http://www.google.com |
@@ -62,7 +63,9 @@
 
 | Download To Folder GC |
 |    | [Tags] | TODO |
+|    | [Setup] | Close All Browsers |
 |    | ${path} | Set Variable | ${TEMPDIR}/Artifacts/download |
+|    | Get Chrome Driver Latest |
 |    | Create Directory | ${path} |
 |    | ${path} | Normalize Path | ${path} |
 |    | ${capabilities} | Create Download Dir Capabilities For Chrome | ${path} |
@@ -72,9 +75,9 @@
 |    | Click Element | //a[contains(.,'.xls - an Excel spreadsheet file')] |
 |    | Wait Until Keyword Succeeds | 10 | 1 | File Should Not Change | ${path}/menuexcel.xls |
 |    | File Should Not Be Empty | ${path}/menuexcel.xls |
-|    | [Teardown] | Close All Browsers |
 
 | Download To Folder FF |
+|    | [Tags] | TODO |
 |    | ${path} | Set Variable | Artifacts/download |
 |    | ${capabilities} | Create Download Dir Profile For Firefox | ${path} | atest/resources/mimeTypes.rdf |
 |    | Log | ${capabilities} |
@@ -85,9 +88,10 @@
 |    | File Should Not Be Empty | ${path}/menuexcel.xls |
 |    | [Teardown] | Close All Browsers |
 
-| DataBase Extenions |
+| DataBase Extensions |
 |    | ${ db file} | Set Variable | Artifacts/example.db |
 |    | Remove File | ${ db file} |
+|    | Create File | ${ db file} |
 |    | Connect To Database Using Custom Params | sqlite3 | database='${db file}' |
 |    | Execute Sql String With Logs | CREATE TABLE [test_data] ( [id] INTEGER \ NOT NULL PRIMARY KEY, [string] VARCHAR(100) \ NULL, [time] TIMESTAMP \ NULL ) |
 |    | ${time} | Get Time |
