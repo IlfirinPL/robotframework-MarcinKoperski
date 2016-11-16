@@ -88,9 +88,10 @@
 |    | File Should Not Be Empty | ${path}/menuexcel.xls |
 |    | [Teardown] | Close All Browsers |
 
-| DataBase Extenions |
+| DataBase Extensions |
 |    | ${ db file} | Set Variable | Artifacts/example.db |
 |    | Remove File | ${ db file} |
+|    | Create File | ${ db file} |
 |    | Connect To Database Using Custom Params | sqlite3 | database='${db file}' |
 |    | Execute Sql String With Logs | CREATE TABLE [test_data] ( [id] INTEGER \ NOT NULL PRIMARY KEY, [string] VARCHAR(100) \ NULL, [time] TIMESTAMP \ NULL ) |
 |    | ${time} | Get Time |
