@@ -78,7 +78,8 @@ class UtilsKeywords(object):
         try:
             initial = osl().get_environment_variable("PATH")
             path_abstract = os.path.abspath(path)
-            osl().set_environment_variable("PATH", path_abstract + os.pathsep + initial)
+            if (path_abstract not in initial):
+                osl().set_environment_variable("PATH", path_abstract + os.pathsep + initial)
 
             try:
                 version = subprocess.check_output(["chromedriver", "--version"], shell=True, stderr=subprocess.STDOUT)
@@ -121,7 +122,8 @@ class UtilsKeywords(object):
         try:
             initial = osl().get_environment_variable("PATH")
             path_abstract = os.path.abspath(path)
-            osl().set_environment_variable("PATH", path_abstract + os.pathsep + initial)
+            if (path_abstract not in initial):
+                osl().set_environment_variable("PATH", path_abstract + os.pathsep + initial)
 
             try:
                 version = subprocess.check_output(["geckodriver", "--version"], shell=True, stderr=subprocess.STDOUT)
