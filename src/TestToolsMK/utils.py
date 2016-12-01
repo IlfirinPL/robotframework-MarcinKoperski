@@ -6,6 +6,7 @@ import json
 import os
 import os.path
 import platform
+import shlex
 import subprocess
 import urllib
 
@@ -156,3 +157,59 @@ class UtilsKeywords(object):
             logger.error(e)
         except OSError as e:
             logger.error(e)
+
+
+
+    def get_selenum_server(self,url='https://goo.gl/Lyo36k' ,path='./bin/selenium-server.jar'):
+        """
+        Currenlty hard coded as arg future change to download from https://selenium-release.storage.googleapis.com
+        """
+        try:
+            # initial = osl().get_environment_variable("PATH")
+            # path_abstract = os.path.abspath(path)
+            # if (path_abstract not in initial):
+            #     osl().set_environment_variable("PATH", path_abstract + os.pathsep + initial)
+
+            #try:
+            #    version = subprocess.check_output(["geckodriver", "--version"], shell=True, stderr=subprocess.STDOUT)
+            #except subprocess.CalledProcessError as e:
+            #    version = "Firefox geckodriver driver is MISSING "
+
+            # version_current = version.strip()
+            # version_latest = self.get_latest_firefox_driver_version.replace("v", "").strip()
+            # url_firefox = self.get_url_for_latest_firefox_driver
+            # logger.debug("Current version \t" + version_current)
+            # logger.debug("Latest version :\t" + version_latest)
+            # if (version_latest not in version_current):
+            #     logger.info("Current version %s , latest is %s" % (version_current, version_latest))
+            #
+            #     logger.info("start download firefox geckodriver driver :" + url_firefox)
+
+            driver = urllib.urlopen(url).read()
+            logger.debug("Selenium Server size: " + sizeof_fmt(len(driver)))
+
+            with open(path, 'wb') as output:
+                output.write(driver)
+
+            # else:
+            #     logger.info("Latest Version of Firefox geckodriver Present %s , latest %s" % (version_current, version_latest))
+
+        except KeyError as e:
+            logger.error(e)
+        except OSError as e:
+            logger.error(e)
+
+    def start_selenium_server_latest(self,path='./bin/selenium-server.jar'):
+        """
+        :return:
+        """
+        self.selenium_server = subprocess.Popen(shlex.split('java -jar {p}'.format(p=path)),
+                                "./Artifacts/selenium_server.log", "./Artifacts/selenium_server.log")
+
+
+    def shutdown_selenium_server(self):
+        if self.selenium_server is not None :
+            self.selenium_server.shut_down_selenium_server()
+            logger.info("Selenium Server shutdown")
+        else:
+            logger.error("Server not starded")
