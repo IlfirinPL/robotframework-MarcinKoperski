@@ -64,7 +64,7 @@
 | Download To Folder GC |
 |    | [Setup] |
 |    | Comment | get all binaries |
-|    | Comment | Get Selenium Server |
+|    | Get Selenium Server |
 |    | Start Selenium Server |
 |    | Get Chrome Driver Latest |
 |    | Comment |
