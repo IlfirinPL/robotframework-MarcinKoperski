@@ -23,17 +23,28 @@ setup(
     author='Marcin Koperski',
     author_email='marcin.koperski+github[at].gmail.com', license='AGPL',
     url=u'https://github.com/IlfirinPL/robotframework-MarcinKoperski',
-    download_url=u'https://github.com/IlfirinPL/robotframework-MarcinKoperski/archive/master.zip'.format(version=__version__), keywords=['robotframework'],
-    package_dir={u'': 'src'}, packages=['TestToolsMK'], exclude_package_data={'': ['.git', '.git/*', '.idea', '.gitignore', 'doc/*', 'atest/*']},
+    download_url=u'https://github.com/IlfirinPL/robotframework-MarcinKoperski/archive/master.zip'.format(
+        version=__version__), keywords=['robotframework', 'MarcinKoperski'],
+    package_dir={u'': 'src'}, packages=['TestToolsMK'],
+    exclude_package_data={'': ['.git', '.git/*', '.idea', '.gitignore', 'doc/*', 'atest/*']},
     package_data={'TestToolsMK': ['VERSION']},
     install_requires=[
-        'robotframework>=3.0',
-        'robotframework-archivelibrary', 'robotframework-databaselibrary', 'robotframework-imaplibrary', 'robotframework-pabot',
-        'robotframework-ride>=1.5.2.1',
-        'robotframework-selenium2library', u'robotframework-testmanagement',  # u'robotframework-sshlibrary>=2.1.1',
-        'robotframework-sudslibrary',
-        'robotframework-appiumlibrary',
-        'gspread', 'unicodecsv', 'oauth2client', 'selenium', 'robotframework-httplibrary'
+        u'robotframework>=3.0',
+        u'robotframework-databaselibrary',
+        u'robotframework-imaplibrary',
+        u'robotframework-pabot',
+        u'robotframework-ride>=1.5.2.1',
+        u'robotframework-selenium2library',
+        u'robotframework-testmanagement',
+        # u'robotframework-sshlibrary>=2.1.1',
+        # u'robotframework-archivelibrary',
+        u'robotframework-sudslibrary',
+        u'robotframework-appiumlibrary',
+        u'gspread',
+        u'unicodecsv',
+        u'oauth2client',
+        u'selenium',
+        u'robotframework-httplibrary'
 
     ]
 )

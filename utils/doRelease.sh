@@ -13,7 +13,7 @@ pwd
 ./utils/generateReport.sh
 
 rm ${BASEDIR}/dist/*
-python setup.py sdist
+python2 setup.py sdist
 pause Press any key to continue or Crlt-C to stop
 echo Start Upload
 
