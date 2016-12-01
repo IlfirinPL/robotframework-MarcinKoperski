@@ -62,10 +62,13 @@
 |    | [Teardown] | Close All Browsers |
 
 | Download To Folder GC |
-|    | [Tags] | TODO |
-|    | [Setup] | Close All Browsers |
-|    | ${path} | Set Variable | ${TEMPDIR}/Artifacts/download |
+|    | [Setup] |
+|    | Comment | get all binaries |
+|    | Comment | Get Selenium Server |
+|    | Start Selenium Server |
 |    | Get Chrome Driver Latest |
+|    | Comment |
+|    | ${path} | Set Variable | ${TEMPDIR}/Artifacts/download |
 |    | Create Directory | ${path} |
 |    | ${path} | Normalize Path | ${path} |
 |    | ${capabilities} | Create Download Dir Capabilities For Chrome | ${path} |
@@ -75,6 +78,8 @@
 |    | Click Element | //a[contains(.,'.xls - an Excel spreadsheet file')] |
 |    | Wait Until Keyword Succeeds | 10 | 1 | File Should Not Change | ${path}/menuexcel.xls |
 |    | File Should Not Be Empty | ${path}/menuexcel.xls |
+|    | Close All Browsers |
+|    | [Teardown] | Shutdown Selenium Server |
 
 | Download To Folder FF |
 |    | [Tags] | TODO |

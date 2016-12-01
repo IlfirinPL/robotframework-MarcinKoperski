@@ -10,6 +10,8 @@ import shlex
 import subprocess
 import urllib
 
+import requests
+
 from TestToolsMK.robot_instances import osl
 
 try:
@@ -28,6 +30,47 @@ def sizeof_fmt(num, suffix='B'):
             return "%3.1f%s%s" % (num, unit, suffix)
         num /= 1024.0
     return "%.1f%s%s" % (num, 'Yi', suffix)
+
+
+def wait_net_service(server, port, timeout=None):
+    """ Wait for network service to appear
+        @param timeout: in seconds, if None or 0 wait forever
+        @return: True of False, if timeout is None may return only True or
+                 throw unhandled network exception
+    """
+    import socket
+    import errno
+
+    s = socket.socket()
+    if timeout:
+        from time import time as now
+        # time module is needed to calc timeout shared between two exceptions
+        end = now() + timeout
+
+    while True:
+        try:
+            if timeout:
+                next_timeout = end - now()
+                if next_timeout < 0:
+                    return False
+                else:
+                    s.settimeout(next_timeout)
+
+            s.connect((server, port))
+
+        except socket.timeout, err:
+            # this exception occurs only if timeout is set
+            if timeout:
+                return False
+
+        except socket.error, err:
+            # catch timeout exception from underlying network library
+            # this one is different from socket.timeout
+            if type(err.args) != tuple or err[0] != errno.ETIMEDOUT:
+                raise
+        else:
+            s.close()
+            return True
 
 
 class UtilsKeywords(object):
@@ -79,6 +122,7 @@ class UtilsKeywords(object):
         try:
             initial = osl().get_environment_variable("PATH")
             path_abstract = os.path.abspath(path)
+
             if (path_abstract not in initial):
                 osl().set_environment_variable("PATH", path_abstract + os.pathsep + initial)
 
@@ -94,7 +138,8 @@ class UtilsKeywords(object):
             logger.debug("Latest version :\t" + version_latest)
             if (version_latest not in version_current):
                 logger.info("Current version %s , latest is %s" % (version_current, version_latest))
-
+                if not os.path.exists(path_abstract):
+                    os.makedirs(path_abstract)
                 logger.info("start download chrome driver :" + url_chrome)
 
                 driver = urllib.urlopen(url_chrome).read()
@@ -120,9 +165,11 @@ class UtilsKeywords(object):
         If system already contains proper version do nothing.
         Based on information from https://api.github.com/repos/mozilla/geckodriver/releases/latest
         """
+
         try:
             initial = osl().get_environment_variable("PATH")
             path_abstract = os.path.abspath(path)
+
             if (path_abstract not in initial):
                 osl().set_environment_variable("PATH", path_abstract + os.pathsep + initial)
 
@@ -140,7 +187,8 @@ class UtilsKeywords(object):
                 logger.info("Current version %s , latest is %s" % (version_current, version_latest))
 
                 logger.info("start download firefox geckodriver driver :" + url_firefox)
-
+                if not os.path.exists(path_abstract):
+                    os.makedirs(path_abstract)
                 driver = urllib.urlopen(url_firefox).read()
                 logger.debug("Firefox geckodriver driver compressed size: " + sizeof_fmt(len(driver)))
 
@@ -158,58 +206,43 @@ class UtilsKeywords(object):
         except OSError as e:
             logger.error(e)
 
-
-
-    def get_selenum_server(self,url='https://goo.gl/Lyo36k' ,path='./bin/selenium-server.jar'):
+    def get_selenium_server(self, url='https://goo.gl/Lyo36k', path='./bin/selenium-server.jar'):
         """
         Currenlty hard coded as arg future change to download from https://selenium-release.storage.googleapis.com
         """
+        dir = os.path.dirname(path)
+        path = os.path.abspath(path)
+        logger.debug("Folder to download " + dir)
+
+        if not os.path.exists(dir):
+            os.makedirs(dir)
         try:
-            # initial = osl().get_environment_variable("PATH")
-            # path_abstract = os.path.abspath(path)
-            # if (path_abstract not in initial):
-            #     osl().set_environment_variable("PATH", path_abstract + os.pathsep + initial)
-
-            #try:
-            #    version = subprocess.check_output(["geckodriver", "--version"], shell=True, stderr=subprocess.STDOUT)
-            #except subprocess.CalledProcessError as e:
-            #    version = "Firefox geckodriver driver is MISSING "
-
-            # version_current = version.strip()
-            # version_latest = self.get_latest_firefox_driver_version.replace("v", "").strip()
-            # url_firefox = self.get_url_for_latest_firefox_driver
-            # logger.debug("Current version \t" + version_current)
-            # logger.debug("Latest version :\t" + version_latest)
-            # if (version_latest not in version_current):
-            #     logger.info("Current version %s , latest is %s" % (version_current, version_latest))
-            #
-            #     logger.info("start download firefox geckodriver driver :" + url_firefox)
-
-            driver = urllib.urlopen(url).read()
-            logger.debug("Selenium Server size: " + sizeof_fmt(len(driver)))
-
-            with open(path, 'wb') as output:
-                output.write(driver)
-
-            # else:
-            #     logger.info("Latest Version of Firefox geckodriver Present %s , latest %s" % (version_current, version_latest))
+            r = requests.head(url, allow_redirects=True)
+            logger.info("Resoved url: \t" + r.url)
+            testfile = urllib.URLopener()
+            testfile.retrieve(r.url, path)
+            logger.info("Selenium Server download completed to " + path)
 
         except KeyError as e:
             logger.error(e)
         except OSError as e:
             logger.error(e)
 
-    def start_selenium_server_latest(self,path='./bin/selenium-server.jar'):
+    def start_selenium_server(self, path='./bin/selenium-server.jar', timeout=60, logs_path='./bin'):
         """
         :return:
         """
-        self.selenium_server = subprocess.Popen(shlex.split('java -jar {p}'.format(p=path)),
-                                "./Artifacts/selenium_server.log", "./Artifacts/selenium_server.log")
+        path = os.path.abspath(path)
 
+        with open(os.path.abspath(logs_path + "/selenium_server_stdout.txt"), "wb") as out, open(os.path.abspath(logs_path + "/selenium_server_stderr.txt"),
+                "wb") as err:
+            self.selenium_server = subprocess.Popen(shlex.split('java -jar "{p}"'.format(p=path)), stdout=out, stderr=err)
+
+        wait_net_service("127.0.0.1", 4444, timeout)
 
     def shutdown_selenium_server(self):
         if self.selenium_server is not None :
-            self.selenium_server.shut_down_selenium_server()
+            self.selenium_server.terminate()
             logger.info("Selenium Server shutdown")
         else:
-            logger.error("Server not starded")
+            logger.error("Server not started")
