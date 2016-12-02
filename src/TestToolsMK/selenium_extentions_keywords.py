@@ -185,6 +185,7 @@ class Selenium2LibraryKeywords(object):
         for single_extension in extensions_files:
             fp.add_extension(single_extension)
         if mime_types_file is not None:
+            mime_types_file = os.path.abspath(mime_types_file)
             from shutil import copy2
             copy2(os.path.normpath(mime_types_file), fp.profile_dir)
         logger.info("Firefox Profile Created in dir '" + fp.profile_dir + "'")

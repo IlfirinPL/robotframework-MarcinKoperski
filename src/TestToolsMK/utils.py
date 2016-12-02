@@ -68,6 +68,12 @@ def wait_net_service(server, port, timeout=None):
             # this one is different from socket.timeout
             if type(err.args) != tuple or err[0] != errno.ETIMEDOUT:
                 raise
+
+        except:
+            # catch timeout exception from underlying network library
+            # this one is different from socket.timeout
+            if timeout:
+                return False
         else:
             s.close()
             return True

@@ -62,11 +62,14 @@
 |    | [Teardown] | Close All Browsers |
 
 | Download To Folder GC |
+|    | [Tags] | WIN |
 |    | [Setup] |
 |    | Comment | get all binaries |
 |    | Get Selenium Server |
 |    | Start Selenium Server |
 |    | Get Chrome Driver Latest |
+|    | Open Browser | http://127.0.0.1:4444/wd/hub | gc |
+|    | Capture Page Screenshot Extension |
 |    | Comment |
 |    | ${path} | Set Variable | ${TEMPDIR}/Artifacts/download |
 |    | Create Directory | ${path} |
@@ -78,20 +81,26 @@
 |    | Click Element | //a[contains(.,'.xls - an Excel spreadsheet file')] |
 |    | Wait Until Keyword Succeeds | 10 | 1 | File Should Not Change | ${path}/menuexcel.xls |
 |    | File Should Not Be Empty | ${path}/menuexcel.xls |
-|    | Close All Browsers |
-|    | [Teardown] | Shutdown Selenium Server |
+|    | [Teardown] | Run Keywords | Close All Browsers |
+|    | ... | AND | Shutdown Selenium Server |
 
 | Download To Folder FF |
-|    | [Tags] | TODO |
+|    | [Tags] | WIN |
+|    | Get Selenium Server |
+|    | Start Selenium Server |
+|    | Get Firefox Driver Latest |
+|    | Open Browser | http://127.0.0.1:4444/wd/hub | gc |
+|    | Capture Page Screenshot Extension |
 |    | ${path} | Set Variable | Artifacts/download |
-|    | ${capabilities} | Create Download Dir Profile For Firefox | ${path} | atest/resources/mimeTypes.rdf |
+|    | ${capabilities} | Create Download Dir Profile For Firefox | ${path} | C:/Cutting Edge QA/robotframework-MarcinKoperski/atest/acceptance/mimeTypes.rdf |
 |    | Log | ${capabilities} |
 |    | Remove File | ${path}/menuexcel.xls |
-|    | Open Browser Extension | http://www.lancsngfl.ac.uk/cmsmanual/index.php?category_id=14 | ff | ff_profile_dir=${capabilities} |
+|    | Open Browser Extension | http://www.lancsngfl.ac.uk/cmsmanual/index.php?category_id=14 | ff | ff_profile_dir=${capabilities} | remote_url=http://127.0.0.1:4444/wd/hub |
 |    | Click Element | //a[contains(.,'.xls - an Excel spreadsheet file')] |
 |    | Wait Until Keyword Succeeds | 10 | 1 | File Should Not Change | ${path}/menuexcel.xls |
 |    | File Should Not Be Empty | ${path}/menuexcel.xls |
-|    | [Teardown] | Close All Browsers |
+|    | [Teardown] | Run Keywords | Close All Browsers |
+|    | ... | AND | Shutdown Selenium Server |
 
 | DataBase Extensions |
 |    | ${ db file} | Set Variable | Artifacts/example.db |
