@@ -38,6 +38,7 @@ def wait_net_service(server, port, timeout=None):
         @return: True of False, if timeout is None may return only True or
                  throw unhandled network exception
     """
+    global end, now
     import socket
     import errno
 
@@ -58,12 +59,12 @@ def wait_net_service(server, port, timeout=None):
 
             s.connect((server, port))
 
-        except socket.timeout, err:
+        except socket.timeout as err:
             # this exception occurs only if timeout is set
             if timeout:
                 return False
 
-        except socket.error, err:
+        except socket.error as err:
             # catch timeout exception from underlying network library
             # this one is different from socket.timeout
             if type(err.args) != tuple or err[0] != errno.ETIMEDOUT:

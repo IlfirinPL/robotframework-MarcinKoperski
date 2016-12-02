@@ -5,7 +5,6 @@
 import io
 import os
 import time
-from wsgiref import validate
 
 import unicodecsv as csv
 from robot.libraries import DateTime
@@ -13,7 +12,7 @@ from robot.utils import asserts
 
 from TestToolsMK.robot_instances import validate_create_artifacts_dir
 from robot_instances import *
-from robot.api import logger
+
 
 class CsvKeywords(object):
     OUTPUT_FILE_CSV = "Artifacts/output.csv"
@@ -95,7 +94,7 @@ class CsvKeywords(object):
 
     @staticmethod
     def csv_read_file(path, encoding='UTF-8', encoding_errors='strict'):
-        # type: (str, str, str) -> array
+        # type: (str, str, str) -> list
         """
         returns file CSV content as 2D table
         """

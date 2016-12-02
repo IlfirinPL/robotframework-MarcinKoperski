@@ -8,7 +8,6 @@
 | Library        | ImapLibrary |
 | Library        | XML |
 | Library        | Process |
-| Library        | ArchiveLibrary |
 | Library        | Selenium2Library |
 | Library        | OperatingSystem |
 | Library        | Collections |
