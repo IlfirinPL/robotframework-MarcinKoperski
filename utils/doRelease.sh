@@ -17,5 +17,5 @@ python2 setup.py sdist
 pause Press any key to continue or Crlt-C to stop
 echo Start Upload
 
-twine upload dist/*
+twine upload -u IlfirinPL dist/*
 echo Upload Finished
