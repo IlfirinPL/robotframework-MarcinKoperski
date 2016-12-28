@@ -101,11 +101,11 @@
 |    | [Teardown] | Run Keywords | Close All Browsers |
 |    | ... | AND | Shutdown Selenium Server |
 
-| DataBase Extensions |
+| Database Extensions |
 |    | ${ db file} | Set Variable | Artifacts/example.db |
 |    | Remove File | ${ db file} |
-|    | Create File | ${ db file} |
-|    | Connect To Database Using Custom Params | sqlite3 | database='${db file}' |
+|    | Create File | ${ db file} | #remove cases when write is problem |
+|    | Connect To Database Using Custom Params | sqlite3 | database='${db file};Version=3;UTF16Encoding=True;' |
 |    | Execute Sql String With Logs | CREATE TABLE [test_data] ( [id] INTEGER \ NOT NULL PRIMARY KEY, [string] VARCHAR(100) \ NULL, [time] TIMESTAMP \ NULL ) |
 |    | ${time} | Get Time |
 |    | Repeat Keyword | 4 | Execute Sql String With Logs | Insert Into test_data (string,time) values ("RF","${time}") |
@@ -119,7 +119,8 @@
 |    | Length Should Be | ${resutls} | 4 |
 |    | Disconnect From Database |
 |    | File Should Exist | Artifacts/log_of_sql_execution.sql |
-|    | [Teardown] | Remove Directory | Artifacts | ${True} |
+|    | Remove File | Artifacts/log_of_sql_execution.sql |
+|    | [Teardown] | Remove Files | ${ db file} |
 
 | CSV |
 |    | Remove File | ${TEMPDIR}/Artifacts/output.csv |
