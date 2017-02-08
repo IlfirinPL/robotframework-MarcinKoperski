@@ -175,7 +175,9 @@ class SQLKeywords(object):
 
         """
         dbl().connect_to_database_using_custom_params(library,
-            "'%s',['%s', '%s', '%s'],'%s'" % (jdbc_driver, jdbc_connection_string, user, password, jdbc_jar_path))
+                                                      "\"%s\",\"%s\",[ \"%s\", \"%s\"],\"%s\"," % (
+                                                      jdbc_driver, jdbc_connection_string, user, password,
+                                                      jdbc_jar_path))
 
 
 def table_name_generator(size=12, chars=string.ascii_lowercase + string.ascii_uppercase):
