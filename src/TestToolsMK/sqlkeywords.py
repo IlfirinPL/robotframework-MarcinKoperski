@@ -3,10 +3,10 @@
 
 # Copyright (c) 2015 Cutting Edge QA
 import os
-from xmlrpclib import DateTime
+# from xmlrpclib import DateTime
 import string
 import random
-from TestToolsMK.robot_instances import *
+import robot_instances
 from datetime import datetime
 
 from robot.api import logger

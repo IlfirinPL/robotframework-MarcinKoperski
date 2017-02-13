@@ -7,12 +7,15 @@ import os
 import os.path
 import platform
 import shlex
+import socket
 import subprocess
 import urllib
 
 import requests
+import timeout as timeout
 
 from TestToolsMK.robot_instances import osl
+import time
 
 try:
     # noinspection PyCompatibility
@@ -213,9 +216,10 @@ class UtilsKeywords(object):
         except OSError as e:
             logger.error(e)
 
-    def get_selenium_server(self, url='https://goo.gl/Lyo36k', path='./bin/selenium-server.jar'):
+    def get_selenium_server(self, url='https://goo.gl/Lyo36k', path='./bin/selenium-server.jar',
+                            skipIfAlreadyExists="True"):
         """
-        Currenlty hard coded as arg future change to download from https://selenium-release.storage.googleapis.com
+        Currently hard coded as arg future change to download from https://selenium-release.storage.googleapis.com
         """
         dir = os.path.dirname(path)
         path = os.path.abspath(path)
@@ -223,6 +227,14 @@ class UtilsKeywords(object):
 
         if not os.path.exists(dir):
             os.makedirs(dir)
+
+        if skipIfAlreadyExists == "True":
+            if os.path.exists(path):
+                logger.info(
+                    "Skip Selenium Server download already exists in path \"%s\" because skipIfAlreadyExists is set to \"%s\"" % (
+                    path, skipIfAlreadyExists))
+                return
+
         try:
             r = requests.head(url, allow_redirects=True)
             logger.info("Resoved url: \t" + r.url)
@@ -235,7 +247,7 @@ class UtilsKeywords(object):
         except OSError as e:
             logger.error(e)
 
-    def start_selenium_server(self, path='./bin/selenium-server.jar', timeout=60, logs_path='./bin'):
+    def start_selenium_server(self, path='./bin/selenium-server.jar', timeout=60, port="4444", logs_path='./bin'):
         """
         :return:
         """
@@ -243,9 +255,12 @@ class UtilsKeywords(object):
 
         with open(os.path.abspath(logs_path + "/selenium_server_stdout.txt"), "wb") as out, open(os.path.abspath(logs_path + "/selenium_server_stderr.txt"),
                 "wb") as err:
-            self.selenium_server = subprocess.Popen(shlex.split('java -jar "{p}"'.format(p=path)), stdout=out, stderr=err)
-
-        wait_net_service("127.0.0.1", 4444, timeout)
+            command = "java -jar \"" + path + "\" -port " + port
+            logger.info("Command to start server :" + command)
+            self.selenium_server = subprocess.Popen(shlex.split(command), stdout=out, stderr=err)
+        time.sleep(7)
+        # open_port(port, host="127.0.0.1")
+        # wait_net_service(, port, timeout)
 
     def shutdown_selenium_server(self):
         if self.selenium_server is not None :
@@ -253,3 +268,4 @@ class UtilsKeywords(object):
             logger.info("Selenium Server shutdown")
         else:
             logger.error("Server not started")
+
