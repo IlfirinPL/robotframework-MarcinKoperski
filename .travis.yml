@@ -16,12 +16,12 @@ addons:
 
 install:
   - pip install robotframework
-  #- pip install selenium
-  #- pip install robotframework-MarcinKoperski
+  - pip install selenium
+  - pip install robotframework-MarcinKoperski
 before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
-  - "pip install -U ."
+  - "pip install --no-deps -U ."
 
 script:
   - "firefox --version"
