@@ -7,12 +7,10 @@ import os
 import os.path
 import platform
 import shlex
-import socket
 import subprocess
 import urllib
 
 import requests
-import timeout as timeout
 
 from TestToolsMK.robot_instances import osl
 import time
@@ -259,8 +257,6 @@ class UtilsKeywords(object):
             logger.info("Command to start server :" + command)
             self.selenium_server = subprocess.Popen(shlex.split(command), stdout=out, stderr=err)
         time.sleep(7)
-        # open_port(port, host="127.0.0.1")
-        # wait_net_service(, port, timeout)
 
     def shutdown_selenium_server(self):
         if self.selenium_server is not None :
