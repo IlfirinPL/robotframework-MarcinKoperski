@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# Copyright (c) 2015 Cutting Edge QA
+# Copyright (c) 2015 Cutting Edge QA Marcin Koperski
 import os
 import os.path
 import time

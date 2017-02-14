@@ -1,3 +1,4 @@
+# Copyright (c) 2015 Cutting Edge QA Marcin Koperski
 import os.path
 
 from DatabaseLibrary import DatabaseLibrary

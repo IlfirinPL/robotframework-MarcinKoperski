@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-#  Copyright (c) 2015 Cutting Edge QA
+#  Copyright (c) 2015 Cutting Edge QA Marcin Koperski
 
 
 """Setup script for Robot's Marcin Koperski bundle distributions"""
@@ -45,6 +45,7 @@ setup(
         u'oauth2client',
         u'selenium',
         u'robotframework-httplibrary'
+        #,u'jaydebeapi'
 
     ]
 )
