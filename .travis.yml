@@ -25,7 +25,8 @@ before_script:
 
 script:
   - "firefox --version"
-  - "python -m robot.run  -b debug.log -e TODO -e WIN -r none -l none ./atest/acceptance"
+  - "pushd atest/acceptance"
+  - "python -m robot.run  -b debug.log -e TODO -e WIN -r none -l none ."
   - "cat debug.log"
 env:
   matrix:

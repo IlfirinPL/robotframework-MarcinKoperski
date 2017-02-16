@@ -23,8 +23,8 @@
 
 | File list |
 |    | ${list} | List Files In Directory | ${EXECDIR} |
-|    | ${info} | Get File Lines Count | ${list[0]} |
-|    | Should Be Equal As Strings | .gitignore / 57 | ${list[0]} / ${info} |
+|    | ${info} | Get File Lines Count | ${list[1]} |
+|    | Should Be Equal As Strings | mimeTypes.rdf / 83 | ${list[1]} / ${info} |
 
 | Using Timer Example |
 |    | Timer Start |
@@ -64,9 +64,9 @@
 |    | [Tags] | WIN |
 |    | [Setup] |
 |    | Comment | get all binaries |
-|    | Get Selenium Server |
-|    | Start Selenium Server |
-|    | Get Chrome Driver Latest |
+|    | Get Selenium Server | path=${TEMPDIR}/bin/selenium-server.jar |
+|    | Start Selenium Server | path=${TEMPDIR}/bin/selenium-server.jar | logs_path=${TEMPDIR}/bin |
+|    | Get Chrome Driver Latest | ${TEMPDIR} |
 |    | Open Browser | http://127.0.0.1:4444/wd/hub | gc |
 |    | Capture Page Screenshot Extension |
 |    | Comment |
@@ -85,13 +85,13 @@
 
 | Download To Folder FF |
 |    | [Tags] | WIN |
-|    | Get Selenium Server |
-|    | Start Selenium Server |
-|    | Get Firefox Driver Latest |
+|    | Get Selenium Server | path=${TEMPDIR}/bin/selenium-server.jar |
+|    | Start Selenium Server | path=${TEMPDIR}/bin/selenium-server.jar | logs_path=${TEMPDIR}/bin |
+|    | Get Firefox Driver Latest | ${TEMPDIR} |
 |    | Open Browser | http://127.0.0.1:4444/wd/hub | gc |
 |    | Capture Page Screenshot Extension |
-|    | ${path} | Set Variable | Artifacts/download |
-|    | ${capabilities} | Create Download Dir Profile For Firefox | ${path} | C:/Cutting Edge QA/robotframework-MarcinKoperski/atest/acceptance/mimeTypes.rdf |
+|    | ${path} | Set Variable | ${TEMPDIR}/Artifacts/download |
+|    | ${capabilities} | Create Download Dir Profile For Firefox | ${path} | ${CURDIR}/mimeTypes.rdf |
 |    | Log | ${capabilities} |
 |    | Remove File | ${path}/menuexcel.xls |
 |    | Open Browser Extension | http://www.lancsngfl.ac.uk/cmsmanual/index.php?category_id=14 | ff | ff_profile_dir=${capabilities} | remote_url=http://127.0.0.1:4444/wd/hub |
