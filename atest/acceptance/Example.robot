@@ -23,8 +23,9 @@
 
 | File list |
 |    | ${list} | List Files In Directory | ${EXECDIR} |
-|    | ${info} | Get File Lines Count | ${list[1]} |
-|    | Should Be Equal As Strings | mimeTypes.rdf / 83 | ${list[1]} / ${info} |
+|    | List Should Contain Value | ${list} | mimeTypes.rdf |
+|    | ${info} | Get File Lines Count | mimeTypes.rdf |
+|    | Should Be Equal As Numbers | ${info} | 83 |
 
 | Using Timer Example |
 |    | Timer Start |
