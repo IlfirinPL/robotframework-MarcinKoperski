@@ -214,7 +214,7 @@ class UtilsKeywords(object):
         except OSError as e:
             logger.error(e)
 
-    def get_selenium_server(self, url='https://goo.gl/Lyo36k', path='./bin/selenium-server.jar',
+    def get_selenium_server(self, url='https://goo.gl/lbAQcq', path='./bin/selenium-server.jar',
                             skipIfAlreadyExists="True"):
         """
         Currently hard coded as arg future change to download from https://selenium-release.storage.googleapis.com
