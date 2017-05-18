@@ -8,6 +8,7 @@ import os
 
 from TestToolsMK.collections_keywords import CollectionsKeywords
 from TestToolsMK.csv_keywords import CsvKeywords
+from TestToolsMK.excel_keywords import ExcelKeywords
 from TestToolsMK.google_sheets_keywords import GoogleSheetsKeywords
 from TestToolsMK.image_magick_keywords import ImageMagickKeywords
 from TestToolsMK.logger_extension_keywords import LoggerKeywords
@@ -22,7 +23,7 @@ __version__ = open(__version_file_path__, 'r').read().strip()
 
 
 class TestToolsMK(GoogleSheetsKeywords, Selenium2LibraryKeywords, TimerKeywords, CollectionsKeywords, ImageMagickKeywords, LoggerKeywords, CsvKeywords,
-    SQLKeywords, UtilsKeywords, SendNotificationKeywords):
+                  SQLKeywords, UtilsKeywords, SendNotificationKeywords, ExcelKeywords):
     ROBOT_LIBRARY_SCOPE = 'GLOBAL'
     ROBOT_LIBRARY_VERSION = __version__
 

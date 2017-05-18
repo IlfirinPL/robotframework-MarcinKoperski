@@ -44,7 +44,8 @@ setup(
         u'unicodecsv',
         u'oauth2client',
         u'selenium',
-        u'robotframework-httplibrary'
+        u'robotframework-httplibrary',
+        u'openpyxl'
         #,u'jaydebeapi'
 
     ]
