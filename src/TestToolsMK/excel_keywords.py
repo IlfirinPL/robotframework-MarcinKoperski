@@ -17,6 +17,7 @@ import openpyxl
 
 
 class ExcelKeywords(object):
+
     def __init__(self):
         self.wb = None  # type: openpyxl.workbook
         self.tb = None
@@ -24,6 +25,7 @@ class ExcelKeywords(object):
         self.sheetNames = None
         self.currentSheet = None  # type: openpyxl.worksheet
         self.fileName = None
+        self.mode = None
         if os.name is "nt":
             self.tmpDir = "Temp"
         else:
@@ -31,16 +33,27 @@ class ExcelKeywords(object):
 
     def open_excel(self, filename, read_only=True, **kwark):
         """
-        Open spread excel and return spreadsheet names
+        Open spread excel and return spreadsheet names.
+        Select first spreadsheet as current
         :param self: 
         :param filename: 
         :param kwark: 
         :return: 
         """
+        self.mode = read_only
         self.fileName = filename
         self.wb = load_workbook(self.fileName, read_only, **kwark)
         self.sheetNames = self.wb.get_sheet_names()
+        self.select_SpreadSheet("")
         return self.sheetNames
+
+    def save_working_excel(self, filename):
+        """
+        Save working file"
+        """
+        self.fileName = filename
+        self.wb.save(self.fileName)
+        self.open_excel(self.fileName, self.mode)
 
     def select_SpreadSheet(self, name=""):
 
@@ -63,6 +76,23 @@ class ExcelKeywords(object):
         return table
 
     def get_cell_data_by_coordinates(self, column, row):
-
+        """
+        will use currently selected spreadsheet to change use method
+        | select SpreadSheet | mySpreadSheet |
+        @param column: ex. A
+        @param row: ex. 1
+        """
         cellValue = self.currentSheet[column + row].value
         return cellValue
+
+    def edit_data_by_coordinates(self, colNum, rowNum, value=""):
+        """
+        Edit cell in open excel file by coordinates column and row number. Edit will use current spreadsheet
+        | select SpreadSheet | mySpreadSheet |
+        return old value
+        """
+        old = self.currentSheet.cell(row=int(rowNum), column=int(colNum)).value
+        self.currentSheet.cell(row=int(rowNum), column=int(colNum)).value = value
+        return old
+
+
