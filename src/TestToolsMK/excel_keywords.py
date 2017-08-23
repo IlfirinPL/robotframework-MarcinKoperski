@@ -57,7 +57,7 @@ class ExcelKeywords(object):
 
     def select_SpreadSheet(self, name=""):
 
-        if (name == ""):
+        if name == "":
             name = self.sheetNames[0]
             self.currentSheet = self.wb[name]
         else:
@@ -79,8 +79,8 @@ class ExcelKeywords(object):
         """
         will use currently selected spreadsheet to change use method
         | select SpreadSheet | mySpreadSheet |
-        @param column: ex. A
-        @param row: ex. 1
+        | ${value}| get_cell_data_by_coordinates | A | 1 |
+
         """
         cellValue = self.currentSheet[column + row].value
         return cellValue
@@ -89,6 +89,7 @@ class ExcelKeywords(object):
         """
         Edit cell in open excel file by coordinates column and row number. Edit will use current spreadsheet
         | select SpreadSheet | mySpreadSheet |
+        | ${old value}| edit_data_by_coordinates | 1 | 1 | Example |
         return old value
         """
         old = self.currentSheet.cell(row=int(rowNum), column=int(colNum)).value
