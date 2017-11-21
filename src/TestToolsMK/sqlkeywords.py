@@ -32,6 +32,13 @@ class SQLKeywords(object):
         self.ADD_LOGS_FLAG = flag
 
     def query_many_rows(self, select_statement, append_to_logs=ADD_LOGS_FLAG):
+        """
+        To switch output file with logs use
+        | Set Sql Log Output File | ./myFile.sql |
+        :param select_statement:
+        :param append_to_logs:
+        :return:
+        """
         if append_to_logs:
             self._add_query_to_log_file(select_statement)
         results = dbl().query(select_statement)
@@ -41,6 +48,8 @@ class SQLKeywords(object):
 
     def query_row(self, select_statement, append_to_logs=ADD_LOGS_FLAG):
         """
+        To switch output file with logs use
+        | Set Sql Log Output File | ./myFile.sql |
         :raise error when results contains more then one row results
         :return: table
         """
@@ -55,6 +64,8 @@ class SQLKeywords(object):
 
     def query_cell(self, select_statement, append_to_logs=ADD_LOGS_FLAG):
         """
+        To switch output file with logs use
+        | Set Sql Log Output File | ./myFile.sql |
         :raise error when results contains more then one cell
         :return: single value
         """
@@ -98,6 +109,13 @@ class SQLKeywords(object):
             output.write(text)
 
     def execute_sql_string_with_logs(self, sql_string, append_to_logs=ADD_LOGS_FLAG):
+        """
+        To switch output file with logs use
+        | Set Sql Log Output File | ./myFile.sql |
+        :param sql_string:
+        :param append_to_logs:
+        :return:
+        """
         if append_to_logs:
             self._add_query_to_log_file(sql_string)
         dbl().execute_sql_string(sql_string)
