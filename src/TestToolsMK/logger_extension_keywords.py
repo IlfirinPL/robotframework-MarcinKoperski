@@ -39,13 +39,19 @@ class LoggerKeywords(object):
     # noinspection PyProtectedMember
     @staticmethod
     def set_log_level_none():
-        temp = bi()._context.output.set_log_level("None")
-        bi().set_global_variable("${previous log level}", temp)
+        log_level_history = bi().get_variable_value("${LOG_LEVEL_HISTORY}")
+        if log_level_history is None:
+            log_level_history = []
+        old = bi().set_log_level("None")
+        log_level_history.append(old)
+        bi().set_global_variable("${LOG_LEVEL_HISTORY}", log_level_history)
 
     # noinspection PyProtectedMember
     @staticmethod
     def set_log_level_restore():
-        temp = bi().get_variable_value("${previous log level}")
-        if temp is None:
-            temp = "INFO"
-        bi()._context.output.set_log_level(temp)
+        log_level_history = bi().get_variable_value("${LOG_LEVEL_HISTORY}")
+        if not log_level_history:
+            bi().set_log_level('INFO')
+        else:
+            last = log_level_history.pop()
+            bi().set_log_level(last)
