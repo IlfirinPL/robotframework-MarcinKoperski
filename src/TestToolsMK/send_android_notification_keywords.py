@@ -16,7 +16,7 @@ class SendNotificationKeywords(object):
 
         """
         params_to_send = {'to': identifier, 'text': msg}
-        r = requests.get('https://appnotify.herokuapp.com/notify', params=params_to_send)
+        r = requests.get('https://us-central1-notify-b7652.cloudfunctions.net/sendNotification', params=params_to_send)
 
         logger.debug("Send Url:\t" + r.url)
         logger.debug("Response Url:\t" + r.text)
