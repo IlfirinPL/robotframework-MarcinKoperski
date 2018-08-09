@@ -97,5 +97,5 @@ To install using latest stable build use
 
 to install from sources may install unstable release
 ::
-	pip install --upgrade https://github.com/IlfirinPL/robotframework-MarcinKoperski/archive/master.zip
+	pip install git+https://github.com/IlfirinPL/robotframework-MarcinKoperski.git
 
