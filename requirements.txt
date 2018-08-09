@@ -1,0 +1,20 @@
+#list of  non robotframework
+setuptools
+lxml
+selenium
+JayDeBeApi
+pillow>=2.9.0
+requests
+openpyxl
+
+#list of robotframework libraries
+robotframework
+robotframework-ride>=1.5.2.1
+robotframework-requests
+#robotframework-imagehorizonlibrary
+robotframework-archivelibrary
+robotframework-seleniumlibrary
+#robotframework-sshlibrary
+robotframework-extendedselenium2library
+robotframework-httplibrary
+robotframework-ftplibrary
