@@ -13,8 +13,10 @@ robotframework-ride>=1.5.2.1
 robotframework-requests
 #robotframework-imagehorizonlibrary
 robotframework-archivelibrary
-robotframework-seleniumlibrary
-#robotframework-sshlibrary
+git+https://github.com/robotframework/SeleniumLibrary.git
+git+https://github.com/robotframework/SSHLibrary.git
 robotframework-extendedselenium2library
 robotframework-httplibrary
 robotframework-ftplibrary
+robotframework-pabot
+git+https://github.com/franz-see/Robotframework-Database-Library.git
