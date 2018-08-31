@@ -6,7 +6,7 @@
 | Library        | Screenshot |
 | Library        | XML |
 | Library        | Process |
-| Library        | Selenium2Library |
+| Library        | SeleniumLibrary |
 | Library        | OperatingSystem |
 | Library        | Collections |
 | Library        | DatabaseLibrary |
