@@ -31,20 +31,22 @@ class ExcelKeywords(object):
         else:
             self.tmpDir = "tmp"
 
-    def open_excel(self, filename, read_only=True, **kwark):
+    def open_excel(self, filename, read_only=True, **kwargs):
         """
         Open spread excel and return spreadsheet names.
         Select first spreadsheet as current
         :param self: 
         :param filename: 
-        :param kwark: 
+        :param kwargs:
         :return: 
+        @param filename:
+        @param read_only:
         """
         self.mode = read_only
         self.fileName = filename
-        self.wb = load_workbook(self.fileName, read_only, **kwark)
+        self.wb = load_workbook(self.fileName, read_only, **kwargs)
         self.sheetNames = self.wb.get_sheet_names()
-        self.select_SpreadSheet("")
+        self.select_spreadsheet("")
         return self.sheetNames
 
     def save_working_excel(self, filename):
@@ -55,7 +57,7 @@ class ExcelKeywords(object):
         self.wb.save(self.fileName)
         self.open_excel(self.fileName, self.mode)
 
-    def select_SpreadSheet(self, name=""):
+    def select_spreadsheet(self, name=""):
 
         if name == "":
             name = self.sheetNames[0]
@@ -82,18 +84,18 @@ class ExcelKeywords(object):
         | ${value}| get_cell_data_by_coordinates | A | 1 |
 
         """
-        cellValue = self.currentSheet[column + row].value
-        return cellValue
+        cell_value = self.currentSheet[column + row].value
+        return cell_value
 
-    def edit_data_by_coordinates(self, colNum, rowNum, value=""):
+    def edit_data_by_coordinates(self, col_num, row_num, value=""):
         """
         Edit cell in open excel file by coordinates column and row number. Edit will use current spreadsheet
         | select SpreadSheet | mySpreadSheet |
         | ${old value}| edit_data_by_coordinates | 1 | 1 | Example |
         return old value
         """
-        old = self.currentSheet.cell(row=int(rowNum), column=int(colNum)).value
-        self.currentSheet.cell(row=int(rowNum), column=int(colNum)).value = value
+        old = self.currentSheet.cell(row=int(row_num), column=int(col_num)).value
+        self.currentSheet.cell(row=int(row_num), column=int(col_num)).value = value
         return old
 
 

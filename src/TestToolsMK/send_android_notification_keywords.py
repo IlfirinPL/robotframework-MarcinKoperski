@@ -20,7 +20,7 @@ class SendNotificationKeywords(object):
 
         logger.debug("Send Url:\t" + r.url)
         logger.debug("Response Url:\t" + r.text)
-        if ("\"success\":true" not in r.text):
+        if "\"success\":true" not in r.text:
             message = "Failed to send message err=%s" % r.text
             raise AssertionError(message)
 

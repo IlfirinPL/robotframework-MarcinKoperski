@@ -21,6 +21,7 @@ def get_current_time_for_timers():
     return datetime.now()
 
 
+# noinspection PyProtectedMember
 class SQLKeywords(object):
     OUTPUT_FILE_LOG_SQL = "Artifacts/log_of_sql_execution.sql"
     ADD_LOGS_FLAG = True
