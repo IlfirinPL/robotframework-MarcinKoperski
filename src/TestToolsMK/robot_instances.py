@@ -2,7 +2,7 @@
 import os.path
 
 from DatabaseLibrary import DatabaseLibrary
-from Selenium2Library import Selenium2Library
+from SeleniumLibrary import SeleniumLibrary
 from robot.libraries import DateTime
 from robot.libraries.BuiltIn import BuiltIn
 from robot.libraries.Collections import Collections
@@ -36,12 +36,19 @@ def validate_create_artifacts_dir(path):
 
 def s2l():
     """
-        :rtype : Selenium2Library
+        :rtype : SeleniumLibrary
         """
-    s2l_instance = BuiltIn().get_library_instance('Selenium2Library')
-    assert isinstance(s2l_instance, Selenium2Library)
+    s2l_instance = BuiltIn().get_library_instance('SeleniumLibrary')
+    assert isinstance(s2l_instance, SeleniumLibrary)
     return s2l_instance
 
+def sl():
+    """
+        :rtype : SeleniumLibrary
+        """
+    sl_instance = BuiltIn().get_library_instance('SeleniumLibrary')
+    assert isinstance(s2l_instance, SeleniumLibrary)
+    return sl_instance
 
 def bi():
     """
