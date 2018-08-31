@@ -84,8 +84,8 @@ windows
 linux
 ::
 	sudo apt-get install imagemagick
-	sudo pip install robotframework
-	sudo pip install robotframework-MarcinKoperski
+	sudo pip install -r https://raw.githubusercontent.com/IlfirinPL/robotframework-MarcinKoperski/master/requirements.txt
+	sudo pip install git+https://github.com/IlfirinPL/robotframework-MarcinKoperski.git
 
 
 Update 
