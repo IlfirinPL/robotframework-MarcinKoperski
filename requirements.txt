@@ -6,6 +6,7 @@ JayDeBeApi
 pillow>=2.9.0
 requests
 openpyxl
+unicodecsv
 
 #list of robotframework libraries
 robotframework
