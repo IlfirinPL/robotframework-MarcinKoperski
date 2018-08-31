@@ -77,15 +77,15 @@ windows
 	choco install imagemagick.tool
 	setx MAGICK_HOME "C:\ProgramData\chocolatey\lib\imagemagick.tool\tools"
 
-	pip install robotframework
-	pip install robotframework-MarcinKoperski
+	pip install -U -r https://raw.githubusercontent.com/IlfirinPL/robotframework-MarcinKoperski/master/requirements.txt
+	pip install -U git+https://github.com/IlfirinPL/robotframework-MarcinKoperski.git
 
 
 linux
 ::
 	sudo apt-get install imagemagick
-	sudo pip install -r https://raw.githubusercontent.com/IlfirinPL/robotframework-MarcinKoperski/master/requirements.txt
-	sudo pip install git+https://github.com/IlfirinPL/robotframework-MarcinKoperski.git
+	sudo pip install -U -r https://raw.githubusercontent.com/IlfirinPL/robotframework-MarcinKoperski/master/requirements.txt
+	sudo pip install -U git+https://github.com/IlfirinPL/robotframework-MarcinKoperski.git
 
 
 Update 
