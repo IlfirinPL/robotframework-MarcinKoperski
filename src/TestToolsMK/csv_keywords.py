@@ -11,7 +11,7 @@ from robot.libraries import DateTime
 from robot.utils import asserts
 
 from TestToolsMK.robot_instances import validate_create_artifacts_dir
-from robot_instances import *
+import robot_instances
 
 
 class CsvKeywords(object):
@@ -46,8 +46,8 @@ class CsvKeywords(object):
         1. time of execution
         2. suite + test cases name
         """
-        test_case_name = str(bi().get_variable_value("${TEST_NAME}"))
-        suite_name = str(bi().get_variable_value("${SUITE_NAME}"))
+        test_case_name = str(robot_instances.bi().get_variable_value("${TEST_NAME}"))
+        suite_name = str(robot_instances.bi().get_variable_value("${SUITE_NAME}"))
         extra_list = list(values)
         extra_list.insert(0, suite_name + test_case_name)
         self.csv_writer_with_time(*extra_list)
@@ -82,7 +82,7 @@ class CsvKeywords(object):
         final_content = content + "\n" + data
         with open(path, 'w') as modified:
             modified.write(final_content.encode(encoding))
-        osl()._link("Appended to file begin of file '%s'.", path)
+        robot_instances.osl()._link("Appended to file begin of file '%s'.", path)
 
     @staticmethod
     def get_file_lines_count(path):
