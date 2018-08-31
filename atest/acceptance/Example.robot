@@ -3,9 +3,7 @@
 | ...            |
 | ...            | Author: Marcin Koperski |
 | Library        | TestToolsMK |
-| Library        | Dialogs |
 | Library        | Screenshot |
-| Library        | ImapLibrary |
 | Library        | XML |
 | Library        | Process |
 | Library        | Selenium2Library |
