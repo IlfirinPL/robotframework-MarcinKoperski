@@ -10,7 +10,6 @@ openpyxl
 #list of robotframework libraries
 robotframework
 robotframework-requests
-#robotframework-imagehorizonlibrary
 robotframework-archivelibrary
 git+https://github.com/robotframework/SeleniumLibrary.git
 git+https://github.com/robotframework/SSHLibrary.git
@@ -18,3 +17,4 @@ robotframework-httplibrary
 robotframework-ftplibrary
 robotframework-pabot
 robotframework-databaselibrary
+#robotframework-imagehorizonlibrary
