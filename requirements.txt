@@ -19,4 +19,4 @@ robotframework-extendedselenium2library
 robotframework-httplibrary
 robotframework-ftplibrary
 robotframework-pabot
-git+https://github.com/franz-see/Robotframework-Database-Library.git
+robotframework-databaselibrary
