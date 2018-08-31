@@ -16,8 +16,7 @@ addons:
 
 install:
   - pip install robotframework
-  - pip install selenium
-  - pip install robotframework-MarcinKoperski
+
 before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
