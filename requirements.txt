@@ -9,7 +9,6 @@ openpyxl
 
 #list of robotframework libraries
 robotframework
-#robotframework-ride>=1.5.2.1
 robotframework-requests
 #robotframework-imagehorizonlibrary
 robotframework-archivelibrary
