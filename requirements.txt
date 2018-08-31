@@ -14,7 +14,6 @@ robotframework-requests
 robotframework-archivelibrary
 git+https://github.com/robotframework/SeleniumLibrary.git
 git+https://github.com/robotframework/SSHLibrary.git
-robotframework-extendedselenium2library
 robotframework-httplibrary
 robotframework-ftplibrary
 robotframework-pabot
