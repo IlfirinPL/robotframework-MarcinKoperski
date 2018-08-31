@@ -6,8 +6,12 @@ JayDeBeApi
 pillow>=2.9.0
 requests
 openpyxl
+#csv file
 unicodecsv
+#google drive
 gspread
+oauth2client 
+google-api-python-client
 
 #list of robotframework libraries
 robotframework
