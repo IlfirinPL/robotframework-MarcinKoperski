@@ -9,7 +9,7 @@ from robot.libraries.Collections import Collections
 from robot.libraries.OperatingSystem import OperatingSystem
 from robot.api import logger
 
-__all__ = ('s2l', 'bi', 'dtl', 'osl', 'cl', 'get_artifacts_dir')
+__all__ = ('sl', 'bi', 'dtl', 'osl', 'cl', 'get_artifacts_dir')
 
 
 def get_artifacts_dir(delta_path=""):
@@ -47,7 +47,7 @@ def sl():
         :rtype : SeleniumLibrary
         """
     sl_instance = BuiltIn().get_library_instance('SeleniumLibrary')
-    assert isinstance(s2l_instance, SeleniumLibrary)
+    assert isinstance(sl_instance, SeleniumLibrary)
     return sl_instance
 
 def bi():

@@ -27,7 +27,7 @@ except ImportError:  # python3
 import urllib
 
 
-class Selenium2LibraryKeywords(object):
+class SeleniumLibraryKeywords(object):
     WIDTH_DEFAULT = "1366"
     HEIGHT_DEFAULT = "768"
     SELENIUM_SPEED = "0 sec"
@@ -41,16 +41,16 @@ class Selenium2LibraryKeywords(object):
     @staticmethod
     def open_new_tab(url):
         """Hack it use Control +t to open new tab"""
-        driver = s2l()._current_browser()
+        driver = sl().driver
         body = driver.find_element_by_tag_name("body")
         body.send_keys(Keys.CONTROL + 't')
         time.sleep(2)
-        s2l().go_to(url)
+        sl().go_to(url)
 
     @staticmethod
     def switch_tab_by_id(id_tab):
         """Hack it use Control + 1,2,3 etc to switch tab"""
-        driver = s2l()._current_browser()
+        driver = sl().driver
         body = driver.find_element_by_tag_name("body")
         body.send_keys(Keys.CONTROL + id_tab)
         time.sleep(4)
@@ -60,28 +60,28 @@ class Selenium2LibraryKeywords(object):
     @staticmethod
     def press_key_python(command, locator="//body", strategy="XPATH"):
         """Hack !!!  example argument | Keys.CONTROL + 't' |Keys.TAB + Keys.SHIFT"""
-        driver = s2l()._current_browser()
+        driver = sl().driver
         element = driver.find_element(eval("By." + strategy), locator)
         element.send_keys(eval(command))
 
     @staticmethod
     def close_tab():
         """Hack it use Control +w to close tab"""
-        driver = s2l()._current_browser()
+        driver = sl().driver
         body = driver.find_element_by_tag_name("body")
         body.send_keys(Keys.CONTROL + 'w')
 
     @staticmethod
     def set_browser_size_and_position(width=WIDTH_DEFAULT, height=HEIGHT_DEFAULT, x=0, y=0):
-        s2l().set_window_size(width, height)
-        s2l().set_window_position(x, y)
+        sl().set_window_size(width, height)
+        sl().set_window_position(x, y)
 
     @staticmethod
     def go_to_smart(url):
         """Redirect only in on different url"""
-        current_url = s2l().get_location()
+        current_url = sl().get_location()
         if url != current_url:
-            s2l().go_to(url)
+            sl().go_to(url)
 
     @staticmethod
     def click_element_extended(locator, timeout=None, error_msg=None):
@@ -89,17 +89,17 @@ class Selenium2LibraryKeywords(object):
         1.wait_until_page_contains_element
         2.wait_until_element_is_visible_wait_until_element_is_visible
         3.mouse_over"""
-        s2l().wait_until_page_contains_element(locator, timeout, error_msg)
-        s2l().wait_until_element_is_visible(locator, timeout, error_msg)
-        s2l().mouse_over(locator)
-        s2l().click_element(locator)
+        sl().wait_until_page_contains_element(locator, timeout, error_msg)
+        sl().wait_until_element_is_visible(locator, timeout, error_msg)
+        sl().mouse_over(locator)
+        sl().click_element(locator)
 
     @staticmethod
     def double_click_element_extended(locator, timeout=None, error=None):
-        s2l().wait_until_page_contains_element(locator, timeout, error)
-        s2l().wait_until_element_is_visible(locator, timeout, error)
-        s2l().mouse_over(locator)
-        s2l().double_click_element(locator)
+        sl().wait_until_page_contains_element(locator, timeout, error)
+        sl().wait_until_element_is_visible(locator, timeout, error)
+        sl().mouse_over(locator)
+        sl().double_click_element(locator)
 
     def click_element_extended_and_wait(self, locator, sleep, timeout=None, error_msg=None, reason=None):
         self.click_element_extended(locator, timeout, error_msg)
@@ -108,19 +108,19 @@ class Selenium2LibraryKeywords(object):
     @staticmethod
     def open_browser_extension(url, browser="ff", width=WIDTH_DEFAULT, height=HEIGHT_DEFAULT, x="0", y="0", alias=None, remote_url=False,
             desired_capabilities=None, ff_profile_dir=None, selenium_timeout=SELENIUM_TIMEOUT, keyword_to_run_on_failure="Capture Page Screenshot Extension"):
-        s2l().open_browser("about:blank", browser, alias, remote_url, desired_capabilities, ff_profile_dir)
-        s2l().set_window_position(x, y)
-        s2l().set_window_size(width, height)
-        s2l().set_selenium_timeout(selenium_timeout)
-        s2l().register_keyword_to_run_on_failure(keyword_to_run_on_failure)
-        s2l().go_to(url)
+        sl().open_browser("about:blank", browser, alias, remote_url, desired_capabilities, ff_profile_dir)
+        sl().set_window_position(x, y)
+        sl().set_window_size(width, height)
+        sl().set_selenium_timeout(selenium_timeout)
+        sl().register_keyword_to_run_on_failure(keyword_to_run_on_failure)
+        sl().go_to(url)
 
     def import_xpath2(self):
-        s2l().execute_javascript(self.XPATH2_JS)
+        sl().execute_javascript(self.XPATH2_JS)
 
     # noinspection PyPep8Naming,PyPep8Naming
     def import_jQuery(self):
-        s2l().execute_javascript(self.JQUERY_JS)
+        sl().execute_javascript(self.JQUERY_JS)
 
     @staticmethod
     def capture_page_screenshot_extension(prefix="", postfix="", add_time_stamp=True, add_test_case_name=True, add_file_path_to_list="${list of screenshots}",
@@ -139,8 +139,8 @@ class Selenium2LibraryKeywords(object):
         output_file = output_dir_normalized + "/" + prefix + test_case_name + postfix + current_time + ".png"
         output_file_normalized = os.path.normpath(output_file)
 
-        # s2l()_current_browser().get_screenshot_as_file(output_file_normalized)
-        s2l().capture_page_screenshot(output_file_normalized)
+        # sl()driver.get_screenshot_as_file(output_file_normalized)
+        sl().capture_page_screenshot(output_file_normalized)
 
         results = bi().run_keyword_and_return_status("Variable Should Exist", add_file_path_to_list)
 
@@ -157,7 +157,7 @@ class Selenium2LibraryKeywords(object):
 
     @staticmethod
     def element_attribute_should_be(locator, attribute, attribute_value_expected, msg=None, values=True):
-        actual_value = s2l().get_element_attribute(locator + "@" + attribute)
+        actual_value = sl().get_element_attribute(locator + "@" + attribute)
         actual_value, attribute_value_expected = [bi()._convert_to_string(i) for i in (actual_value, attribute_value_expected)]
         bi()._should_be_equal(actual_value, attribute_value_expected, msg, values)
 
