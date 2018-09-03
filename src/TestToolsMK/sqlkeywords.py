@@ -6,7 +6,6 @@ import os
 # from xmlrpclib import DateTime
 import string
 import random
-import robot_instances
 from datetime import datetime
 
 from robot.api import logger

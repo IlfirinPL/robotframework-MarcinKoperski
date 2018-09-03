@@ -11,8 +11,7 @@ from openpyxl import load_workbook
 from robot.libraries import DateTime
 from robot.utils import asserts
 
-from TestToolsMK.robot_instances import validate_create_artifacts_dir
-from robot_instances import *
+from TestToolsMK.robot_instances import *
 import openpyxl
 
 

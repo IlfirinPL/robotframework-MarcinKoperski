@@ -9,8 +9,7 @@ import os
 from robot.api import logger
 from robot.libraries import DateTime
 
-from TestToolsMK.robot_instances import validate_create_artifacts_dir
-from robot_instances import *
+from TestToolsMK.robot_instances import validate_create_artifacts_dir, bi
 
 
 class LoggerKeywords(object):

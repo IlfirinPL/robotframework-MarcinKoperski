@@ -10,14 +10,15 @@ import unicodecsv as csv
 from robot.libraries import DateTime
 from robot.utils import asserts
 
-import robot_instances
+from TestToolsMK import robot_instances
+from TestToolsMK.robot_instances import validate_create_artifacts_dir
 
 
 class CsvKeywords(object):
     OUTPUT_FILE_CSV = "Artifacts/output.csv"
 
     def csv_set_output_file(self, file_name="Artifacts/output.csv"):
-        self.OUTPUT_FILE_CSV = robot_instances.validate_create_artifacts_dir(file_name)
+        self.OUTPUT_FILE_CSV = validate_create_artifacts_dir(file_name)
 
     @staticmethod
     def append_to_csv(filename, values_list, encoding='UTF-8'):
