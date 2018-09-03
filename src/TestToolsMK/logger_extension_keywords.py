@@ -29,7 +29,7 @@ class LoggerKeywords(object):
         # variable_name = _Variables._get_var_name(bi(),str(name))
         # bi().get_variable_value("${" + variable_name + "}", "Missing!!!")
 
-        with open(log_file, 'ab') as csv_file:
+        with open(log_file, 'a') as csv_file:
             writer_csv = csv.writer(csv_file, dialect='excel')
             if os.stat(log_file).st_size < 10:
                 writer_csv.writerow(fieldnames)
