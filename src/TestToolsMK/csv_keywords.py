@@ -102,7 +102,7 @@ class CsvKeywords(object):
         output_table = []
         # encoding = osl()._map_encoding(encoding)
         with open(path) as csv_file:
-            csv_reader = csv.reader(csv_file, dialect='excel', quotechar='"')
+            csv_reader = csv.reader(csv_file, quotechar='"')
             for row in csv_reader:
                 output_table.append(row)
             return output_table
