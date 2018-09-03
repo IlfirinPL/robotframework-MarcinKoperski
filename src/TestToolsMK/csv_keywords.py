@@ -6,7 +6,8 @@ import io
 import os
 import time
 
-import unicodecsv as csv
+import csv
+# import unicodecsv as csv
 from robot.libraries import DateTime
 from robot.utils import asserts
 
@@ -95,7 +96,6 @@ class CsvKeywords(object):
 
     @staticmethod
     def csv_read_file(path, encoding='UTF-8', encoding_errors='strict'):
-        # type: (str, str, str) -> list
         """
         returns file CSV content as 2D table
         """
