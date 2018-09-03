@@ -8,11 +8,10 @@ import time
 
 from robot.api import logger
 from robot.libraries import DateTime
-from robot_instances import *
 from selenium.webdriver import FirefoxProfile, ChromeOptions
 from selenium.webdriver.common.keys import Keys
 
-from TestToolsMK.robot_instances import validate_create_artifacts_dir
+from TestToolsMK.robot_instances import validate_create_artifacts_dir, sl
 
 try:
     # noinspection PyCompatibility

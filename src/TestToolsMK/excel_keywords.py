@@ -5,14 +5,15 @@
 import io
 import os
 import time
-from robot.api import logger
+
+import openpyxl
 import unicodecsv as csv
 from openpyxl import load_workbook
+from robot.api import logger
 from robot.libraries import DateTime
 from robot.utils import asserts
 
 from TestToolsMK.robot_instances import *
-import openpyxl
 
 
 class ExcelKeywords(object):
