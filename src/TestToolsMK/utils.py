@@ -35,10 +35,13 @@ def sizeof_fmt(num, suffix='B'):
 
 def wait_net_service(server, port, timeout=None):
     """ Wait for network service to appear
+        @param port:
+        @param server:
         @param timeout: in seconds, if None or 0 wait forever
         @return: True of False, if timeout is None may return only True or
                  throw unhandled network exception
     """
+    # noinspection PyGlobalUndefined,PyGlobalUndefined
     global end, now
     import socket
     import errno
@@ -131,7 +134,7 @@ class UtilsKeywords(object):
             initial = osl().get_environment_variable("PATH")
             path_abstract = os.path.abspath(path)
 
-            if (path_abstract not in initial):
+            if path_abstract not in initial:
                 osl().set_environment_variable("PATH", path_abstract + os.pathsep + initial)
 
             try:
@@ -144,7 +147,7 @@ class UtilsKeywords(object):
             url_chrome = self.get_url_for_latest_chrome_driver
             logger.debug("Current version \t" + version_current)
             logger.debug("Latest version :\t" + version_latest)
-            if (version_latest not in version_current):
+            if version_latest not in version_current:
                 logger.info("Current version %s , latest is %s" % (version_current, version_latest))
                 if not os.path.exists(path_abstract):
                     os.makedirs(path_abstract)
@@ -178,7 +181,7 @@ class UtilsKeywords(object):
             initial = osl().get_environment_variable("PATH")
             path_abstract = os.path.abspath(path)
 
-            if (path_abstract not in initial):
+            if path_abstract not in initial:
                 osl().set_environment_variable("PATH", path_abstract + os.pathsep + initial)
 
             try:
@@ -191,7 +194,7 @@ class UtilsKeywords(object):
             url_firefox = self.get_url_for_latest_firefox_driver
             logger.debug("Current version \t" + version_current)
             logger.debug("Latest version :\t" + version_latest)
-            if (version_latest not in version_current):
+            if version_latest not in version_current:
                 logger.info("Current version %s , latest is %s" % (version_current, version_latest))
 
                 logger.info("start download firefox geckodriver driver :" + url_firefox)
@@ -214,28 +217,29 @@ class UtilsKeywords(object):
         except OSError as e:
             logger.error(e)
 
-    def get_selenium_server(self, url='https://goo.gl/lbAQcq', path='./bin/selenium-server.jar',
-                            skipIfAlreadyExists="True"):
+    @staticmethod
+    def get_selenium_server(url='https://goo.gl/lbAQcq', path='./bin/selenium-server.jar',
+                            skip_if_already_exists="True"):
         """
         Currently hard coded as arg future change to download from https://selenium-release.storage.googleapis.com
         """
-        dir = os.path.dirname(path)
+        dir_selenium = os.path.dirname(path)
         path = os.path.abspath(path)
-        logger.debug("Folder to download " + dir)
+        logger.debug("Folder to download " + dir_selenium)
 
-        if not os.path.exists(dir):
-            os.makedirs(dir)
+        if not os.path.exists(dir_selenium):
+            os.makedirs(dir_selenium)
 
-        if skipIfAlreadyExists == "True":
+        if skip_if_already_exists == "True":
             if os.path.exists(path):
                 logger.info(
-                    "Skip Selenium Server download already exists in path \"%s\" because skipIfAlreadyExists is set to \"%s\"" % (
-                    path, skipIfAlreadyExists))
+                    "Skip Selenium Server download already exists in path \"%s\" because skip_if_already_exists is set to \"%s\"" % (
+                    path, skip_if_already_exists))
                 return
 
         try:
             r = requests.head(url, allow_redirects=True)
-            logger.info("Resoved url: \t" + r.url)
+            logger.info("Resolved url: \t" + r.url)
             testfile = urllib.URLopener()
             testfile.retrieve(r.url, path)
             logger.info("Selenium Server download completed to " + path)
@@ -255,6 +259,7 @@ class UtilsKeywords(object):
                 "wb") as err:
             command = "java -jar \"" + path + "\" -port " + port
             logger.info("Command to start server :" + command)
+            # noinspection PyAttributeOutsideInit
             self.selenium_server = subprocess.Popen(shlex.split(command), stdout=out, stderr=err)
         time.sleep(7)
 

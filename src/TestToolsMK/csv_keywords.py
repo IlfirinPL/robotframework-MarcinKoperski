@@ -6,12 +6,13 @@ import io
 import os
 import time
 
-import unicodecsv as csv
+import csv
+# import unicodecsv as csv
 from robot.libraries import DateTime
 from robot.utils import asserts
 
+from TestToolsMK import robot_instances
 from TestToolsMK.robot_instances import validate_create_artifacts_dir
-from robot_instances import *
 
 
 class CsvKeywords(object):
@@ -21,15 +22,15 @@ class CsvKeywords(object):
         self.OUTPUT_FILE_CSV = validate_create_artifacts_dir(file_name)
 
     @staticmethod
-    def append_to_csv(filename, values_list, encoding='UTF-8'):
+    def append_to_csv(filename, values_list):
         """
         Example usage:
         | ${list} | Create List	| a | ""1"" |	"é,őáá" | #example with chars utf-8 |
         | Append To Csv | example.csv   |
         """
-        with open(filename, 'ab') as csv_file:
+        with open(filename, 'a') as csv_file:
             writer_csv = csv.writer(csv_file, dialect='excel')
-            writer_csv.writerow([item.encode(encoding) for item in values_list])
+            writer_csv.writerow([item for item in values_list])
 
     def csv_writer(self, *values):
         """
@@ -46,8 +47,8 @@ class CsvKeywords(object):
         1. time of execution
         2. suite + test cases name
         """
-        test_case_name = str(bi().get_variable_value("${TEST_NAME}"))
-        suite_name = str(bi().get_variable_value("${SUITE_NAME}"))
+        test_case_name = str(robot_instances.bi().get_variable_value("${TEST_NAME}"))
+        suite_name = str(robot_instances.bi().get_variable_value("${SUITE_NAME}"))
         extra_list = list(values)
         extra_list.insert(0, suite_name + test_case_name)
         self.csv_writer_with_time(*extra_list)
@@ -82,7 +83,8 @@ class CsvKeywords(object):
         final_content = content + "\n" + data
         with open(path, 'w') as modified:
             modified.write(final_content.encode(encoding))
-        osl()._link("Appended to file begin of file '%s'.", path)
+        # noinspection PyProtectedMember
+        robot_instances.osl()._link("Appended to file begin of file '%s'.", path)
 
     @staticmethod
     def get_file_lines_count(path):
@@ -94,14 +96,13 @@ class CsvKeywords(object):
 
     @staticmethod
     def csv_read_file(path, encoding='UTF-8', encoding_errors='strict'):
-        # type: (str, str, str) -> list
         """
         returns file CSV content as 2D table
         """
         output_table = []
         # encoding = osl()._map_encoding(encoding)
-        with io.open(path, encoding=encoding, errors=encoding_errors) as csv_file:
-            csv_reader = csv.reader(csv_file, dialect='excel', quotechar='"')
+        with open(path) as csv_file:
+            csv_reader = csv.reader(csv_file, quotechar='"')
             for row in csv_reader:
                 output_table.append(row)
             return output_table

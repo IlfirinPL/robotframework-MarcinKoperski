@@ -42,6 +42,7 @@ def s2l():
     assert isinstance(s2l_instance, SeleniumLibrary)
     return s2l_instance
 
+
 def sl():
     """
         :rtype : SeleniumLibrary
@@ -49,6 +50,7 @@ def sl():
     sl_instance = BuiltIn().get_library_instance('SeleniumLibrary')
     assert isinstance(sl_instance, SeleniumLibrary)
     return sl_instance
+
 
 def bi():
     """
@@ -65,7 +67,6 @@ def dtl():
         :rtype : DateTime
         """
     dt_instance = BuiltIn().get_library_instance('DateTime')
-    assert isinstance(dt_instance, DateTime)
     return dt_instance
 
 

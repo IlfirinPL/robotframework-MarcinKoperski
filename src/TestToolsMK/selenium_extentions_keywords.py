@@ -10,12 +10,8 @@ from robot.api import logger
 from robot.libraries import DateTime
 from selenium.webdriver import FirefoxProfile, ChromeOptions
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By   #used in evaluator do not remove
 
-from TestToolsMK.robot_instances import validate_create_artifacts_dir
-from robot_instances import *
-import mimetypes
-import image_magick_keywords
+from TestToolsMK.robot_instances import validate_create_artifacts_dir, sl
 
 try:
     # noinspection PyCompatibility
@@ -24,9 +20,8 @@ except ImportError:  # python3
     # noinspection PyCompatibility,PyUnresolvedReferences
     from urllib.parse import urljoin
 
-import urllib
 
-
+# noinspection PyProtectedMember
 class SeleniumLibraryKeywords(object):
     WIDTH_DEFAULT = "1366"
     HEIGHT_DEFAULT = "768"
@@ -122,6 +117,7 @@ class SeleniumLibraryKeywords(object):
     def import_jQuery(self):
         sl().execute_javascript(self.JQUERY_JS)
 
+    # noinspection PyProtectedMember
     @staticmethod
     def capture_page_screenshot_extension(prefix="", postfix="", add_time_stamp=True, add_test_case_name=True, add_file_path_to_list="${list of screenshots}",
             output_dir="Artifacts/Screenshots"):
@@ -158,9 +154,11 @@ class SeleniumLibraryKeywords(object):
     @staticmethod
     def element_attribute_should_be(locator, attribute, attribute_value_expected, msg=None, values=True):
         actual_value = sl().get_element_attribute(locator + "@" + attribute)
+        # noinspection PyProtectedMember
         actual_value, attribute_value_expected = [bi()._convert_to_string(i) for i in (actual_value, attribute_value_expected)]
         bi()._should_be_equal(actual_value, attribute_value_expected, msg, values)
 
+    # noinspection SpellCheckingInspection,SpellCheckingInspection,SpellCheckingInspection,SpellCheckingInspection
     @staticmethod
     def create_download_dir_profile_for_firefox(path_to_download, mime_types_file=None, *extensions_files):
         """
@@ -191,6 +189,7 @@ class SeleniumLibraryKeywords(object):
         logger.info("Firefox Profile Created in dir '" + fp.profile_dir + "'")
         return fp.profile_dir
 
+    # noinspection SpellCheckingInspection,SpellCheckingInspection
     @staticmethod
     def create_download_dir_capabilities_for_chrome(path_to_download, **extensions_files):
         """
