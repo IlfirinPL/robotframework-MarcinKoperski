@@ -11,7 +11,7 @@ from robot.libraries import DateTime
 from selenium.webdriver import FirefoxProfile, ChromeOptions
 from selenium.webdriver.common.keys import Keys
 
-from TestToolsMK.robot_instances import validate_create_artifacts_dir, sl
+from TestToolsMK.robot_instances import validate_create_artifacts_dir, sl, bi
 
 try:
     # noinspection PyCompatibility
