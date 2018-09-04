@@ -61,6 +61,8 @@ Prerequisites
 - `Microsoft Visual C++ Compiler for Python 2.7`__  // for windows only 
 - `Chocolatey`__ // for windows only
 - `Python 2.7.X`__   // for windows only
+- Python 2.7,3.6,3.7  // tested on linux
+
 
 __ http://www.microsoft.com/en-us/download/details.aspx?id=44266
 __ https://chocolatey.org/
@@ -93,7 +95,7 @@ Update
 To install using latest stable build use 
 ::
 	sudo pip install -U -r https://raw.githubusercontent.com/IlfirinPL/robotframework-MarcinKoperski/master/requirements.txt
-	pip install -U git+https://github.com/IlfirinPL/robotframework-MarcinKoperski.git
+	sudo pip install -U git+https://github.com/IlfirinPL/robotframework-MarcinKoperski.git
 
 
 
