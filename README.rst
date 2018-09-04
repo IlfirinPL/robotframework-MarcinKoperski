@@ -90,12 +90,10 @@ linux
 
 Update 
 ------------
-To install using latest stable build use
+To install using latest stable build use 
 ::
-	pip install -U robotframework-MarcinKoperski
+	sudo pip install -U -r https://raw.githubusercontent.com/IlfirinPL/robotframework-MarcinKoperski/master/requirements.txt
+	pip install -U git+https://github.com/IlfirinPL/robotframework-MarcinKoperski.git
 
 
-to install from sources may install unstable release
-::
-	pip install git+https://github.com/IlfirinPL/robotframework-MarcinKoperski.git
 
