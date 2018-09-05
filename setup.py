@@ -35,7 +35,6 @@ setup(
         u'robotframework-pabot',
         u'robotframework-seleniumlibrary',
         u'robotframework-selenium2library',
-        u'robotframework-testmanagement',
         u'robotframework-appiumlibrary',
         u'gspread',
         u'unicodecsv',
