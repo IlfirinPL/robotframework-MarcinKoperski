@@ -24,3 +24,4 @@ robotframework-ftplibrary
 robotframework-pabot
 robotframework-databaselibrary
 #robotframework-imagehorizonlibrary
+git+https://github.com/IlfirinPL/robotframework-testmanagement.git
