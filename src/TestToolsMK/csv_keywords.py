@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 
 # Copyright (c) 2015 Cutting Edge QA Marcin Koperski
-import io
 import os
 import time
+import sys
 
 import csv
 # import unicodecsv as csv
@@ -22,15 +22,20 @@ class CsvKeywords(object):
         self.OUTPUT_FILE_CSV = validate_create_artifacts_dir(file_name)
 
     @staticmethod
-    def append_to_csv(filename, values_list):
+    def append_to_csv(filename, values_list, encoding='UTF-8'):
         """
         Example usage:
         | ${list} | Create List	| a | ""1"" |	"é,őáá" | #example with chars utf-8 |
         | Append To Csv | example.csv   |
         """
-        with open(filename, 'a') as csv_file:
-            writer_csv = csv.writer(csv_file, dialect='excel')
-            writer_csv.writerow([item for item in values_list])
+        if sys.version_info[0] < 3:
+            with open(filename, 'ab') as csv_file:
+                writer_csv = csv.writer(csv_file, dialect='excel')
+                writer_csv.writerow([item.encode(encoding) for item in values_list])
+        else:
+            with open(filename, 'a', newline='') as csv_file:
+                writer_csv = csv.writer(csv_file, dialect='excel')
+                writer_csv.writerow([item for item in values_list])
 
     def csv_writer(self, *values):
         """
