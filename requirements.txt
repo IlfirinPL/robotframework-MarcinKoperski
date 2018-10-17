@@ -12,6 +12,9 @@ unicodecsv
 gspread
 oauth2client 
 google-api-python-client
+# support python
+PyPDF2
+
 
 #list of robotframework libraries
 robotframework
