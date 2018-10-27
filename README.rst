@@ -99,3 +99,7 @@ To install using latest stable build use
 
 
 
+RIDE for python 3
+
+::
+	https://github.com/HelioGuilherme66/RIDE/releases
