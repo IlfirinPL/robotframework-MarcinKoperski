@@ -15,6 +15,14 @@ library for Robot Framework
 .. contents::
    :local:
 
+News/Changelog
+------------
+* Get File PDF - read pdf file content
+* better support python3 add automatic test in travis
+
+
+
+
 =================================================
 
 Introduction
