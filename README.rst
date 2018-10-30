@@ -67,14 +67,16 @@ To use it add Library "TestToolsMK" to your robotframework projects
 Prerequisites
 -------------
 - `Microsoft Visual C++ Compiler for Python 2.7`__  // for windows only 
+- `Microsoft Visual C++ Compiler for Python 3.X`__
 - `Chocolatey`__ // for windows only
 - `Python 2.7.X`__   // for windows only
 - Python 2.7,3.6,3.7  // tested on linux
 
 
 __ http://www.microsoft.com/en-us/download/details.aspx?id=44266
+__ https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools&rel=15
 __ https://chocolatey.org/
-__ https://www.python.org/downloads/
+__ https://www.python.org/downloads
 
 Installation 
 ------------
