@@ -2,7 +2,7 @@
 setuptools
 lxml
 selenium
-JayDeBeApi
+#JayDeBeApi
 pillow>=2.9.0
 requests
 openpyxl
