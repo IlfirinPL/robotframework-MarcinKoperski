@@ -14,7 +14,7 @@ oauth2client
 google-api-python-client
 # support python
 PyPDF2
-
+pyyaml
 
 #list of robotframework libraries
 robotframework
@@ -28,3 +28,4 @@ robotframework-pabot
 robotframework-databaselibrary
 git+https://github.com/IlfirinPL/robotframework-testmanagement.git
 #robotframework-imagehorizonlibrary
+git+https://github.com/IlfirinPL/robotframework-jsonlibrary.git
