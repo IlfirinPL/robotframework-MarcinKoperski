@@ -33,3 +33,8 @@ robotframework-databaselibrary
 git+https://github.com/IlfirinPL/robotframework-testmanagement.git
 #robotframework-imagehorizonlibrary
 git+https://github.com/IlfirinPL/robotframework-jsonlibrary.git
+robotframework-appiumlibrary
+
+# additonal tools
+robotremoteserver
+robotframework-metrics
