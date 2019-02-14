@@ -78,7 +78,7 @@ __ https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=B
 __ https://chocolatey.org/
 __ https://www.python.org/downloads
 
-Installation 
+Installation or Update
 ------------
 
 Best way to setup is to use following commands , skip steps that you already have
@@ -98,15 +98,6 @@ linux
 	sudo apt-get install imagemagick
 	sudo pip install -U -r https://raw.githubusercontent.com/IlfirinPL/robotframework-MarcinKoperski/master/requirements.txt
 	sudo pip install -U git+https://github.com/IlfirinPL/robotframework-MarcinKoperski.git
-
-
-Update 
-------------
-To install using latest stable build use 
-::
-	sudo pip install -U -r https://raw.githubusercontent.com/IlfirinPL/robotframework-MarcinKoperski/master/requirements.txt
-	sudo pip install -U git+https://github.com/IlfirinPL/robotframework-MarcinKoperski.git
-
 
 
 RIDE for python 3
