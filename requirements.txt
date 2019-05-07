@@ -34,7 +34,9 @@ git+https://github.com/IlfirinPL/robotframework-testmanagement.git
 #robotframework-imagehorizonlibrary
 git+https://github.com/IlfirinPL/robotframework-jsonlibrary.git
 robotframework-appiumlibrary
+robotframework-faker
 
 # additonal tools
 robotremoteserver
 robotframework-metrics
+
