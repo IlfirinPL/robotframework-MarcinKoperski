@@ -4,7 +4,7 @@ lxml
 selenium
 #JayDeBeApi
 pillow>=2.9.0
-requests
+requests3
 openpyxl
 #csv file
 unicodecsv
