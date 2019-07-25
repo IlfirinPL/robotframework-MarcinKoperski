@@ -100,6 +100,5 @@ linux
 
 
 RIDE for python 3
-
 ::
 	pip install -U git+https://github.com/robotframework/RIDE.git
