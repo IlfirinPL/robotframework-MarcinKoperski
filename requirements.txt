@@ -18,6 +18,12 @@ pyyaml
 jsonpath-ng>=1.4.3
 coverage==4.2
 
+xlrd
+xlwt
+xlutils 
+psycopg2-binary
+
+
 #list of robotframework libraries
 robotframework
 robotframework-requests
