@@ -32,14 +32,6 @@ matrix:
         - ROBOTFRAMEWORK=3.1.2
         - ROBOT_OPTIONS=--dotted
         - INTERPRETER=python3
-    - python: "3.7"
-      env:
-        - BROWSER=chrome
-        - SELENIUM=3.141.0
-        - ROBOTFRAMEWORK=3.1.2
-        - ROBOT_OPTIONS=--dotted
-        - INTERPRETER=pypy3
-        - PYPY=True
 
 install:
   - pip install -r requirements.txt
