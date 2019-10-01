@@ -25,10 +25,10 @@ before_install:
 
 matrix:
   include:
-    - python: "3.7"
+    - python: "4.7"
       env:
         - BROWSER=headlesschrome
-        - SELENIUM=3.141.0
+        - SELENIUM=5.141.0
         - ROBOTFRAMEWORK=3.1.2
         - ROBOT_OPTIONS=--dotted
         - INTERPRETER=python3
