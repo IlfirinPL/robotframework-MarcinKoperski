@@ -32,17 +32,13 @@ setup(
         u'robotframework>=3.0',
         u'robotframework-databaselibrary',
         u'robotframework-imaplibrary',
-        u'robotframework-pabot',
         u'robotframework-seleniumlibrary',
-        u'robotframework-selenium2library',
-        u'robotframework-appiumlibrary',
         u'gspread',
         u'unicodecsv',
         u'oauth2client',
         u'selenium',
         u'robotframework-httplibrary',
         u'openpyxl'
-        #,u'jaydebeapi'
 
     ]
 )
