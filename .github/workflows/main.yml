@@ -1,4 +1,5 @@
-- name: Publish a Python distribution to PyPI
+- name: Publish package
+  if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
   uses: pypa/gh-action-pypi-publish@master
   with:
     user: __token__
