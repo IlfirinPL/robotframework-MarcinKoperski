@@ -30,5 +30,6 @@ jobs:
         python -m robot.run  -b debug.log -e TODO -e WIN -r none -l none .
     - name: Print Debug Logs 
       run: |
+        pushd atest/acceptance
         cat debug.log
 
