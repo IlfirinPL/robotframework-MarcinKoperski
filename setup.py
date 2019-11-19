@@ -36,7 +36,6 @@ setup(
         u'gspread',
         u'unicodecsv',
         u'oauth2client',
-        u'selenium',
         u'robotframework-httplibrary',
         u'openpyxl'
 
