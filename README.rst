@@ -18,7 +18,7 @@ library for Robot Framework
 News/Changelog
 ------------
 * Get File PDF - read pdf file content
-* better support python3 add automatic test in travis
+* better support python3 add automatic test in github, also automatic release in pype
 
 
 
