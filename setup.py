@@ -21,6 +21,7 @@ setup(
     name='robotframework-MarcinKoperski', version=__version__,
     description='RobotFramework Marcin Koperski bundle',
     author='Marcin Koperski', license='AGPL',
+    author_email='marcin.koperski+pypi@gmail.com',
     url=u'https://github.com/IlfirinPL/robotframework-MarcinKoperski',
     download_url=u'https://github.com/IlfirinPL/robotframework-MarcinKoperski/archive/master.zip'.format(
         version=__version__), keywords=['robotframework', 'MarcinKoperski'],
