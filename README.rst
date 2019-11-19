@@ -3,9 +3,6 @@ robotframework-MarcinKoperski
 library for Robot Framework
 
 
-.. image:: https://travis-ci.org/IlfirinPL/robotframework-MarcinKoperski.png
-    :target: https://travis-ci.org/IlfirinPL/robotframework-MarcinKoperski
-
 .. image:: https://img.shields.io/pypi/v/robotframework-MarcinKoperski.svg
     :target: https://pypi.python.org/pypi/robotframework-MarcinKoperski
 
@@ -18,8 +15,7 @@ library for Robot Framework
 News/Changelog
 ------------
 * Get File PDF - read pdf file content
-* better support python3 add automatic test in github, also automatic release in pype
-
+* better support python3 add automatic test in github, also automatic release in https://pypi.org
 
 
 
