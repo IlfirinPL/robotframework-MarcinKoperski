@@ -1,7 +1,9 @@
     
 name: Upload Python Package Test PYPI
 
-on: [push]
+on:
+  label:
+    types: [created, deleted]
 
 jobs:
   deploy:
