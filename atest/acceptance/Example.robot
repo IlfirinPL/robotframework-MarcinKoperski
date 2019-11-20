@@ -154,7 +154,7 @@
 |    | File Should Exist | ${TEMPDIR}/temp1.txt |
 |    | [Teardown] | Remove Files | test1.txt | ${TEMPDIR}/temp1.txt |
 
-| Generate Pesel|
+| Generate Pesel |
 |    | Pesel |
 |    | Pesel | 01/01/1911 |
 |    | Pesel | 01/01/1911 | M |
