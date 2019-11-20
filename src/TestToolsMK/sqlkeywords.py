@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# Copyright (c) 2015 Cutting Edge QA
+# Copyright (c) 2015 Cutting Edge QA Marcin Koperski
 import os
-from xmlrpclib import DateTime
+# from xmlrpclib import DateTime
 import string
 import random
-from TestToolsMK.robot_instances import *
 from datetime import datetime
 
 from robot.api import logger
@@ -21,6 +20,7 @@ def get_current_time_for_timers():
     return datetime.now()
 
 
+# noinspection PyProtectedMember
 class SQLKeywords(object):
     OUTPUT_FILE_LOG_SQL = "Artifacts/log_of_sql_execution.sql"
     ADD_LOGS_FLAG = True
@@ -32,6 +32,13 @@ class SQLKeywords(object):
         self.ADD_LOGS_FLAG = flag
 
     def query_many_rows(self, select_statement, append_to_logs=ADD_LOGS_FLAG):
+        """
+        To switch output file with logs use
+        | Set Sql Log Output File | ./myFile.sql |
+        :param select_statement:
+        :param append_to_logs:
+        :return:
+        """
         if append_to_logs:
             self._add_query_to_log_file(select_statement)
         results = dbl().query(select_statement)
@@ -41,6 +48,8 @@ class SQLKeywords(object):
 
     def query_row(self, select_statement, append_to_logs=ADD_LOGS_FLAG):
         """
+        To switch output file with logs use
+        | Set Sql Log Output File | ./myFile.sql |
         :raise error when results contains more then one row results
         :return: table
         """
@@ -55,6 +64,8 @@ class SQLKeywords(object):
 
     def query_cell(self, select_statement, append_to_logs=ADD_LOGS_FLAG):
         """
+        To switch output file with logs use
+        | Set Sql Log Output File | ./myFile.sql |
         :raise error when results contains more then one cell
         :return: single value
         """
@@ -68,7 +79,8 @@ class SQLKeywords(object):
     def _add_query_to_log_file(self, statement):
         current_time = get_current_time_for_timers()
         self.start_time = current_time
-        final_string = "\n/* Start execution, statement below : " + current_time.strftime("%Y.%m.%d %H:%M:%S") + " */\n" + statement + "\n"
+        final_string = "\n/* Start execution, statement below : " + current_time.strftime(
+            "%Y.%m.%d %H:%M:%S") + " */\n" + statement + "\n"
         self._append_to_file(final_string)
 
     def _add_results_to_log_file(self, results):
@@ -97,6 +109,13 @@ class SQLKeywords(object):
             output.write(text)
 
     def execute_sql_string_with_logs(self, sql_string, append_to_logs=ADD_LOGS_FLAG):
+        """
+        To switch output file with logs use
+        | Set Sql Log Output File | ./myFile.sql |
+        :param sql_string:
+        :param append_to_logs:
+        :return:
+        """
         if append_to_logs:
             self._add_query_to_log_file(sql_string)
         dbl().execute_sql_string(sql_string)
@@ -165,7 +184,8 @@ class SQLKeywords(object):
         self.insert_data_to_table(table_name, array_table)
         return table_name
 
-    def connect_to_database_using_jdbc_driver(self, jdbc_connection_string, user, password, jdbc_driver, jdbc_jar_path, library="jaydebeapi"):
+    def connect_to_database_using_jdbc_driver(self, jdbc_connection_string, user, password, jdbc_driver, jdbc_jar_path,
+                                              library="jaydebeapi"):
         """
         Example parameters for CIS databases Cisto Integration Services, using java drivers is done using library
         jdbc_connection_string: jdbc:compositesw:dbapi@localhost:9401?domain=composite&dataSource=Example
@@ -174,8 +194,9 @@ class SQLKeywords(object):
         jaydebeapi library has to be installed 
 
         """
-        dbl().connect_to_database_using_custom_params(library,
-            "'%s',['%s', '%s', '%s'],'%s'" % (jdbc_driver, jdbc_connection_string, user, password, jdbc_jar_path))
+        dbl().connect_to_database_using_custom_params(library, "\"%s\",\"%s\",[ \"%s\", \"%s\"],\"%s\"," % (
+            jdbc_driver, jdbc_connection_string, user, password,
+            jdbc_jar_path))
 
 
 def table_name_generator(size=12, chars=string.ascii_lowercase + string.ascii_uppercase):

@@ -55,3 +55,11 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# run artifacts
+atest/results/
+.idea
+bin
+
+# VS Code
+.vscode/*

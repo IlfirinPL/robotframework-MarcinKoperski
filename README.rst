@@ -3,9 +3,6 @@ robotframework-MarcinKoperski
 library for Robot Framework
 
 
-.. image:: https://travis-ci.org/IlfirinPL/robotframework-MarcinKoperski.png
-    :target: https://travis-ci.org/IlfirinPL/robotframework-MarcinKoperski
-
 .. image:: https://img.shields.io/pypi/v/robotframework-MarcinKoperski.svg
     :target: https://pypi.python.org/pypi/robotframework-MarcinKoperski
 
@@ -14,6 +11,13 @@ library for Robot Framework
 
 .. contents::
    :local:
+
+News/Changelog
+------------
+* Get File PDF - read pdf file content
+* better support python3 add automatic test in github, also automatic release in https://pypi.org
+
+
 
 =================================================
 
@@ -58,15 +62,17 @@ To use it add Library "TestToolsMK" to your robotframework projects
 
 Prerequisites
 -------------
-- `Microsoft Visual C++ Compiler for Python 2.7`__  // for windows only 
+- `Microsoft Visual C++ Compiler for Python 3.X`__
 - `Chocolatey`__ // for windows only
-- `Python 2.7.X`__   // for windows only
+- Python 3.6,3.7,3.8  // tested on linux
+
 
 __ http://www.microsoft.com/en-us/download/details.aspx?id=44266
+__ https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools&rel=15
 __ https://chocolatey.org/
-__ https://www.python.org/downloads/
+__ https://www.python.org/downloads
 
-Installation 
+Installation or Update
 ------------
 
 Best way to setup is to use following commands , skip steps that you already have
@@ -77,25 +83,15 @@ windows
 	choco install imagemagick.tool
 	setx MAGICK_HOME "C:\ProgramData\chocolatey\lib\imagemagick.tool\tools"
 
-	pip install robotframework
-	pip install robotframework-MarcinKoperski
+	pip install -U robotframework-MarcinKoperski
 
 
 linux
 ::
 	sudo apt-get install imagemagick
-	sudo pip install -r https://raw.githubusercontent.com/IlfirinPL/robotframework-MarcinKoperski/master/requirements.txt
-	sudo pip install git+https://github.com/IlfirinPL/robotframework-MarcinKoperski.git
+	sudo pip install -U robotframework-MarcinKoperski
 
 
-Update 
-------------
-To install using latest stable build use
+RIDE for python 3
 ::
-	pip install -U robotframework-MarcinKoperski
-
-
-to install from sources may install unstable release
-::
-	pip install git+https://github.com/IlfirinPL/robotframework-MarcinKoperski.git
-
+	py -m pip install -U git+https://github.com/robotframework/RIDE.git

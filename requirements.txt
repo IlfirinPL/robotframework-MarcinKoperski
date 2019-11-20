@@ -1,0 +1,46 @@
+#list of  non robotframework
+setuptools
+lxml
+selenium
+#JayDeBeApi
+pillow>=2.9.0
+requests3
+openpyxl
+#csv file
+unicodecsv
+#google drive
+gspread
+oauth2client 
+google-api-python-client
+# support python
+PyPDF2
+pyyaml
+jsonpath-ng>=1.4.3
+coverage==4.2
+
+xlrd
+xlwt
+xlutils 
+psycopg2-binary
+
+
+#list of robotframework libraries
+robotframework
+robotframework-requests
+robotframework-archivelibrary
+robotframework-seleniumlibrary
+robotframework-sshlibrary
+robotframework-httplibrary
+robotframework-ftplibrary
+robotframework-pabot
+robotframework-databaselibrary
+git+https://github.com/IlfirinPL/robotframework-testmanagement.git
+#robotframework-imagehorizonlibrary
+git+https://github.com/IlfirinPL/robotframework-jsonlibrary.git
+robotframework-appiumlibrary
+robotframework-faker
+
+# additonal tools
+robotremoteserver
+robotframework-metrics
+
