@@ -64,7 +64,6 @@ Prerequisites
 -------------
 - `Microsoft Visual C++ Compiler for Python 3.X`__
 - `Chocolatey`__ // for windows only
-- `Python 2.7.X`__   // for windows only
 - Python 3.6,3.7,3.8  // tested on linux
 
 
@@ -84,16 +83,13 @@ windows
 	choco install imagemagick.tool
 	setx MAGICK_HOME "C:\ProgramData\chocolatey\lib\imagemagick.tool\tools"
 
-	pip install -U -r https://raw.githubusercontent.com/IlfirinPL/robotframework-MarcinKoperski/master/requirements.txt
-	pip install -U git+https://github.com/IlfirinPL/robotframework-MarcinKoperski.git
+	pip install -U robotframework-MarcinKoperski
 
 
 linux
 ::
 	sudo apt-get install imagemagick
-	sudo pip install -U -r https://raw.githubusercontent.com/IlfirinPL/robotframework-MarcinKoperski/master/requirements.txt
-	sudo pip install -U git+https://github.com/IlfirinPL/robotframework-MarcinKoperski.git
-
+	sudo pip install -U robotframework-MarcinKoperski
 
 RIDE for python 3
 ::
