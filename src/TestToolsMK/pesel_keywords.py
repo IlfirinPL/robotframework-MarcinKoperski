@@ -20,13 +20,10 @@ from robot.libraries import DateTime
 from robot.utils import asserts
 
 class PeselKeywords(object):
-    def Pesel(self,date='20/12/1999',gender=''):
-        """ 
-        Generate PSL for given birthdate DD/MM/YYYY and 
-        gender M - male, F - female, <empty> - random. 
-        """
-        gender = gender.upper() 
-        if gender != '' and gender != 'M' and gender != 'F':
+    def Pesel(self,date='20/12/1999',sex=''):
+        """ Generate PSL for given birthdate DD/MM/YYYY and gender M - male, F - female, <empty> - random. """
+        sex = sex.upper() 
+        if sex != '' and sex != 'M' and sex != 'F':
             raise ValueError("Accepted values for gender: M or F or <empty>")
         dt = datetime.strptime(date,'%d/%m/%Y')
         y = str(dt.year)
@@ -56,12 +53,12 @@ class PeselKeywords(object):
         psl08 = random.randrange(10)
         psl09 = random.randrange(10)
         rand = random.randrange(10)
-        if gender=='M':
+        if sex=='M':
             if rand%2==0:
                 psl10 = rand+1
             else:
                 psl10 = rand
-        elif gender=='F':
+        elif sex=='F':
             if rand%2==0:
                 psl10 = rand
             else:
@@ -69,9 +66,9 @@ class PeselKeywords(object):
         else:
             psl10 = rand
             if psl10 % 2 == 0:
-                gender = 'F'  
+                sex = 'F'  
             else:
-                gender = 'M'
+                sex = 'M'
         rest = (psl01*1 + psl02*3 + psl03*7 + psl04*9 + psl05*1 + psl06*3 + psl07*7 + psl08*9 + psl09*1 + psl10*3) % 10
         if rest == 0:
             psl11 = 0

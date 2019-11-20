@@ -37,7 +37,8 @@ setup(
         u'unicodecsv',
         u'oauth2client',
         u'robotframework-httplibrary',
-        u'openpyxl'
+        u'openpyxl',
+        u'PyPDF2'
 
     ]
 )
