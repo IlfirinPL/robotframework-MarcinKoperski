@@ -93,14 +93,14 @@ class SQLKeywords(object):
             for i in range(len(results)):
                 data += "("
                 for j in range(len(results[i])):
-                    data += results[i][j].encode(sys.stdout.encoding, errors='replace')
+                    data += repr(results[i][j])
                     if j != (len(results[i]) - 1):
                         data += "\t,"
                 data += ")\n"
             data += "]"
         else:
             data = ""
-        final_string = "/* Response of statement in :" + total_time_verbose + " , data below " + data.encode(sys.stdout.encoding, errors='replace') + " */\n"
+        final_string = "/* Response of statement in :" + total_time_verbose + " , data below " + data + " */\n"
         self._append_to_file(final_string)
 
     def _append_to_file(self, text):
