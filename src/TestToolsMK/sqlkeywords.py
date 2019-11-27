@@ -14,6 +14,7 @@ from robot.libraries.DateTime import Time
 from robot.utils import (is_falsy)
 
 from TestToolsMK.robot_instances import dbl, ttmkl, validate_create_artifacts_dir
+import sys
 
 
 def get_current_time_for_timers():
@@ -92,14 +93,14 @@ class SQLKeywords(object):
             for i in range(len(results)):
                 data += "("
                 for j in range(len(results[i])):
-                    data += str(results[i][j])
+                    data += results[i][j].encode(sys.stdout.encoding, errors='replace')
                     if j != (len(results[i]) - 1):
                         data += "\t,"
                 data += ")\n"
             data += "]"
         else:
             data = ""
-        final_string = "/* Response of statement in :" + total_time_verbose + " , data below " + data + " */\n"
+        final_string = "/* Response of statement in :" + total_time_verbose + " , data below " + data.encode(sys.stdout.encoding, errors='replace') + " */\n"
         self._append_to_file(final_string)
 
     def _append_to_file(self, text):
