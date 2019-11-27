@@ -30,6 +30,7 @@ jobs:
         python -m robot.run  -b debug.log -e TODO -e WIN -r none -l none .
     - name: Print Debug Logs 
       run: |
-        pushd atest/acceptance
-        cat debug.log
-
+        cat atest/acceptance/debug.log
+    - name: Print sql Log 
+      run: |
+        cat atest/acceptance/Artifacts/log_of_sql_execution.sql
