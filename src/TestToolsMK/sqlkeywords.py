@@ -7,6 +7,7 @@ import os
 import string
 import random
 from datetime import datetime
+import codecs
 
 from robot.api import logger
 from robot.libraries.DateTime import Date
@@ -105,8 +106,8 @@ class SQLKeywords(object):
 
     def _append_to_file(self, text):
         full_log_file_path = validate_create_artifacts_dir(self.OUTPUT_FILE_LOG_SQL)
-        mode = 'a' if os.path.exists(full_log_file_path) else 'w'
-        with open(full_log_file_path, mode) as output:
+        modeFile = 'a' if os.path.exists(full_log_file_path) else 'w'
+        with codecs.open(full_log_file_path, modeFile, "utf-8") as output:
             output.write(text)
 
     def execute_sql_string_with_logs(self, sql_string, append_to_logs=ADD_LOGS_FLAG):

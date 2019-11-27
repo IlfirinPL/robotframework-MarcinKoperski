@@ -15,10 +15,6 @@ google-api-python-client
 # support python
 PyPDF2
 pyyaml
-jsonpath-ng>=1.4.3
-coverage==4.2
-
-
 #list of robotframework libraries
 robotframework
 robotframework-requests
