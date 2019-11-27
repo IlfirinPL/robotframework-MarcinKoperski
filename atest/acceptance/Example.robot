@@ -118,7 +118,6 @@
 |    | Length Should Be | ${resutls} | 4 |
 |    | Disconnect From Database |
 |    | File Should Exist | Artifacts/log_of_sql_execution.sql |
-|    | Remove File | Artifacts/log_of_sql_execution.sql |
 |    | [Teardown] | Remove Files | ${ db file} |
 
 | CSV |

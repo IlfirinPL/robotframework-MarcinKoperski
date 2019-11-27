@@ -46,7 +46,8 @@ coverage.xml
 # Translations
 *.mo
 *.pot
-
+output.xml
+log_of_sql_execution.sql
 # Django stuff:
 *.log
 
