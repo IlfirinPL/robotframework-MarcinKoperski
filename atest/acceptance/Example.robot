@@ -153,9 +153,3 @@
 |    | Log Variable To File | ${test} | test2 | ${TEMPDIR}/temp1.txt |
 |    | File Should Exist | ${TEMPDIR}/temp1.txt |
 |    | [Teardown] | Remove Files | test1.txt | ${TEMPDIR}/temp1.txt |
-
-| Generate Pesel |
-|    | Pesel |
-|    | Pesel | 01/01/1911 |
-|    | Pesel | 01/01/1911 | M |
-|    | Pesel | 01/01/1911 | F |
