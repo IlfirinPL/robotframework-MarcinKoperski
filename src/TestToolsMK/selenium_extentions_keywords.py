@@ -80,19 +80,34 @@ class SeleniumLibraryKeywords(object):
 
     @staticmethod
     def click_element_extended(locator, timeout=None, error_msg=None):
-        """Click element proceed with following steps
-        1.wait_until_page_contains_element
-        2.wait_until_element_is_visible_wait_until_element_is_visible
-        3.mouse_over"""
+        """
+        Click element proceed with following steps
+        * wait_until_page_contains_element
+        * wait_until_element_is_visible_wait_until_element_is_visible
+        * scroll_element_into_view
+        * mouse_over
+        * click_element
+
+        """
         sl().wait_until_page_contains_element(locator, timeout, error_msg)
         sl().wait_until_element_is_visible(locator, timeout, error_msg)
+        sl().scroll_element_into_view(locator)
         sl().mouse_over(locator)
         sl().click_element(locator)
 
     @staticmethod
     def double_click_element_extended(locator, timeout=None, error=None):
+        """
+        Double Click element proceed with following steps
+        * wait_until_page_contains_element
+        * wait_until_element_is_visible_wait_until_element_is_visible
+        * scroll_element_into_view
+        * mouse_over
+        * double_click_element
+        """
         sl().wait_until_page_contains_element(locator, timeout, error)
         sl().wait_until_element_is_visible(locator, timeout, error)
+        sl().scroll_element_into_view(locator)
         sl().mouse_over(locator)
         sl().double_click_element(locator)
 

@@ -34,15 +34,6 @@ def validate_create_artifacts_dir(path):
     return output_path_normalized
 
 
-def s2l():
-    """
-        :rtype : SeleniumLibrary
-        """
-    s2l_instance = BuiltIn().get_library_instance('SeleniumLibrary')
-    assert isinstance(s2l_instance, SeleniumLibrary)
-    return s2l_instance
-
-
 def sl():
     """
         :rtype : SeleniumLibrary
