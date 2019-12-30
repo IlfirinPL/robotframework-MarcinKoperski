@@ -1,0 +1,3 @@
+tasks:
+  - init: pyenv local 3.7.6 && pip install -r ./requirements.txt
+
