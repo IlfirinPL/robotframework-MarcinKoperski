@@ -100,14 +100,27 @@ class CsvKeywords(object):
             return i + 1
 
     @staticmethod
-    def csv_read_file(path, encoding='UTF-8', encoding_errors='strict'):
+    def csv_read_file(path, encoding='UTF-8', encoding_errors='strict',delimiter=',',quotechar='"'):
         """
         returns file CSV content as 2D table
         """
         output_table = []
         # encoding = osl()._map_encoding(encoding)
         with open(path) as csv_file:
-            csv_reader = csv.reader(csv_file, quotechar='"')
+            csv_reader = csv.reader(csv_file, quotechar=quotechar,delimiter=delimiter)
+            for row in csv_reader:
+                output_table.append(row)
+            return output_table
+
+    @staticmethod
+    def csv_read_file_return_dictionary(path, encoding='UTF-8', encoding_errors='strict',delimiter=',',quotechar='"'):
+        """
+        returns file CSV content as 1D table of dictionaries
+        """
+        output_table = []
+        # encoding = osl()._map_encoding(encoding)
+        with open(path) as csv_file:
+            csv_reader = csv.DictReader(csv_file, quotechar=quotechar,delimiter=delimiter)
             for row in csv_reader:
                 output_table.append(row)
             return output_table
