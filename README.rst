@@ -7,7 +7,7 @@ library for Robot Framework
     :target: https://pypi.python.org/pypi/robotframework-MarcinKoperski
 
 .. image:: https://img.shields.io/pypi/l/robotframework-MarcinKoperski.svg
-    :target: http://www.gnu.org/licenses/agpl-3.0.html
+    :target: http://www.gnu.org/licenses/mit.html
 
 .. contents::
    :local:
