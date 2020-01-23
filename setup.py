@@ -20,7 +20,7 @@ __version__ = open(__version_file_path__, 'r').read().strip()
 setup(
     name='robotframework-MarcinKoperski', version=__version__,
     description='RobotFramework Marcin Koperski bundle',
-    author='Marcin Koperski', license='AGPL',
+    author='Marcin Koperski', license='MIT',
     author_email='marcin.koperski+pypi@gmail.com',
     url=u'https://github.com/IlfirinPL/robotframework-MarcinKoperski',
     download_url=u'https://github.com/IlfirinPL/robotframework-MarcinKoperski/archive/master.zip'.format(
