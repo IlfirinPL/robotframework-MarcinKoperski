@@ -79,7 +79,7 @@ class SeleniumLibraryKeywords(object):
             sl().go_to(url)
 
     @staticmethod
-    def click_element_extended(locator, timeout=None, error_msg=None):
+    def click_element_extended(locator, modifier=False, action_chain=False, timeout=None, error_msg=None):
         """
         Click element proceed with following steps
         * wait_until_page_contains_element
@@ -93,10 +93,10 @@ class SeleniumLibraryKeywords(object):
         sl().wait_until_element_is_visible(locator, timeout, error_msg)
         sl().scroll_element_into_view(locator)
         sl().mouse_over(locator)
-        sl().click_element(locator)
+        sl().click_element(locator, modifier=modifier, action_chain=action_chain)
 
     @staticmethod
-    def double_click_element_extended(locator, timeout=None, error=None):
+    def double_click_element_extended(locator, modifier=False, action_chain=False, timeout=None, error=None):
         """
         Double Click element proceed with following steps
         * wait_until_page_contains_element
@@ -109,16 +109,17 @@ class SeleniumLibraryKeywords(object):
         sl().wait_until_element_is_visible(locator, timeout, error)
         sl().scroll_element_into_view(locator)
         sl().mouse_over(locator)
-        sl().double_click_element(locator)
+        sl().double_click_element(locator, modifier=modifier, action_chain=action_chain)
 
-    def click_element_extended_and_wait(self, locator, sleep, timeout=None, error_msg=None, reason=None):
+    def click_element_extended_and_wait(self, locator, sleep, modifier=False, action_chain=False, timeout=None, error_msg=None, reason=None):
         self.click_element_extended(locator, timeout, error_msg)
         bi().sleep(sleep, reason)
 
     @staticmethod
     def open_browser_extension(url, browser="ff", width=WIDTH_DEFAULT, height=HEIGHT_DEFAULT, x="0", y="0", alias=None, remote_url=False,
-            desired_capabilities=None, ff_profile_dir=None, selenium_timeout=SELENIUM_TIMEOUT, keyword_to_run_on_failure="Capture Page Screenshot Extension"):
-        sl().open_browser("about:blank", browser, alias, remote_url, desired_capabilities, ff_profile_dir)
+                               desired_capabilities=None, ff_profile_dir=None, selenium_timeout=SELENIUM_TIMEOUT, keyword_to_run_on_failure="Capture Page Screenshot Extension"):
+        sl().open_browser("about:blank", browser, alias,
+                          remote_url, desired_capabilities, ff_profile_dir)
         sl().set_window_position(x, y)
         sl().set_window_size(width, height)
         sl().set_selenium_timeout(selenium_timeout)
@@ -135,11 +136,12 @@ class SeleniumLibraryKeywords(object):
     # noinspection PyProtectedMember
     @staticmethod
     def capture_page_screenshot_extension(prefix="", postfix="", add_time_stamp=True, add_test_case_name=True, add_file_path_to_list="${list of screenshots}",
-            output_dir="Artifacts/Screenshots"):
+                                          output_dir="Artifacts/Screenshots"):
         output_dir_normalized = validate_create_artifacts_dir(output_dir)
 
         if add_time_stamp:
-            current_time = " " + DateTime.get_current_date(result_format="%Y.%m.%d_%H.%M.%S")
+            current_time = " " + \
+                DateTime.get_current_date(result_format="%Y.%m.%d_%H.%M.%S")
         else:
             current_time = ""
         if add_test_case_name:
@@ -147,13 +149,15 @@ class SeleniumLibraryKeywords(object):
         else:
             test_case_name = ""
 
-        output_file = output_dir_normalized + "/" + prefix + test_case_name + postfix + current_time + ".png"
+        output_file = output_dir_normalized + "/" + prefix + \
+            test_case_name + postfix + current_time + ".png"
         output_file_normalized = os.path.normpath(output_file)
 
         # sl()driver.get_screenshot_as_file(output_file_normalized)
         sl().capture_page_screenshot(output_file_normalized)
 
-        results = bi().run_keyword_and_return_status("Variable Should Exist", add_file_path_to_list)
+        results = bi().run_keyword_and_return_status(
+            "Variable Should Exist", add_file_path_to_list)
 
         if not results:
             bi()._get_var_name(add_file_path_to_list)
@@ -161,7 +165,8 @@ class SeleniumLibraryKeywords(object):
             bi().set_test_variable(add_file_path_to_list, list_with_files)
         else:
             list_with_files = bi().create_list(output_file_normalized)
-            list_with_files = bi().run_keyword("Combine Lists", add_file_path_to_list, list_with_files)
+            list_with_files = bi().run_keyword(
+                "Combine Lists", add_file_path_to_list, list_with_files)
             bi().set_test_variable(add_file_path_to_list, list_with_files)
 
         return output_file_normalized
@@ -170,7 +175,7 @@ class SeleniumLibraryKeywords(object):
     def element_attribute_should_be(locator, attribute, attribute_value_expected, msg=None, values=True):
         actual_value = sl().get_element_attribute(locator + "@" + attribute)
         # noinspection PyProtectedMember
-        actual_value, attribute_value_expected = [bi()._convert_to_string(i) for i in (actual_value, attribute_value_expected)]
+        actual_value, attribute_value_expected = [bi()._convert_to_string( i) for i in (actual_value, attribute_value_expected)]
         bi()._should_be_equal(actual_value, attribute_value_expected, msg, values)
 
     # noinspection SpellCheckingInspection,SpellCheckingInspection,SpellCheckingInspection,SpellCheckingInspection
@@ -182,7 +187,8 @@ class SeleniumLibraryKeywords(object):
         | Open Browser Extension | https://support.spatialkey.com/spatialkey-sample-csv-data/ | ff_profile_dir=${profile} |
         | Click Element | //a[contains(@href,'sample.csv.zip')]  |
         """
-        path_to_download_check = validate_create_artifacts_dir(path_to_download)
+        path_to_download_check = validate_create_artifacts_dir(
+            path_to_download)
 
         fp = FirefoxProfile()
         fp.set_preference("browser.download.folderList", 2)
@@ -192,7 +198,7 @@ class SeleniumLibraryKeywords(object):
         fp.set_preference("xpinstall.signatures.required", False)
         fp.set_preference("browser.helperApps.alwaysAsk.force", False)
         fp.set_preference("browser.helperApps.neverAsk.saveToDisk",
-            "application/msword;application/csv;text/csv;image/png;image/jpeg;application/pdf;text/html;text/plain;application/octet-stream")
+                          "application/msword;application/csv;text/csv;image/png;image/jpeg;application/pdf;text/html;text/plain;application/octet-stream")
         fp.set_preference("pdfjs.disabled", True)
         fp.update_preferences()
         for single_extension in extensions_files:
@@ -214,15 +220,18 @@ class SeleniumLibraryKeywords(object):
         | Click Element	 | //a[contains(@href,'sample.csv.zip')] |
         """
 
-        path_to_download_check = validate_create_artifacts_dir(path_to_download)
+        path_to_download_check = validate_create_artifacts_dir(
+            path_to_download)
 
         chrome_options = ChromeOptions()
-        prefs = {"download.default_directory": path_to_download_check, "directory_upgrade": "true"}
+        prefs = {"download.default_directory": path_to_download_check,
+                 "directory_upgrade": "true"}
 
         chrome_options.add_experimental_option("prefs", prefs)
         chrome_options.add_argument("--disable-web-security")
         for single_extension in extensions_files:
             chrome_options.add_extension(single_extension)
 
-        logger.info("Chrome Capabilities set download dir '" + path_to_download_check + "'")
+        logger.info("Chrome Capabilities set download dir '" +
+                    path_to_download_check + "'")
         return chrome_options.to_capabilities()
