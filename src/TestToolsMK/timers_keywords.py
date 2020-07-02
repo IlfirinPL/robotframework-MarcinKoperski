@@ -67,3 +67,16 @@ class TimerKeywords(Time, Date):
                 message = "Timer '%s' is above expected time. Actual time %s > %s expected time " % (timer_name, delta, expected_time)
                 raise AssertionError(message)
             return delta
+
+    def timer_should_be_greater_then(self, expected_time, timer_name="Global"):
+        if timer_name not in self.TIMERS_DICTIONARY:
+            message = "Time '%s' is not started." % timer_name
+            raise AssertionError(message)
+        else:
+            delta = get_current_time_for_timers() - self.TIMERS_DICTIONARY[timer_name]
+            delta = Time._convert_time_to_seconds(self, delta)
+            expected_time = Time._convert_time_to_seconds(self, expected_time)
+            if delta < expected_time:
+                message = "Timer '%s' is below expected time. Actual time %s < %s expected time " % (timer_name, delta, expected_time)
+                raise AssertionError(message)
+            return delta
