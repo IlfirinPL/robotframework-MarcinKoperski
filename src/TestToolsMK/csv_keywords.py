@@ -46,6 +46,20 @@ class CsvKeywords(object):
         log_file = self.OUTPUT_FILE_CSV
         self.append_to_csv(log_file, list(values))
 
+    def csv_writer_rows(self, filename, table ,**kwargs):
+        """
+        Append multiple rows to file csv file
+        """
+        if sys.version_info[0] < 3:
+            with open(filename, 'ab') as csv_file:
+                writer_csv = csv.writer(csv_file, dialect='excel' ,**kwargs)
+                writer_csv.writerows(table)
+        else:
+            with open(filename, 'a', newline='') as csv_file:
+                writer_csv = csv.writer(csv_file, dialect='excel' ,**kwargs)
+                writer_csv.writerows(table)
+
+
     def csv_writer_with_extra(self, *values):
         """
         Add extra params at beginning
