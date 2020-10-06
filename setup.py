@@ -33,9 +33,7 @@ setup(
         u'robotframework-databaselibrary',
         u'robotframework-imaplibrary',
         u'robotframework-seleniumlibrary',
-        u'gspread',
         u'unicodecsv',
-        u'oauth2client',
         u'robotframework-httplibrary',
         u'openpyxl',
         u'PyPDF2'
