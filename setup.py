@@ -31,7 +31,6 @@ setup(
     install_requires=[
         u'robotframework>=3.0',
         u'robotframework-databaselibrary',
-        u'robotframework-imaplibrary',
         u'robotframework-seleniumlibrary',
         u'unicodecsv',
         u'robotframework-httplibrary',
