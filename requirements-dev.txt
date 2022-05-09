@@ -1,0 +1,4 @@
+robotframework-lsp
+robotframework-robocop
+robotframework-debuglibrary
+robotframework-tidy
