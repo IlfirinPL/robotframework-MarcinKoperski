@@ -24,11 +24,6 @@ class LoggerKeywords(object):
         suite_name = str(bi().get_variable_value("${SUITE_NAME}"))
         variable_value = name
 
-        # TODO
-        # get variable name is not working
-        # variable_name = _Variables._get_var_name(bi(),str(name))
-        # bi().get_variable_value("${" + variable_name + "}", "Missing!!!")
-
         with open(log_file, 'a') as csv_file:
             writer_csv = csv.writer(csv_file, dialect='excel')
             if os.stat(log_file).st_size < 10:
