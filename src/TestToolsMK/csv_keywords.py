@@ -7,7 +7,7 @@ import time
 import sys
 
 import csv
-# import unicodecsv as csv
+
 from robot.libraries import DateTime
 from robot.utils import asserts
 
@@ -22,19 +22,19 @@ class CsvKeywords(object):
         self.OUTPUT_FILE_CSV = validate_create_artifacts_dir(file_name)
 
     @staticmethod
-    def append_to_csv(filename, values_list, encoding='UTF-8'):
+    def append_to_csv(filename, values_list, encoding="UTF-8"):
         """
         Example usage:
         | ${list} | Create List	| a | ""1"" |	"é,őáá" | #example with chars utf-8 |
         | Append To Csv | example.csv   |
         """
         if sys.version_info[0] < 3:
-            with open(filename, 'ab') as csv_file:
-                writer_csv = csv.writer(csv_file, dialect='excel')
+            with open(filename, "ab") as csv_file:
+                writer_csv = csv.writer(csv_file, dialect="excel")
                 writer_csv.writerow([item.encode(encoding) for item in values_list])
         else:
-            with open(filename, 'a', newline='') as csv_file:
-                writer_csv = csv.writer(csv_file, dialect='excel')
+            with open(filename, "a", newline="") as csv_file:
+                writer_csv = csv.writer(csv_file, dialect="excel")
                 writer_csv.writerow([item for item in values_list])
 
     def csv_writer(self, *values):
@@ -46,19 +46,18 @@ class CsvKeywords(object):
         log_file = self.OUTPUT_FILE_CSV
         self.append_to_csv(log_file, list(values))
 
-    def csv_writer_rows(self, filename, table ,**kwargs):
+    def csv_writer_rows(self, filename, table, **kwargs):
         """
         Append multiple rows to file csv file
         """
         if sys.version_info[0] < 3:
-            with open(filename, 'ab') as csv_file:
-                writer_csv = csv.writer(csv_file, dialect='excel' ,**kwargs)
+            with open(filename, "ab") as csv_file:
+                writer_csv = csv.writer(csv_file, dialect="excel", **kwargs)
                 writer_csv.writerows(table)
         else:
-            with open(filename, 'a', newline='') as csv_file:
-                writer_csv = csv.writer(csv_file, dialect='excel' ,**kwargs)
+            with open(filename, "a", newline="") as csv_file:
+                writer_csv = csv.writer(csv_file, dialect="excel", **kwargs)
                 writer_csv.writerows(table)
-
 
     def csv_writer_with_extra(self, *values):
         """
@@ -79,7 +78,9 @@ class CsvKeywords(object):
         self.csv_writer(*extra_list)
 
     @staticmethod
-    def file_should_not_change(filename, time_in_sec="1", msg="File was modify during waiting time"):
+    def file_should_not_change(
+        filename, time_in_sec="1", msg="File was modify during waiting time"
+    ):
         """
         Methods check modification date date if date doesnt change after set time return true
         Best use with method Wait Until Keyword Succeeds
@@ -96,11 +97,11 @@ class CsvKeywords(object):
         if not os.path.exists(parent):
             os.makedirs(parent)
         if not os.path.isfile(path):
-            open(path, 'w').close()
-        with open(path, 'r') as original:
+            open(path, "w").close()
+        with open(path, "r") as original:
             data = original.read()
         final_content = content + "\n" + data
-        with open(path, 'w') as modified:
+        with open(path, "w") as modified:
             modified.write(final_content.encode(encoding))
         # noinspection PyProtectedMember
         robot_instances.osl()._link("Appended to file begin of file '%s'.", path)
@@ -114,27 +115,33 @@ class CsvKeywords(object):
             return i + 1
 
     @staticmethod
-    def csv_read_file(path, encoding='UTF-8', encoding_errors='strict',delimiter=',',quotechar='"'):
+    def csv_read_file(
+        path, encoding="UTF-8", encoding_errors="strict", delimiter=",", quotechar='"'
+    ):
         """
         returns file CSV content as 2D table
         """
         output_table = []
         # encoding = osl()._map_encoding(encoding)
         with open(path) as csv_file:
-            csv_reader = csv.reader(csv_file, quotechar=quotechar,delimiter=delimiter)
+            csv_reader = csv.reader(csv_file, quotechar=quotechar, delimiter=delimiter)
             for row in csv_reader:
                 output_table.append(row)
             return output_table
 
     @staticmethod
-    def csv_read_file_return_dictionary(path, encoding='UTF-8', encoding_errors='strict',delimiter=',',quotechar='"'):
+    def csv_read_file_return_dictionary(
+        path, encoding="UTF-8", encoding_errors="strict", delimiter=",", quotechar='"'
+    ):
         """
         returns file CSV content as 1D table of dictionaries
         """
         output_table = []
         # encoding = osl()._map_encoding(encoding)
         with open(path) as csv_file:
-            csv_reader = csv.DictReader(csv_file, quotechar=quotechar,delimiter=delimiter)
+            csv_reader = csv.DictReader(
+                csv_file, quotechar=quotechar, delimiter=delimiter
+            )
             for row in csv_reader:
                 output_table.append(row)
             return output_table

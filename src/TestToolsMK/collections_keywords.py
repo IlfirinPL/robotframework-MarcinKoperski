@@ -23,7 +23,5 @@ class CollectionsKeywords(object):
 
     @staticmethod
     def sort_list_by_number(list_):
-        """Sorts the given list in place.
-
-        """
+        """Sorts the given list in place."""
         list_.sort(key=float)

@@ -9,12 +9,12 @@ from robot.libraries.Collections import Collections
 from robot.libraries.OperatingSystem import OperatingSystem
 from robot.api import logger
 
-__all__ = ('sl', 'bi', 'dtl', 'osl', 'cl', 'get_artifacts_dir')
+__all__ = ("sl", "bi", "dtl", "osl", "cl", "get_artifacts_dir")
 
 
 def get_artifacts_dir(delta_path=""):
     output_path = bi().get_variable_value("${EXECDIR}")
-    output_path += "/Artifacts/"
+    output_path += "/artifacts/"
     output_path += delta_path
     output_path_normalized = validate_create_artifacts_dir(output_path)
     return output_path_normalized
@@ -36,18 +36,18 @@ def validate_create_artifacts_dir(path):
 
 def sl():
     """
-        :rtype : SeleniumLibrary
-        """
-    sl_instance = BuiltIn().get_library_instance('SeleniumLibrary')
+    :rtype : SeleniumLibrary
+    """
+    sl_instance = BuiltIn().get_library_instance("SeleniumLibrary")
     assert isinstance(sl_instance, SeleniumLibrary)
     return sl_instance
 
 
 def bi():
     """
-        :rtype : BuiltIn
-        """
-    bi_instance = BuiltIn().get_library_instance('BuiltIn')
+    :rtype : BuiltIn
+    """
+    bi_instance = BuiltIn().get_library_instance("BuiltIn")
     assert isinstance(bi_instance, BuiltIn)
     return bi_instance
 
@@ -55,18 +55,18 @@ def bi():
 def dtl():
     """
 
-        :rtype : DateTime
-        """
-    dt_instance = BuiltIn().get_library_instance('DateTime')
+    :rtype : DateTime
+    """
+    dt_instance = BuiltIn().get_library_instance("DateTime")
     return dt_instance
 
 
 def osl():
     """
 
-        :rtype : OperatingSystem
-        """
-    os_instance = BuiltIn().get_library_instance('OperatingSystem')
+    :rtype : OperatingSystem
+    """
+    os_instance = BuiltIn().get_library_instance("OperatingSystem")
     assert isinstance(os_instance, OperatingSystem)
     return os_instance
 
@@ -74,9 +74,9 @@ def osl():
 def cl():
     """
 
-        :rtype : Collections
-        """
-    c_instance = BuiltIn().get_library_instance('Collections')
+    :rtype : Collections
+    """
+    c_instance = BuiltIn().get_library_instance("Collections")
     assert isinstance(c_instance, Collections)
     return c_instance
 
@@ -84,9 +84,9 @@ def cl():
 def dbl():
     """
 
-        :rtype : DatabaseLibrary
-        """
-    c_instance = BuiltIn().get_library_instance('DatabaseLibrary')
+    :rtype : DatabaseLibrary
+    """
+    c_instance = BuiltIn().get_library_instance("DatabaseLibrary")
     assert isinstance(c_instance, DatabaseLibrary)
     return c_instance
 
@@ -94,8 +94,8 @@ def dbl():
 def ttmkl():
     """
 
-        :rtype : TestToolsMK
-        """
-    c_instance = BuiltIn().get_library_instance('TestToolsMK')
+    :rtype : TestToolsMK
+    """
+    c_instance = BuiltIn().get_library_instance("TestToolsMK")
     # assert isinstance(c_instance, TestToolsMK)
     return c_instance

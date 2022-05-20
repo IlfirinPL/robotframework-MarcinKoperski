@@ -1,0 +1,9 @@
+black
+parameterized
+pytest-flake8
+pytest-html
+pytest-xdist
+robotframework-debuglibrary
+robotframework-lsp
+robotframework-robocop
+robotframework-tidy

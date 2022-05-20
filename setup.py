@@ -29,13 +29,9 @@ setup(
     exclude_package_data={'': ['.git', '.git/*', '.idea', '.gitignore', 'doc/*', 'atest/*']},
     package_data={'TestToolsMK': ['VERSION']},
     install_requires=[
-        u'robotframework>=3.0',
+        u'robotframework>=5.0',
         u'robotframework-databaselibrary',
         u'robotframework-seleniumlibrary',
-        u'unicodecsv',
-        u'robotframework-httplibrary',
-        u'openpyxl',
-        u'PyPDF2'
 
     ]
 )

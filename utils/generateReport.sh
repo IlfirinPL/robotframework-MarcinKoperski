@@ -1,16 +1,8 @@
 #!/bin/bash
 
-source ~/Envs/Venv/bin/activate
+python -m pip install -U .
 
-echo Start Setup
-BASEDIR=$(dirname "${0}")/../
+pushd atest/acceptance && python -m robot.run  -b debug.log -e TODO -e WIN -r none -l none .
+popd
 
-
-echo "Base Dir :$BASEDIR"
-pushd "$BASEDIR" > /dev/null
-
-python3 -m pip install -U .
-
-pushd doc > /dev/null
-chmod +711 generate.py
-python3 ./generate.py
+python -m robot.libdoc TestToolsMK doc/TestToolsMK.html
