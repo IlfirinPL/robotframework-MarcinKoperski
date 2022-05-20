@@ -44,7 +44,7 @@ To use it add Library "TestToolsMK" to your robotframework projects
 	*** Settings ***
 	Documentation       This test show how to create delta gif and evalute if screenshot are similar
 	Library             TestToolsMK
-	Library             Selenium2Library
+	Library             SeleniumLibrary
 	Library             Collections
 
 	*** Test Cases ***
@@ -64,7 +64,7 @@ Prerequisites
 -------------
 - `Microsoft Visual C++ Compiler for Python 3.X`__
 - `Chocolatey`__ // for windows only
-- Python 3.6,3.7,3.8  // tested on linux
+- Python 3.9  // tested on linux
 
 
 __ http://www.microsoft.com/en-us/download/details.aspx?id=44266
