@@ -8,12 +8,8 @@ import os.path
 import platform
 import subprocess
 
-try:
-    # noinspection PyCompatibility
-    from urlparse import urljoin
-except ImportError:  # python3
-    # noinspection PyCompatibility,PyUnresolvedReferences
-    from urllib.parse import urljoin
+
+from urllib.parse import urljoin
 
 import urllib
 from robot.api import logger

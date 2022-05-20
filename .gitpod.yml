@@ -1,2 +1,3 @@
 tasks:
   - init: pyenv local 3.8.13 && pip install -r ./requirements.txt -r ./requirements-dev.txt
+  - init: pyenv local 3.8.13 && pip install -e .

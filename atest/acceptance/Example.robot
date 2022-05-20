@@ -42,7 +42,7 @@ List Sort By Number
     Should Be Equal    ${to sort[0]}    9
 
 Jquery2 Example
-    [Tags]    todo
+    [Tags]    TODO
     # PLUGIN CHROME    https://chrome.google.com/webstore/detail/jquery-unique-selector/cmdmlphjbobhblimniofbnlfkmpcjlgd?utm_source=chrome-app-launcher-info-dialog
     Open Browser Extension    http://codylindley.com/jqueryselectors/
     Import JQuery
@@ -53,7 +53,7 @@ Jquery2 Example
     [Teardown]    Close All Browsers
 
 Compare images
-    [Tags]    win    todo
+    [Tags]    TODO    WIN
     Open Browser Extension    http://www.google.pl
     ${name a}    Capture Page Screenshot Extension
     Go To    http://www.google.com
@@ -63,7 +63,7 @@ Compare images
     [Teardown]    Close All Browsers
 
 Download To Folder GC
-    [Tags]    win
+    [Tags]    WIN
     Comment    get all binaries
     Get Selenium Server    path=${TEMPDIR}/bin/selenium-server.jar
     Start Selenium Server    path=${TEMPDIR}/bin/selenium-server.jar    logs_path=${TEMPDIR}/bin
@@ -89,7 +89,7 @@ Download To Folder GC
     ...    AND    Shutdown Selenium Server
 
 Download To Folder FF
-    [Tags]    win
+    [Tags]    WIN
     Get Selenium Server    path=${TEMPDIR}/bin/selenium-server.jar
     Start Selenium Server    path=${TEMPDIR}/bin/selenium-server.jar    logs_path=${TEMPDIR}/bin
     Get Firefox Driver Latest    ${TEMPDIR}
