@@ -54,12 +54,7 @@ Jquery2 Example
 
 Compare images
     [Tags]    TODO    WIN
-    Open Browser Extension    http://www.google.pl
-    ${name a}    Capture Page Screenshot Extension
-    Go To    http://www.google.com
-    ${name b}    Capture Page Screenshot Extension
-    ${status}    Run Keyword And Return Status    Image Should Be Difference Less Then    ${name a}    ${name b}    0
-    Should Be Equal As Strings    ${status}    False
+    Image Should Be Difference Less Then    1.png    2.png    0
     [Teardown]    Close All Browsers
 
 Download To Folder GC
