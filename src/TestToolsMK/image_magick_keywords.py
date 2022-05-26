@@ -16,108 +16,24 @@ from robot.api import logger
 
 
 class ImageMagickKeywords(object):
-    def __init__(self):
-        if os.path.isfile(self.get_convert_path):
-            logger.debug("Convert file exits path, path used :" + self.get_convert_path)
-        else:
-            message = "Missing file convert.exe"
-            logger.debug(message)
 
-        if os.path.isfile(self.get_compare_path):
-            logger.debug("Compare file exits , path used :" + self.get_compare_path)
-        else:
-            message = "Missing file compare.exe"
-            logger.debug(message)
+    def _count_nonblack_pil(img):
+    """Return the number of pixels in img that are not black.
+    img must be a PIL.Image object in mode RGB.
 
-        if os.path.isfile(self.get_identify_path):
-            logger.debug("Identify file exits, path used :" + self.get_identify_path)
-        else:
-            message = "Missing file identify.exe"
-            logger.debug(message)
+    """
+    bbox = img.getbbox()
+    if not bbox:
+        return 0
+    return sum(
+        img.crop(bbox)
+        .point(lambda x: 255 if x else 0)
+        .convert("L")
+        .point(bool)
+        .getdata()
+    )
 
-    @property
-    def get_magick_home(self):
-        try:
-            if platform.system() == "Windows":
-                return os.environ["MAGICK_HOME"]
-            if platform.system() == "Linux":
-                return "/usr/bin/"
 
-        except os.error as e:
-            message = "Missing system variable 'MAGICK_HOME'" + e
-            logger.warn(message)
-            return message
-
-    @property
-    def get_compare_path(self):
-        try:
-            if platform.system() == "Windows":
-                return os.path.normpath(self.get_magick_home + "\\" + "compare.exe")
-            if platform.system() == "Linux":
-                return os.path.normpath("/usr/bin/compare")
-        except os.error as e:
-            logger.warn("Missing file compare" + e)
-            return "missing"
-
-    @property
-    def get_identify_path(self):
-        try:
-            if platform.system() == "Windows":
-                return os.path.normpath(self.get_magick_home + "\\" + "identify.exe")
-            if platform.system() == "Linux":
-                return os.path.normpath("/usr/bin/identify")
-
-        except os.error as e:
-            logger.warn("Missing file identify" + e)
-            return "missing"
-
-    @property
-    def get_convert_path(self):
-        try:
-            if platform.system() == "Windows":
-                return os.path.normpath(self.get_magick_home + "\\" + "convert.exe")
-            if platform.system() == "Linux":
-                return os.path.normpath("/usr/bin/convert")
-
-        except os.error as e:
-            logger.warn("Missing file convert.exe" + e)
-            return "missing"
-
-    def image_self_check(self):
-        if os.path.isfile(self.get_convert_path):
-            logger.info("Convert file exits path, path used :" + self.get_convert_path)
-        else:
-            message = "Missing file convert.exe"
-            raise AssertionError(message)
-
-        if os.path.isfile(self.get_compare_path):
-            logger.info("Compare file exits , path used :" + self.get_compare_path)
-        else:
-            message = "Missing file compare.exe"
-            raise AssertionError(message)
-
-        if os.path.isfile(self.get_identify_path):
-            logger.info("Identify file exits, path used :" + self.get_identify_path)
-        else:
-            message = "Missing file identify.exe"
-            raise AssertionError(message)
-
-        argument_list = [self.get_convert_path, "--version"]
-        try:
-            procces = subprocess.Popen(
-                argument_list, stdout=subprocess.PIPE, stderr=subprocess.PIPE
-            )  # , shell=True
-            procces.wait()
-            output = procces.communicate()
-            logger.info("returnCode \t:" + str(procces.returncode))
-            if procces.returncode != 0:
-                message = "processing failed msg= %s" % str(output)
-                raise AssertionError(message)
-            logger.info("stdout \t:" + str(output[0]))
-            logger.info("stderr \t:" + str(output[1]))
-
-        except OSError as e:
-            logger.error(e)
 
     def _compare_image_files(
         self,
@@ -166,24 +82,23 @@ class ImageMagickKeywords(object):
         if os.path.isfile(file_1_path_normalized) and os.path.isfile(
             file_2_path_normalized
         ):
-            argument_list = [
-                self.get_compare_path,
-                "-metric",
-                metric,
-                file_1_path_normalized,
-                file_2_path_normalized,
-                delta_file_path_normalized,
-            ]
-            process = subprocess.Popen(
-                argument_list, stdout=subprocess.PIPE, stderr=subprocess.PIPE
-            )
-            process.wait()
-            output = process.communicate()
-            if "error" in str(output):
-                message = "processing failed msg= %s" % str(output)
-                raise AssertionError(message)
 
-            delta_percent = output[1].split("(")[1].replace(")", "")
+            img1 = Image.open("1.png")
+            img2 = Image.open("2.png")
+
+            # finding difference
+            diff = ImageChops.difference(img1, img2)
+
+            diff.save("delta.png")
+
+            inverted_image = ImageOps.invert(diff)
+
+            inverted_image.save(delta_file_path)
+
+            nonblack = count_nonblack_pil(diff)
+            total = ImageStat.Stat(diff).count[0]
+
+            delta_percent = nonblack * 100 / total
 
             if gif_file_path is not None:
                 self.create_gif_from_three_files(
@@ -277,38 +192,20 @@ class ImageMagickKeywords(object):
         )
 
     def create_gif_from_list_of_files(
-        self, gif_file_path, files_list_path, delay_ms=100, loop=0, embedded=True
+        self, gif_file_path, files_list_path, delay_ms=500, loop=0, embedded=True
     ):
         files_list_path_normalized = []
         for singleFile in files_list_path:
             files_list_path_normalized.append(os.path.normpath(singleFile))
         gif_file_path_normalized = os.path.normpath(gif_file_path)
-        if all(
-            os.path.isfile(singleFile) == True
-            for singleFile in files_list_path_normalized
-        ):
-            argument_list = [
-                self.get_convert_path,
-                "-delay",
-                str(delay_ms),
-                "-loop",
-                str(loop),
-            ]
-            argument_list.extend(files_list_path_normalized)
-            argument_list.append(gif_file_path_normalized)
-            process = subprocess.Popen(
-                argument_list, stdout=subprocess.PIPE, stderr=subprocess.PIPE
-            )
-            process.wait()
-            if embedded:
-                self._embed_screenshot(gif_file_path_normalized)
+        img1.save(
+        gif_file_path,
+        save_all=True,
+        append_images=files_list_path,
+        duration=delay_ms,
+        loop=loop,
+        )
 
-        else:
-            message = "Gif Creation failed."
-            for singleFile in files_list_path_normalized:
-                if os.path.isfile(singleFile):
-                    message += "File missing %s." % singleFile
-            raise AssertionError(message)
 
     @staticmethod
     def _embed_screenshot(path, level="INFO", width="1200px"):

@@ -29,9 +29,10 @@ setup(
     exclude_package_data={'': ['.git', '.git/*', '.idea', '.gitignore', 'doc/*', 'atest/*']},
     package_data={'TestToolsMK': ['VERSION']},
     install_requires=[
-        u'robotframework>=5.0',
-        u'robotframework-databaselibrary',
-        u'robotframework-seleniumlibrary',
+        'robotframework>=5.0',
+        'robotframework-databaselibrary',
+        'robotframework-seleniumlibrary',
+        'Pillow'
 
     ]
 )

@@ -1,26 +1,14 @@
-#list of  non robotframework
-setuptools
 lxml
-selenium
-#JayDeBeApi
-pillow>=2.9.0
-requests3
+oauth2client
 openpyxl
-#csv file
-unicodecsv
-#google drive
-gspread
-oauth2client 
-google-api-python-client
-# support python
+pillow
 PyPDF2
 pyyaml
-#list of robotframework libraries
+requests3
 robotframework
+robotframework-databaselibrary
+robotframework-httplibrary
 robotframework-requests
 robotframework-seleniumlibrary
-robotframework-httplibrary
-robotframework-databaselibrary
-
-
-
+selenium
+unicodecsv

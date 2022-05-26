@@ -13,12 +13,7 @@ from selenium.webdriver.common.keys import Keys
 
 from TestToolsMK.robot_instances import validate_create_artifacts_dir, sl, bi
 
-try:
-    # noinspection PyCompatibility
-    from urlparse import urljoin
-except ImportError:  # python3
-    # noinspection PyCompatibility,PyUnresolvedReferences
-    from urllib.parse import urljoin
+from urllib.parse import urljoin
 
 
 # noinspection PyProtectedMember
