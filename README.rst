@@ -35,7 +35,7 @@ Link to `Keyword Documentation`_
 
 .. _`Keyword Documentation`: http://ilfirinpl.github.io/robotframework-MarcinKoperski/doc/TestToolsMK.html
 
-Example 
+Example
 ------------
 
 To use it add Library "TestToolsMK" to your robotframework projects
@@ -51,15 +51,14 @@ To use it add Library "TestToolsMK" to your robotframework projects
 
 	*** Test Cases ***
 	Example Test
-    		Open Browser Extension    https://www.google.com/search?hl=en&q=test    browser=gc    width=1366    height=768    x=0    y=0
-    		${path1}    Capture Page Screenshot
-    		Go To Smart    https://www.bing.com/search?q=test
-    		${path2}    Capture Page Screenshot
-    		${r}    Compare Image Files    ${path1}    ${path2}
-    		Log To Console    ${r}
-    		${delta value}    Image Should Be Difference Less Then    ${path1}    ${path2}    difference_percent=2
-    		Log To Console    Difference between images is ${delta value}
-    		[Teardown]    Close All Browsers
+	    Open Browser Extension    https://www.google.com/search?hl=en&q=test    browser=gc    width=1366    height=768    x=0    y=0
+	    ${path1}    Capture Page Screenshot
+	    Go To Smart    https://www.bing.com/search?q=test
+	    ${path2}    Capture Page Screenshot
+	    ${delta}    Compare Image Files    ${path1}    ${path2}
+	    Log To Console    ${delta}
+	    ${delta value}    Image Should Be Difference Less Then    ${path1}    ${path2}    difference_percent=3
+	    [Teardown]    Close All Browsers
 
 
 
