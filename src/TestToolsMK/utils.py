@@ -113,7 +113,7 @@ class UtilsKeywords(object):
         return json_data["tag_name"].strip()
 
     @property
-    def get_url_for_latest_chrome_driver(self):
+    def get_url_for_latest_chrome_driver():
         last_build = self.get_latest_chrome_driver_version
         try:
             base_url_for_driver = (
@@ -129,7 +129,7 @@ class UtilsKeywords(object):
             return "missing"
 
     @property
-    def get_url_for_latest_firefox_driver(self):
+    def get_url_for_latest_firefox_driver():
         last_build = self.get_latest_firefox_driver_version
         try:
             base_url_for_driver = (

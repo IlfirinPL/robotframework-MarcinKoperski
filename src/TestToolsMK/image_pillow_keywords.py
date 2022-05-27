@@ -19,7 +19,8 @@ from urllib.request import pathname2url
 
 @library
 class ImagePillowKeywords(object):
-    def _difference_image_percent(self, i1, i2):
+
+  def _difference_image_percent(self, i1, i2):
         pairs = zip(i1.getdata(), i2.getdata())
         if len(i1.getbands()) == 1:
             # for gray-scale jpegs
@@ -30,6 +31,7 @@ class ImagePillowKeywords(object):
         ncomponents = i1.size[0] * i1.size[1] * 3
         temp = (dif / 255.0 * 100) / ncomponents
         return temp
+
 
     def _compare_image_files(
         self,
@@ -68,15 +70,15 @@ class ImagePillowKeywords(object):
             gif_file = os.path.normpath(gif_file_path)
         if os.path.isfile(file_1) and os.path.isfile(file_2):
 
+
             logger.debug("Opening file" + file_1)
             img1 = Image.open(file_1)
             logger.debug("Opening file" + file_2)
+
             img2 = Image.open(file_2)
 
             # finding difference
             diff = ImageChops.difference(img1, img2)
-
-            # diff.save(delta_file)
 
             diff = diff.convert("RGB")
 
@@ -84,7 +86,6 @@ class ImagePillowKeywords(object):
 
             delta_percent = self._difference_image_percent(img1, img2)
 
-            logger.debug("Difference is " + str(delta_percent))
 
             if gif_file_path is not None:
                 self.create_gif_from_three_files(
@@ -124,8 +125,10 @@ class ImagePillowKeywords(object):
             embedded_gif,
             embedded_delta,
         )
+
         actual_percent = results[0]
         return actual_percent
+
 
     @keyword
     def image_should_be_difference_less_then(
@@ -139,7 +142,8 @@ class ImagePillowKeywords(object):
         embedded_delta=False,
     ):
         """difference_percent test to 0 mean both images are identical"""
-        r = self._compare_image_files(
+
+        results = self._compare_image_files(
             file_1_path,
             file_2_path,
             gif_file_path,
