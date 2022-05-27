@@ -56,7 +56,7 @@ Compare images
     Image Should Be Difference Less Then    1.png    2.png    2
 
 Compare images Negative
-    Run Keyword And Expect Error    Difference between files is greater then expected actual 1.76 > 0.00 expected percent    Image Should Be Difference Less Then    1.png    2.png    0
+    Run Keyword And Expect Error    Difference between files is greater then expected actual 0.36 > 0.00 expected percent    Image Should Be Difference Less Then    1.png    2.png    0
 
 Download To Folder GC
     [Tags]    WIN

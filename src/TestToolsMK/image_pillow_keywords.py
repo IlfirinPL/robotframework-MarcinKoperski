@@ -19,18 +19,17 @@ from urllib.request import pathname2url
 
 @library
 class ImagePillowKeywords(object):
-    @staticmethod
-    def _count_non_black_pil(img):
-        bbox = img.getbbox()
-        if not bbox:
-            return 0
-        return sum(
-            img.crop(bbox)
-            .point(lambda x: 255 if x else 0)
-            .convert("L")
-            .point(bool)
-            .getdata()
-        )
+    def _difference_image_percent(self, i1, i2):
+        pairs = zip(i1.getdata(), i2.getdata())
+        if len(i1.getbands()) == 1:
+            # for gray-scale jpegs
+            dif = sum(abs(p1 - p2) for p1, p2 in pairs)
+        else:
+            dif = sum(abs(c1 - c2) for p1, p2 in pairs for c1, c2 in zip(p1, p2))
+
+        ncomponents = i1.size[0] * i1.size[1] * 3
+        temp = (dif / 255.0 * 100) / ncomponents
+        return temp
 
     def _compare_image_files(
         self,
@@ -69,22 +68,20 @@ class ImagePillowKeywords(object):
             gif_file = os.path.normpath(gif_file_path)
         if os.path.isfile(file_1) and os.path.isfile(file_2):
 
+            logger.debug("Opening file" + file_1)
             img1 = Image.open(file_1)
+            logger.debug("Opening file" + file_2)
+
             img2 = Image.open(file_2)
 
             # finding difference
             diff = ImageChops.difference(img1, img2)
 
+            diff = diff.convert("RGB")
+
             diff.save(delta_file)
 
-            inverted_image = ImageOps.invert(diff)
-
-            inverted_image.save(delta_file_path)
-
-            nonblack = self._count_non_black_pil(diff)
-            total = ImageStat.Stat(diff).count[0]
-
-            delta_percent = nonblack * 100 / total
+            delta_percent = self._difference_image_percent(img1, img2)
 
             if gif_file_path is not None:
                 self.create_gif_from_three_files(
@@ -125,7 +122,8 @@ class ImagePillowKeywords(object):
             embedded_delta,
         )
 
-        return results[0]
+        actual_percent = results[0]
+        return actual_percent
 
     @keyword
     def image_should_be_difference_less_then(
@@ -139,6 +137,7 @@ class ImagePillowKeywords(object):
         embedded_delta=False,
     ):
         """difference_percent test to 0 mean both images are identical"""
+
         results = self._compare_image_files(
             file_1_path,
             file_2_path,
@@ -147,15 +146,14 @@ class ImagePillowKeywords(object):
             embedded_gif=embedded_gif,
             embedded_delta=embedded_delta,
         )
-        if float(results[0]) > float(difference_percent):
-            message = (
-                "Difference between files is greater then expected actual %.2f > %.2f expected percent"
-                % (float(results[0]), float(difference_percent))
-            )
+        actual_percent = results[0]
+        if actual_percent > difference_percent:
+            message = f"Difference between files is greater then expected actual {actual_percent:.2f} > {difference_percent:.2f} expected percent"
+
             raise AssertionError(message)
         else:
-            logger.info("Image check successful ")
-        return results[0]
+            logger.info("Image check successful")
+        return actual_percent
 
     @keyword
     def create_gif_from_three_files(
