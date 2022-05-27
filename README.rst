@@ -44,22 +44,23 @@ To use it add Library "TestToolsMK" to your robotframework projects
 .. code:: robotframework
 
 	*** Settings ***
-	Documentation       This test show how to create delta gif and evalute if screenshot are similar
+	Documentation       This test show how to create delta gif and evaluate if screenshot are similar
 	Library             TestToolsMK
 	Library             SeleniumLibrary
-	Library             Collections
+
 
 	*** Test Cases ***
 	Example Test
-		Image Self Check
-		Open Browser Extension      https://www.google.com/search?hl=en&q=test      browser=ff      width=1366      height=768      x=0      y=0
-		${path1}      Capture Page Screenshot Extension
-		Go To Smart      https://www.google.com/search?hl=en&q=testX
-		${path2}      Capture Page Screenshot Extension
-		Comment      Show list of screenshot taken during test
-		Log List      ${list of screenshots}
-		${delta value}      Image Should Be Difference Less Then      ${path1}      ${path2}      difference_percent=2     embedded_gif=True
-		[Teardown]      Close All Browsers
+    		Open Browser Extension    https://www.google.com/search?hl=en&q=test    browser=gc    width=1366    height=768    x=0    y=0
+    		${path1}    Capture Page Screenshot
+    		Go To Smart    https://www.bing.com/search?q=test
+    		${path2}    Capture Page Screenshot
+    		${r}    Compare Image Files    ${path1}    ${path2}
+    		Log To Console    ${r}
+    		${delta value}    Image Should Be Difference Less Then    ${path1}    ${path2}    difference_percent=2
+    		Log To Console    Difference between images is ${delta value}
+    		[Teardown]    Close All Browsers
+
 
 
 Prerequisites
