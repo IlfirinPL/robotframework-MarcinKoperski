@@ -53,14 +53,11 @@ Jquery2 Example
     [Teardown]    Close All Browsers
 
 Compare images
-    [Tags]    TODO    WIN
-    Open Browser Extension    http://www.google.pl
-    ${name a}    Capture Page Screenshot Extension
-    Go To    http://www.google.com
-    ${name b}    Capture Page Screenshot Extension
-    ${status}    Run Keyword And Return Status    Image Should Be Difference Less Then    ${name a}    ${name b}    0
-    Should Be Equal As Strings    ${status}    False
-    [Teardown]    Close All Browsers
+    [Tags]    TEST
+    Image Should Be Difference Less Then    1.png    2.png    2
+
+Compare images Negative
+    Run Keyword And Expect Error    Difference between files is greater then expected actual 1.76 > 0.00 expected percent    Image Should Be Difference Less Then    1.png    2.png    0
 
 Download To Folder GC
     [Tags]    WIN
