@@ -19,8 +19,7 @@ from urllib.request import pathname2url
 
 @library
 class ImagePillowKeywords(object):
-
-  def _difference_image_percent(self, i1, i2):
+    def _difference_image_percent(self, i1, i2):
         pairs = zip(i1.getdata(), i2.getdata())
         if len(i1.getbands()) == 1:
             # for gray-scale jpegs
@@ -31,7 +30,6 @@ class ImagePillowKeywords(object):
         ncomponents = i1.size[0] * i1.size[1] * 3
         temp = (dif / 255.0 * 100) / ncomponents
         return temp
-
 
     def _compare_image_files(
         self,
@@ -70,7 +68,6 @@ class ImagePillowKeywords(object):
             gif_file = os.path.normpath(gif_file_path)
         if os.path.isfile(file_1) and os.path.isfile(file_2):
 
-
             logger.debug("Opening file" + file_1)
             img1 = Image.open(file_1)
             logger.debug("Opening file" + file_2)
@@ -85,7 +82,6 @@ class ImagePillowKeywords(object):
             diff.save(delta_file)
 
             delta_percent = self._difference_image_percent(img1, img2)
-
 
             if gif_file_path is not None:
                 self.create_gif_from_three_files(
@@ -129,7 +125,6 @@ class ImagePillowKeywords(object):
         actual_percent = results[0]
         return actual_percent
 
-
     @keyword
     def image_should_be_difference_less_then(
         self,
@@ -151,9 +146,9 @@ class ImagePillowKeywords(object):
             embedded_gif=embedded_gif,
             embedded_delta=embedded_delta,
         )
-        actual_percent = r[0]
+        actual_percent = results[0]
         if actual_percent > difference_percent:
-            message = f"Difference between files is greater then expected actual{actual_percent:.2f} > {difference_percent:.2f} expected percent"
+            message = f"Difference between files is greater then expected actual {actual_percent:.2f} > {difference_percent:.2f} expected percent"
 
             raise AssertionError(message)
         else:
