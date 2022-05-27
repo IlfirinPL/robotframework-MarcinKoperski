@@ -1,10 +1,15 @@
 {
     "cSpell.words": [
+        "CURDIR",
+        "domtree",
         "EXECDIR",
         "getbbox",
         "getdata",
+        "menuexcel",
+        "jquery",
         "nonblack",
         "quotechar",
-        "rtype"
+        "rtype",
+        "TEMPDIR"
     ]
 }

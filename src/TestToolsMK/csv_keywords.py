@@ -26,7 +26,7 @@ class CsvKeywords(object):
         self.OUTPUT_FILE_CSV = validate_create_artifacts_dir(file_name)
 
     @keyword
-    def append_to_csv(filename, values_list, encoding="UTF-8"):
+    def append_to_csv(self, filename, values_list, encoding="UTF-8"):
         """
         Example usage:
         | ${list} | Create List	| a | ""1"" |	"é,őáá" | #example with chars utf-8 |
@@ -87,7 +87,7 @@ class CsvKeywords(object):
 
     @keyword
     def file_should_not_change(
-        filename, time_in_sec="1", msg="File was modify during waiting time"
+        self, filename, time_in_sec="1", msg="File was modify during waiting time"
     ):
         """
         Methods check modification date date if date doesn't change after set time return true
@@ -99,7 +99,7 @@ class CsvKeywords(object):
         asserts.assert_equal(before, after, msg, values=False)
 
     @keyword
-    def append_to_file_at_beginning(path, content, encoding="UTF-8"):
+    def append_to_file_at_beginning(self, path, content, encoding="UTF-8"):
         path = os.path.abspath(path)
         parent = os.path.dirname(path)
         if not os.path.exists(parent):
@@ -115,7 +115,7 @@ class CsvKeywords(object):
         robot_instances.osl()._link("Appended to file begin of file '%s'.", path)
 
     @keyword
-    def get_file_lines_count(path):
+    def get_file_lines_count(self, path):
         with open(path) as f:
             for i, l in enumerate(f):
                 pass
@@ -124,7 +124,12 @@ class CsvKeywords(object):
 
     @keyword
     def csv_read_file(
-        path, encoding="UTF-8", encoding_errors="strict", delimiter=",", quotechar='"'
+        self,
+        path,
+        encoding="UTF-8",
+        encoding_errors="strict",
+        delimiter=",",
+        quotechar='"',
     ):
         """
         returns file CSV content as 2D table
@@ -139,7 +144,12 @@ class CsvKeywords(object):
 
     @keyword
     def csv_read_file_return_dictionary(
-        path, encoding="UTF-8", encoding_errors="strict", delimiter=",", quotechar='"'
+        self,
+        path,
+        encoding="UTF-8",
+        encoding_errors="strict",
+        delimiter=",",
+        quotechar='"',
     ):
         """
         returns file CSV content as 1D table of dictionaries
