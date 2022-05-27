@@ -14,7 +14,9 @@ library for Robot Framework
 
 News/Changelog
 ------------
-* Get File PDF - read pdf file content
+* Image processing is using PILLOW instead of Image Magick ( all dependenices with choco removed)
+* Remove Support for Python 2.7
+* Remove Keywords that are better supported via RPAFramework
 * better support python3 add automatic test in github, also automatic release in https://pypi.org
 
 
@@ -62,14 +64,8 @@ To use it add Library "TestToolsMK" to your robotframework projects
 
 Prerequisites
 -------------
-- `Microsoft Visual C++ Compiler for Python 3.X`__
-- `Chocolatey`__ // for windows only
 - Python 3.9  // tested on linux
 
-
-__ http://www.microsoft.com/en-us/download/details.aspx?id=44266
-__ https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools&rel=15
-__ https://chocolatey.org/
 __ https://www.python.org/downloads
 
 Installation or Update
@@ -79,18 +75,8 @@ Best way to setup is to use following commands , skip steps that you already hav
 
 windows
 ::
-	choco install pip
-	choco install imagemagick.tool
-	setx MAGICK_HOME "C:\ProgramData\chocolatey\lib\imagemagick.tool\tools"
-
 	pip install -U robotframework-MarcinKoperski
-
 
 linux
 ::
-	sudo apt-get install imagemagick
 	sudo pip install -U robotframework-MarcinKoperski
-
-RIDE for python 3
-::
-	py -m pip install -U git+https://github.com/robotframework/RIDE.git
