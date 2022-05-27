@@ -3,6 +3,8 @@
         "EXECDIR",
         "getbbox",
         "getdata",
-        "nonblack"
+        "nonblack",
+        "quotechar",
+        "rtype"
     ]
 }

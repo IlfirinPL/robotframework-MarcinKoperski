@@ -5,19 +5,21 @@
 
 import os
 import os.path
-import platform
-import subprocess
 
 
-from urllib.parse import urljoin
-
-import urllib
 from robot.api import logger
 
 from PIL import Image, ImageChops, ImageStat, ImageOps
 
+from robot.api.deco import keyword, library
 
-class ImageMagickKeywords(object):
+from urllib.parse import urljoin
+from urllib.request import pathname2url
+
+
+@library
+class ImagePillowKeywords(object):
+    @staticmethod
     def _count_non_black_pil(img):
         bbox = img.getbbox()
         if not bbox:
@@ -38,20 +40,15 @@ class ImageMagickKeywords(object):
         delta_file_path=None,
         embedded_gif=True,
         embedded_delta=False,
-        force_resize=True,
     ):
         file_1 = os.path.normpath(file_1_path)
         file_2 = os.path.normpath(file_2_path)
 
-        if force_resize:
-            file_1_width, file_1_height = self._get_info_for_image(file_1)
-            self._resize_file(file_2, file_1_width, file_1_height)
         if delta_file_path is not None:
             delta_file = os.path.normpath(delta_file_path)
         else:
             delta_file_path = (
-                os.path.dirname(file_1)
-                + "\\"
+                "./"
                 + os.path.splitext(os.path.basename(file_1))[0]
                 + "_"
                 + os.path.splitext(os.path.basename(file_2))[0]
@@ -63,8 +60,7 @@ class ImageMagickKeywords(object):
             gif_file = os.path.normpath(gif_file_path)
         else:
             gif_file_path = (
-                os.path.dirname(file_1)
-                + "\\"
+                "./"
                 + os.path.splitext(os.path.basename(file_1))[0]
                 + "_"
                 + os.path.splitext(os.path.basename(file_2))[0]
@@ -110,6 +106,7 @@ class ImageMagickKeywords(object):
                 gif_file,
             )
 
+    @keyword
     def compare_image_files(
         self,
         file_1_path,
@@ -118,7 +115,6 @@ class ImageMagickKeywords(object):
         delta_file_path=None,
         embedded_gif=True,
         embedded_delta=False,
-        force_resize=True,
     ):
         results = self._compare_image_files(
             file_1_path,
@@ -127,11 +123,11 @@ class ImageMagickKeywords(object):
             delta_file_path,
             embedded_gif,
             embedded_delta,
-            force_resize,
         )
 
         return results[0]
 
+    @keyword
     def image_should_be_difference_less_then(
         self,
         file_1_path,
@@ -141,7 +137,6 @@ class ImageMagickKeywords(object):
         delta_file_path=None,
         embedded_gif=True,
         embedded_delta=False,
-        force_resize=True,
     ):
         """difference_percent test to 0 mean both images are identical"""
         results = self._compare_image_files(
@@ -151,7 +146,6 @@ class ImageMagickKeywords(object):
             delta_file_path,
             embedded_gif=embedded_gif,
             embedded_delta=embedded_delta,
-            force_resize=force_resize,
         )
         if float(results[0]) > float(difference_percent):
             message = (
@@ -163,13 +157,14 @@ class ImageMagickKeywords(object):
             logger.info("Image check successful ")
         return results[0]
 
+    @keyword
     def create_gif_from_three_files(
         self,
         gif_file_path,
         file_1_path,
         file_2_path,
         file_3_path,
-        delay_ms=400,
+        delay_ms=500,
         loop=0,
         embedded=True,
     ):
@@ -178,24 +173,28 @@ class ImageMagickKeywords(object):
             gif_file_path, files_list, delay_ms, loop, embedded
         )
 
+    @keyword
     def create_gif_from_list_of_files(
-        self, gif_file_path, files_list_path, delay_ms=500, loop=0, embedded=True
+        self, gif_file_path, list_of_files, delay_ms=500, loop=0, embedded=True
     ):
+        images = []
+        for file in list_of_files:
+            temp = Image.open(file)
+            images.append(temp)
 
-        gif_file = os.path.normpath(gif_file_path)
-
-        im = Image.open(files_list_path[0])
-        im.save(
-            gif_file,
+        images[0].save(
+            gif_file_path,
             save_all=True,
-            append_images=files_list_path,
+            append_images=images,
             duration=delay_ms,
             loop=loop,
         )
+        if embedded:
+            self._embed_screenshot(gif_file_path)
 
     @staticmethod
     def _embed_screenshot(path, level="INFO", width="1200px"):
-        link = urljoin("file:", urllib.pathname2url(os.path.normpath(path)))
+        link = urljoin("file:", pathname2url(os.path.normpath(path)))
         logger.write(
             '</td></tr><tr><td colspan="3"><a href="%s"><img src="%s" width="%s"></a>'
             % (link, link, width),

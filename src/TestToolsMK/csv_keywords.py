@@ -14,14 +14,18 @@ from robot.utils import asserts
 from TestToolsMK import robot_instances
 from TestToolsMK.robot_instances import validate_create_artifacts_dir
 
+from robot.api.deco import keyword, library
 
+
+@library
 class CsvKeywords(object):
     OUTPUT_FILE_CSV = "Artifacts/output.csv"
 
+    @keyword
     def csv_set_output_file(self, file_name="Artifacts/output.csv"):
         self.OUTPUT_FILE_CSV = validate_create_artifacts_dir(file_name)
 
-    @staticmethod
+    @keyword
     def append_to_csv(filename, values_list, encoding="UTF-8"):
         """
         Example usage:
@@ -37,6 +41,7 @@ class CsvKeywords(object):
                 writer_csv = csv.writer(csv_file, dialect="excel")
                 writer_csv.writerow([item for item in values_list])
 
+    @keyword
     def csv_writer(self, *values):
         """
         Store to default file records in csv
@@ -46,6 +51,7 @@ class CsvKeywords(object):
         log_file = self.OUTPUT_FILE_CSV
         self.append_to_csv(log_file, list(values))
 
+    @keyword
     def csv_writer_rows(self, filename, table, **kwargs):
         """
         Append multiple rows to file csv file
@@ -59,6 +65,7 @@ class CsvKeywords(object):
                 writer_csv = csv.writer(csv_file, dialect="excel", **kwargs)
                 writer_csv.writerows(table)
 
+    @keyword
     def csv_writer_with_extra(self, *values):
         """
         Add extra params at beginning
@@ -71,18 +78,19 @@ class CsvKeywords(object):
         extra_list.insert(0, suite_name + test_case_name)
         self.csv_writer_with_time(*extra_list)
 
+    @keyword
     def csv_writer_with_time(self, *values):
         current_time = DateTime.get_current_date(result_format="%Y.%m.%d %H:%M:%S")
         extra_list = list(values)
         extra_list.insert(0, current_time)
         self.csv_writer(*extra_list)
 
-    @staticmethod
+    @keyword
     def file_should_not_change(
         filename, time_in_sec="1", msg="File was modify during waiting time"
     ):
         """
-        Methods check modification date date if date doesnt change after set time return true
+        Methods check modification date date if date doesn't change after set time return true
         Best use with method Wait Until Keyword Succeeds
         """
         before = os.stat(filename).st_mtime
@@ -90,7 +98,7 @@ class CsvKeywords(object):
         after = os.stat(filename).st_mtime
         asserts.assert_equal(before, after, msg, values=False)
 
-    @staticmethod
+    @keyword
     def append_to_file_at_beginning(path, content, encoding="UTF-8"):
         path = os.path.abspath(path)
         parent = os.path.dirname(path)
@@ -106,7 +114,7 @@ class CsvKeywords(object):
         # noinspection PyProtectedMember
         robot_instances.osl()._link("Appended to file begin of file '%s'.", path)
 
-    @staticmethod
+    @keyword
     def get_file_lines_count(path):
         with open(path) as f:
             for i, l in enumerate(f):
@@ -114,7 +122,7 @@ class CsvKeywords(object):
             # noinspection PyUnboundLocalVariable
             return i + 1
 
-    @staticmethod
+    @keyword
     def csv_read_file(
         path, encoding="UTF-8", encoding_errors="strict", delimiter=",", quotechar='"'
     ):
@@ -129,7 +137,7 @@ class CsvKeywords(object):
                 output_table.append(row)
             return output_table
 
-    @staticmethod
+    @keyword
     def csv_read_file_return_dictionary(
         path, encoding="UTF-8", encoding_errors="strict", delimiter=",", quotechar='"'
     ):
