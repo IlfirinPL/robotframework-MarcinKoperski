@@ -53,14 +53,10 @@ Jquery2 Example
     [Teardown]    Close All Browsers
 
 Compare images
-    [Tags]    TODO    WIN
-    Open Browser Extension    http://www.google.pl
-    ${name a}    Capture Page Screenshot Extension
-    Go To    http://www.google.com
-    ${name b}    Capture Page Screenshot Extension
-    ${status}    Run Keyword And Return Status    Image Should Be Difference Less Then    ${name a}    ${name b}    0
-    Should Be Equal As Strings    ${status}    False
-    [Teardown]    Close All Browsers
+    Image Should Be Difference Less Then    1.png    2.png    2
+
+Compare images Negative
+    Run Keyword And Expect Error    Difference between files is greater then expected actual 1.76 > 0.00 expected percent    Image Should Be Difference Less Then    1.png    2.png    0
 
 Download To Folder GC
     [Tags]    WIN
@@ -122,14 +118,14 @@ Database Extensions
     ...    4
     ...    Execute Sql String With Logs
     ...    Insert Into test_data (string,time) values ("RF","${time}")
-    ${resutls}    Query Cell    select count(*) from test_data
-    Should Be Equal As Strings    ${resutls}    4
+    ${result}    Query Cell    select count(*) from test_data
+    Should Be Equal As Strings    ${result}    4
     ${table}    Query Row    select * from test_data where id = 2
     List Should Contain Value    ${table}    ${time}
     ${single value}    Query Cell    select time from test_data where id = 3
     Should Be Equal As Strings    ${single value}    ${time}
-    ${resutls}    Query Many Rows    select * from test_data
-    Length Should Be    ${resutls}    4
+    ${result}    Query Many Rows    select * from test_data
+    Length Should Be    ${result}    4
     Disconnect From Database
     File Should Exist    Artifacts/log_of_sql_execution.sql
     [Teardown]    Remove Files    ${ db file}
@@ -152,11 +148,8 @@ Create Table From Array
     ${table}    Csv Read File    ${TEMPDIR}/Artifacts/output.csv
     Connect To Database Using Custom Params    sqlite3    database=':memory:'
     ${table name}    Insert Data To Generated Table    ${table}
-    ${unque}    Query    select * from ${table name}
-    Length Should Be    ${unque}    2
-
-Image Operations
-    Image Self Check
+    ${unique}    Query    select * from ${table name}
+    Length Should Be    ${unique}    2
 
 Log Variable To file
     [Setup]    Remove Files    test1.txt    ${TEMPDIR}/temp1.txt
@@ -165,4 +158,5 @@ Log Variable To file
     File Should Exist    test1.txt
     Log Variable To File    ${test}    test2    ${TEMPDIR}/temp1.txt
     File Should Exist    ${TEMPDIR}/temp1.txt
+    Capture Page Screenshot
     [Teardown]    Remove Files    test1.txt    ${TEMPDIR}/temp1.txt

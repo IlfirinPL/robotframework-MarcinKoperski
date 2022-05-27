@@ -4,24 +4,20 @@
 # Copyright (c) 2015 Cutting Edge QA Marcin Koperski
 
 
-class CollectionsKeywords(object):
-    @staticmethod
-    def create_dictionary_from_list(table):
-        """
+from robot.api.deco import keyword, library
 
-        :rtype : dict
-        """
+
+@library
+class CollectionsKeywords(object):
+    @keyword
+    def create_dictionary_from_list(self, table):
         return dict((x, 0) for x in table)
 
-    @staticmethod
-    def create_dictionary_from_two_lists(keys, values):
-        """
-
-        :rtype : dict
-        """
+    @keyword
+    def create_dictionary_from_two_lists(self, keys, values):
         return dict(zip(keys, values))
 
-    @staticmethod
-    def sort_list_by_number(list_):
+    @keyword
+    def sort_list_by_number(self, list):
         """Sorts the given list in place."""
-        list_.sort(key=float)
+        list.sort(key=float)
