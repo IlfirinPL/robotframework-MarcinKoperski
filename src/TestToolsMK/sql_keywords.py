@@ -95,7 +95,6 @@ class SQLKeywords(object):
             raise AssertionError(message)
         return results[0]
 
-    @not_keyword
     def _add_query_to_log_file(self, statement):
         current_time = get_current_time_for_timers()
         self.start_time = current_time
@@ -108,7 +107,7 @@ class SQLKeywords(object):
         )
         self._append_to_file(final_string)
 
-    @not_keyword
+
     def _add_results_to_log_file(self, results):
         current_time = get_current_time_for_timers()
         total_time_verbose = Time(current_time - self.start_time).convert("verbose")
@@ -134,7 +133,6 @@ class SQLKeywords(object):
         )
         self._append_to_file(final_string)
 
-    @not_keyword
     def _append_to_file(self, text):
         full_log_file_path = validate_create_artifacts_dir(self.OUTPUT_FILE_LOG_SQL)
         modeFile = "a" if os.path.exists(full_log_file_path) else "w"
@@ -251,7 +249,7 @@ class SQLKeywords(object):
             % (jdbc_driver, jdbc_connection_string, user, password, jdbc_jar_path),
         )
 
-@not_keyword
+
 def table_name_generator(
     size=12, chars=string.ascii_lowercase + string.ascii_uppercase
 ):
