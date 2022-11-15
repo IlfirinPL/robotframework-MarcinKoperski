@@ -14,7 +14,7 @@ from TestToolsMK.timers_keywords import TimerKeywords
 from TestToolsMK.utils import UtilsKeywords
 
 __version_file_path__ = os.path.join(os.path.dirname(__file__), "VERSION")
-__version__ = open(__version_file_path__, "r").read().strip()
+__version__ = open(__version_file_path__, "r", encoding="UTF-8").read().strip()
 
 
 class TestToolsMK(

@@ -1,5 +1,7 @@
 {
     "cSpell.words": [
+        "atest",
+        "bdist",
         "CURDIR",
         "devcontainers",
         "domtree",
@@ -9,11 +11,16 @@
         "isort",
         "jquery",
         "menuexcel",
+        "millis",
         "nonblack",
         "pdfjs",
+        "pushd",
         "pylint",
+        "PYPI",
         "quotechar",
         "rtype",
+        "sdist",
+        "setuptools",
         "TEMPDIR",
         "ttmkl",
         "xpinstall"

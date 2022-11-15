@@ -15,7 +15,7 @@ src_path = os.path.join(os.path.dirname(__file__), "src")
 sys.path.insert(0, src_path)
 
 __version_file_path__ = os.path.join(src_path, "TestToolsMK", "VERSION")
-__version__ = open(__version_file_path__, "r").read().strip()
+__version__ = open(__version_file_path__, "r", encoding="UTF-8").read().strip()
 
 setup(
     name="robotframework-MarcinKoperski",
