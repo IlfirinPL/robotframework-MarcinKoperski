@@ -7,15 +7,14 @@ import csv
 import os
 
 from robot.api import logger
+from robot.api.deco import keyword, library
 from robot.libraries import DateTime
 
-from TestToolsMK.robot_instances import validate_create_artifacts_dir, bi
-
-from robot.api.deco import keyword, library
+from TestToolsMK.robot_instances import bi, validate_create_artifacts_dir
 
 
 @library
-class LoggerKeywords(object):
+class LoggerKeywords:
     @keyword
     def log_variable_to_file(
         self, name, comment="", output_file="Artifacts/variables.csv"
@@ -34,7 +33,7 @@ class LoggerKeywords(object):
         suite_name = str(bi().get_variable_value("${SUITE_NAME}"))
         variable_value = name
 
-        with open(log_file, "a") as csv_file:
+        with open(log_file, "a", encoding="UTF-8") as csv_file:
             writer_csv = csv.writer(csv_file, dialect="excel")
             if os.stat(log_file).st_size < 10:
                 writer_csv.writerow(fieldnames)

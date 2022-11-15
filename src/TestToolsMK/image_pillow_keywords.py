@@ -5,16 +5,12 @@
 
 import os
 import os.path
-
-
-from robot.api import logger
-
-from PIL import Image, ImageChops, ImageStat, ImageOps
-
-from robot.api.deco import keyword, library
-
 from urllib.parse import urljoin
 from urllib.request import pathname2url
+
+from PIL import Image, ImageChops
+from robot.api import logger
+from robot.api.deco import keyword, library
 
 
 @library
@@ -27,8 +23,8 @@ class ImagePillowKeywords(object):
         else:
             dif = sum(abs(c1 - c2) for p1, p2 in pairs for c1, c2 in zip(p1, p2))
 
-        ncomponents = i1.size[0] * i1.size[1] * 3
-        temp = (dif / 255.0 * 100) / ncomponents
+        n_components = i1.size[0] * i1.size[1] * 3
+        temp = (dif / 255.0 * 100) / n_components
         return temp
 
     def _compare_image_files(

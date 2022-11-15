@@ -2,19 +2,19 @@
 # -*- coding: utf-8 -*-
 
 # Copyright (c) 2015 Cutting Edge QA Marcin Koperski
-from mimetypes import init
+
 import os
 import os.path
 import time
+from mimetypes import init
 
 from robot.api import logger
+from robot.api.deco import keyword, library
 from robot.libraries import DateTime
-from selenium.webdriver import FirefoxProfile, ChromeOptions
+from selenium.webdriver import ChromeOptions, FirefoxProfile
 from selenium.webdriver.common.keys import Keys
 
-from TestToolsMK.robot_instances import validate_create_artifacts_dir, sl, bi
-
-from robot.api.deco import keyword, library
+from TestToolsMK.robot_instances import bi, sl, validate_create_artifacts_dir
 
 
 # noinspection PyProtectedMember
@@ -129,7 +129,9 @@ class ExtendedSeleniumLibrary(object):
         error_msg=None,
         reason=None,
     ):
-        sl().click_element_extended(locator, timeout, error_msg)
+        sl().click_element_extended(
+            locator, timeout, error_msg, modifier=modifier, action_chain=action_chain
+        )
         bi().sleep(sleep, reason)
 
     @keyword

@@ -2,12 +2,10 @@
 import os.path
 
 from DatabaseLibrary import DatabaseLibrary
-from SeleniumLibrary import SeleniumLibrary
-from robot.libraries import DateTime
 from robot.libraries.BuiltIn import BuiltIn
 from robot.libraries.Collections import Collections
 from robot.libraries.OperatingSystem import OperatingSystem
-from robot.api import logger
+from SeleniumLibrary import SeleniumLibrary
 
 __all__ = ("sl", "bi", "dtl", "osl", "cl", "get_artifacts_dir")
 

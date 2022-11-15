@@ -1,22 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 # Copyright (c) 2015 Cutting Edge QA Marcin Koperski
-import os
 
-
-import string
-import random
-from datetime import datetime
 import codecs
+import os
+import random
+import string
+from datetime import datetime
 
 from robot.api import logger
-from robot.libraries.DateTime import Date
 from robot.libraries.DateTime import Time
-from robot.utils import is_falsy
 
+from robot.api.deco import keyword, library
 from TestToolsMK.robot_instances import dbl, ttmkl, validate_create_artifacts_dir
-import sys
 
 
 def get_current_time_for_timers():
@@ -24,25 +20,22 @@ def get_current_time_for_timers():
 
 
 # noinspection PyProtectedMember
-from robot.api.deco import keyword, library
-
-
-# noinspection PyProtectedMember
 @library
-class SQLKeywords(object):
-    OUTPUT_FILE_LOG_SQL = "Artifacts/log_of_sql_execution.sql"
-    ADD_LOGS_FLAG = True
+class SQLKeywords:
+    output_file = "Artifacts/log_of_sql_execution.sql"
+    add_logs_flag = True
+    start_time = None
 
     @keyword
     def set_sql_log_output_file(self, path="Artifacts/log_of_sql_execution.sql"):
-        self.OUTPUT_FILE_LOG_SQL = validate_create_artifacts_dir(path)
+        self.output_file = validate_create_artifacts_dir(path)
 
     @keyword
     def set_add_logs_flag(self, flag=False):
-        self.ADD_LOGS_FLAG = flag
+        self.add_logs_flag = flag
 
     @keyword
-    def query_many_rows(self, select_statement, append_to_logs=ADD_LOGS_FLAG):
+    def query_many_rows(self, select_statement, append_to_logs=add_logs_flag):
         """
         To switch output file with logs use
         | Set Sql Log Output File | ./myFile.sql |
@@ -58,7 +51,7 @@ class SQLKeywords(object):
         return results
 
     @keyword
-    def query_row(self, select_statement, append_to_logs=ADD_LOGS_FLAG):
+    def query_row(self, select_statement, append_to_logs=add_logs_flag):
         """
         To switch output file with logs use
         | Set Sql Log Output File | ./myFile.sql |
@@ -68,17 +61,15 @@ class SQLKeywords(object):
         results = self.query_many_rows(select_statement, append_to_logs)
 
         if len(results) > 1:
-            message = (
-                "Error. Results contains more then one row. Actual size is %s "
-                % (len(results))
-            )
+            message = f"Error. Results contains more then one row. Actual size is {len(results)} "
+
             self._append_to_file("/* \n" + message + "\n */")
             raise AssertionError(message)
 
         return results[0]
 
     @keyword
-    def query_cell(self, select_statement, append_to_logs=ADD_LOGS_FLAG):
+    def query_cell(self, select_statement, append_to_logs=add_logs_flag):
         """
         To switch output file with logs use
         | Set Sql Log Output File | ./myFile.sql |
@@ -87,10 +78,8 @@ class SQLKeywords(object):
         """
         results = self.query_row(select_statement, append_to_logs)
         if len(results) > 1:
-            message = (
-                "Error. Results contains more then one cell. Actual size is %s "
-                % (len(results))
-            )
+            message = f"Error. Results contains more then one cell. Actual size is {len(results)} "
+
             self._append_to_file("/* \n" + message + "\n */")
             raise AssertionError(message)
         return results[0]
@@ -98,15 +87,9 @@ class SQLKeywords(object):
     def _add_query_to_log_file(self, statement):
         current_time = get_current_time_for_timers()
         self.start_time = current_time
-        final_string = (
-            "\n/* Start execution, statement below : "
-            + current_time.strftime("%Y.%m.%d %H:%M:%S")
-            + " */\n"
-            + statement
-            + "\n"
-        )
-        self._append_to_file(final_string)
+        final_string = f'\n/* Start execution, statement below : {current_time.strftime("%Y.%m.%d %H:%M:%S")} */\n{statement}\n'
 
+        self._append_to_file(final_string)
 
     def _add_results_to_log_file(self, results):
         current_time = get_current_time_for_timers()
@@ -124,23 +107,18 @@ class SQLKeywords(object):
             data += "]"
         else:
             data = ""
-        final_string = (
-            "/* Response of statement in :"
-            + total_time_verbose
-            + " , data below "
-            + data
-            + " */\n"
-        )
+        final_string = f"/* Response of statement in :{total_time_verbose} , data below {data}  */\n"
+
         self._append_to_file(final_string)
 
     def _append_to_file(self, text):
-        full_log_file_path = validate_create_artifacts_dir(self.OUTPUT_FILE_LOG_SQL)
-        modeFile = "a" if os.path.exists(full_log_file_path) else "w"
-        with codecs.open(full_log_file_path, modeFile, "utf-8") as output:
+        full_log_file_path = validate_create_artifacts_dir(self.output_file)
+        mode_of_file = "a" if os.path.exists(full_log_file_path) else "w"
+        with codecs.open(full_log_file_path, mode_of_file, "utf-8") as output:
             output.write(text)
 
     @keyword
-    def execute_sql_string_with_logs(self, sql_string, append_to_logs=ADD_LOGS_FLAG):
+    def execute_sql_string_with_logs(self, sql_string, append_to_logs=add_logs_flag):
         """
         To switch output file with logs use
         | Set Sql Log Output File | ./myFile.sql |

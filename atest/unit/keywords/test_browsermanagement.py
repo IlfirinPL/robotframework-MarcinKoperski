@@ -1,6 +1,6 @@
 import unittest
 
-from Selenium2Library.keywords._browsermanagement import _BrowserManagementKeywords
+from SeleniumLibrary.keywords._browsermanagement import _BrowserManagementKeywords
 from mockito import *
 from selenium import webdriver
 

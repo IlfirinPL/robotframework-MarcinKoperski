@@ -60,36 +60,41 @@ def _process_suite(suite):
 def _process_test(test):
     exp = _Expected(test.doc)
     _check_status(test, exp)
-    if test.status == 'PASS':
+    if test.status == "PASS":
         _check_logs(test, exp)
 
 
 def _check_status(test, exp):
     if exp.status != test.status:
-        test.status = 'FAIL'
-        if exp.status == 'PASS':
-            test.message = ("Test was expected to PASS but it FAILED. "
-                            "Error message:\n") + test.message
+        test.status = "FAIL"
+        if exp.status == "PASS":
+            test.message = (
+                "Test was expected to PASS but it FAILED. " "Error message:\n"
+            ) + test.message
         else:
-            test.message = ("Test was expected to FAIL but it PASSED. "
-                            "Expected message:\n") + exp.message
+            test.message = (
+                "Test was expected to FAIL but it PASSED. " "Expected message:\n"
+            ) + exp.message
     elif not _message_matches(test.message, exp.message):
-        test.status = 'FAIL'
-        test.message = ("Wrong error message.\n\nExpected:\n%s\n\nActual:\n%s\n" % (exp.message, test.message))
-    elif test.status == 'FAIL':
-        test.status = 'PASS'
-        test.message = 'Original test failed as expected.'
+        test.status = "FAIL"
+        test.message = "Wrong error message.\n\nExpected:\n%s\n\nActual:\n%s\n" % (
+            exp.message,
+            test.message,
+        )
+    elif test.status == "FAIL":
+        test.status = "PASS"
+        test.message = "Original test failed as expected."
 
 
 def _message_matches(actual, expected):
     if actual == expected:
         return True
-    if expected.startswith('REGEXP:'):
-        pattern = '^%s$' % expected.replace('REGEXP:', '', 1).strip()
+    if expected.startswith("REGEXP:"):
+        pattern = "^%s$" % expected.replace("REGEXP:", "", 1).strip()
         if re.match(pattern, actual, re.DOTALL):
             return True
-    if expected.startswith('STARTS:'):
-        start = expected.replace('STARTS:', '', 1).strip()
+    if expected.startswith("STARTS:"):
+        start = expected.replace("STARTS:", "", 1).strip()
         if actual.startswith(start):
             return True
     return False
@@ -102,15 +107,20 @@ def _check_logs(test, exp):
             for index in kw_indices[1:]:
                 kw = kw.keywords[index]
         except IndexError:
-            indices = '.'.join(str(i + 1) for i in kw_indices)
-            test.status = 'FAIL'
-            test.message = ("Test '%s' does not have keyword with index '%s'" % (test.name, indices))
+            indices = ".".join(str(i + 1) for i in kw_indices)
+            test.status = "FAIL"
+            test.message = "Test '%s' does not have keyword with index '%s'" % (
+                test.name,
+                indices,
+            )
             return
         if len(kw.messages) <= msg_index:
-            if message != 'NONE':
-                test.status = 'FAIL'
-                test.message = ("Keyword '%s' should have had at least %d "
-                                "messages" % (kw.name, msg_index + 1))
+            if message != "NONE":
+                test.status = "FAIL"
+                test.message = (
+                    "Keyword '%s' should have had at least %d "
+                    "messages" % (kw.name, msg_index + 1)
+                )
         else:
             if _check_log_level(level, test, kw, msg_index):
                 _check_log_message(message, test, kw, msg_index)
@@ -120,9 +130,12 @@ def _check_log_level(expected, test, kw, index):
     actual = kw.messages[index].level
     if actual == expected:
         return True
-    test.status = 'FAIL'
-    test.message = ("Wrong level for message %d of keyword '%s'.\n\n"
-                    "Expected: %s\nActual: %s.\n%s" % (index + 1, kw.name, expected, actual, kw.messages[index].message))
+    test.status = "FAIL"
+    test.message = (
+        "Wrong level for message %d of keyword '%s'.\n\n"
+        "Expected: %s\nActual: %s.\n%s"
+        % (index + 1, kw.name, expected, actual, kw.messages[index].message)
+    )
     return False
 
 
@@ -130,9 +143,11 @@ def _check_log_message(expected, test, kw, index):
     actual = kw.messages[index].message.strip()
     if _message_matches(actual, expected):
         return True
-    test.status = 'FAIL'
-    test.message = ("Wrong content for message %d of keyword '%s'.\n\n"
-                    "Expected:\n%s\n\nActual:\n%s" % (index + 1, kw.name, expected, actual))
+    test.status = "FAIL"
+    test.message = (
+        "Wrong content for message %d of keyword '%s'.\n\n"
+        "Expected:\n%s\n\nActual:\n%s" % (index + 1, kw.name, expected, actual)
+    )
     return False
 
 
@@ -142,14 +157,14 @@ class _Expected:
         self.logs = self._get_logs(doc)
 
     def _get_status_and_message(self, doc):
-        if 'FAIL' in doc:
-            return 'FAIL', doc.split('FAIL', 1)[1].split('LOG', 1)[0].strip()
-        return 'PASS', ''
+        if "FAIL" in doc:
+            return "FAIL", doc.split("FAIL", 1)[1].split("LOG", 1)[0].strip()
+        return "PASS", ""
 
     def _get_logs(self, doc):
         logs = []
-        for item in doc.split('LOG')[1:]:
-            index_str, msg_str = item.strip().split(' ', 1)
+        for item in doc.split("LOG")[1:]:
+            index_str, msg_str = item.strip().split(" ", 1)
             kw_indices, msg_index = self._get_indices(index_str)
             level, message = self._get_log_message(msg_str)
             logs.append((kw_indices, msg_index, level, message))
@@ -157,35 +172,35 @@ class _Expected:
 
     def _get_indices(self, index_str):
         try:
-            kw_indices, msg_index = index_str.split(':')
+            kw_indices, msg_index = index_str.split(":")
         except ValueError:
-            kw_indices, msg_index = index_str, '1'
-        kw_indices = [int(index) - 1 for index in kw_indices.split('.')]
+            kw_indices, msg_index = index_str, "1"
+        kw_indices = [int(index) - 1 for index in kw_indices.split(".")]
         return kw_indices, int(msg_index) - 1
 
     def _get_log_message(self, msg_str):
         try:
-            level, message = msg_str.split(' ', 1)
-            if level not in ['TRACE', 'DEBUG', 'INFO', 'WARN', 'FAIL']:
+            level, message = msg_str.split(" ", 1)
+            if level not in ["TRACE", "DEBUG", "INFO", "WARN", "FAIL"]:
                 raise ValueError
         except ValueError:
-            level, message = 'INFO', msg_str
+            level, message = "INFO", msg_str
         return level, message
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     import sys
     import os
 
-    if not 2 <= len(sys.argv) <= 3 or '--help' in sys.argv:
-        print __doc__
+    if not 2 <= len(sys.argv) <= 3 or "--help" in sys.argv:
+        print(__doc__)
         sys.exit(1)
     infile = sys.argv[1]
     outfile = sys.argv[2] if len(sys.argv) == 3 else None
-    print  "Checking %s" % os.path.abspath(infile)
+    print("Checking %s" % os.path.abspath(infile))
     rc = process_output(infile, outfile)
     if outfile:
-        print "Output: %s" % os.path.abspath(outfile)
+        print("Output: %s" % os.path.abspath(outfile))
     if rc > 255:
         rc = 255
     sys.exit(rc)

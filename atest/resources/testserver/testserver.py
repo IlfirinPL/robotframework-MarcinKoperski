@@ -1,9 +1,10 @@
 # http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/336012
 
-import BaseHTTPServer
-import SimpleHTTPServer
-import httplib
 import os
+
+import BaseHTTPServer
+import httplib
+import SimpleHTTPServer
 
 
 class StoppableHttpRequestHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
@@ -37,7 +38,7 @@ class StoppableHttpRequestHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
         path = self.translate_path(self.path)
         f = None
         if os.path.isdir(path):
-            if not self.path.endswith('/'):
+            if not self.path.endswith("/"):
                 # redirect browser - doing basically what apache does
                 self.send_response(301)
                 self.send_header("Location", self.path + "/")
@@ -51,10 +52,10 @@ class StoppableHttpRequestHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
             else:
                 return self.list_directory(path)
         ctype = self.guess_type(path)
-        if ctype.startswith('text/'):
-            mode = 'r'
+        if ctype.startswith("text/"):
+            mode = "r"
         else:
-            mode = 'rb'
+            mode = "rb"
         try:
             f = open(path, mode)
         except IOError:
@@ -88,18 +89,19 @@ def stop_server(port=7000):
 
 def start_server(port=7000):
     import os
-    os.chdir(os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])), '..'))
-    server = StoppableHttpServer(('', port), StoppableHttpRequestHandler)
+
+    os.chdir(os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])), ".."))
+    server = StoppableHttpServer(("", port), StoppableHttpRequestHandler)
     server.serve_forever()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     import sys
 
-    if len(sys.argv) != 2 or sys.argv[1] not in ['start', 'stop']:
-        print 'usage: %s start|stop' % sys.argv[0]
+    if len(sys.argv) != 2 or sys.argv[1] not in ["start", "stop"]:
+        print("usage: %s start|stop" % sys.argv[0])
         sys.exit(1)
-    if sys.argv[1] == 'start':
+    if sys.argv[1] == "start":
         start_server()
     else:
         stop_server()

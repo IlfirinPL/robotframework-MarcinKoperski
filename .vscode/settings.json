@@ -1,15 +1,21 @@
 {
     "cSpell.words": [
         "CURDIR",
+        "devcontainers",
         "domtree",
         "EXECDIR",
         "getbbox",
         "getdata",
-        "menuexcel",
+        "isort",
         "jquery",
+        "menuexcel",
         "nonblack",
+        "pdfjs",
+        "pylint",
         "quotechar",
         "rtype",
-        "TEMPDIR"
+        "TEMPDIR",
+        "ttmkl",
+        "xpinstall"
     ]
 }
