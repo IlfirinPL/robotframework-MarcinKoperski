@@ -126,7 +126,6 @@ class CsvKeywords(object):
         self,
         path,
         encoding="UTF-8",
-        encoding_errors="strict",
         delimiter=",",
         quotechar='"',
     ):
@@ -135,7 +134,7 @@ class CsvKeywords(object):
         """
         output_table = []
         # encoding = osl()._map_encoding(encoding)
-        with open(path, encoding=encoding, encoding_errors=encoding_errors) as csv_file:
+        with open(path, encoding=encoding) as csv_file:
             csv_reader = csv.reader(csv_file, quotechar=quotechar, delimiter=delimiter)
             for row in csv_reader:
                 output_table.append(row)
@@ -146,7 +145,6 @@ class CsvKeywords(object):
         self,
         path,
         encoding="UTF-8",
-        encoding_errors="strict",
         delimiter=",",
         quotechar='"',
     ):
@@ -155,7 +153,7 @@ class CsvKeywords(object):
         """
         output_table = []
 
-        with open(path, encoding=encoding, encoding_errors=encoding_errors) as csv_file:
+        with open(path, encoding=encoding) as csv_file:
             csv_reader = csv.DictReader(
                 csv_file, quotechar=quotechar, delimiter=delimiter
             )
