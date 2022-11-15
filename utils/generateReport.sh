@@ -1,6 +1,6 @@
 #!/bin/bash
 
-python -m pip install -U .
+python -m pip install -U -e .
 
 pushd atest/acceptance && python -m robot.run  -b debug.log -e TODO -e WIN -r none -l none .
 popd

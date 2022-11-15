@@ -8,7 +8,7 @@ from robot.api.deco import keyword, library
 
 
 @library
-class CollectionsKeywords(object):
+class CollectionsKeywords:
     @keyword
     def create_dictionary_from_list(self, table):
         return dict((x, 0) for x in table)

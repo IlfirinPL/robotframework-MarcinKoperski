@@ -2,19 +2,18 @@
 # -*- coding: utf-8 -*-
 
 # Copyright (c) 2015 Cutting Edge QA Marcin Koperski
-import os
-import time
-import sys
 
 import csv
+import os
+import sys
+import time
 
+from robot.api.deco import keyword, library
 from robot.libraries import DateTime
 from robot.utils import asserts
 
 from TestToolsMK import robot_instances
 from TestToolsMK.robot_instances import validate_create_artifacts_dir
-
-from robot.api.deco import keyword, library
 
 
 @library
@@ -61,7 +60,7 @@ class CsvKeywords(object):
                 writer_csv = csv.writer(csv_file, dialect="excel", **kwargs)
                 writer_csv.writerows(table)
         else:
-            with open(filename, "a", newline="") as csv_file:
+            with open(filename, "a", newline="", encoding="UTF-8") as csv_file:
                 writer_csv = csv.writer(csv_file, dialect="excel", **kwargs)
                 writer_csv.writerows(table)
 
@@ -105,11 +104,11 @@ class CsvKeywords(object):
         if not os.path.exists(parent):
             os.makedirs(parent)
         if not os.path.isfile(path):
-            open(path, "w").close()
-        with open(path, "r") as original:
+            open(path, "w", encoding=encoding).close()
+        with open(path, "r", encoding=encoding) as original:
             data = original.read()
         final_content = content + "\n" + data
-        with open(path, "w") as modified:
+        with open(path, "w", encoding=encoding) as modified:
             modified.write(final_content.encode(encoding))
         # noinspection PyProtectedMember
         robot_instances.osl()._link("Appended to file begin of file '%s'.", path)
@@ -136,7 +135,7 @@ class CsvKeywords(object):
         """
         output_table = []
         # encoding = osl()._map_encoding(encoding)
-        with open(path) as csv_file:
+        with open(path, encoding=encoding, encoding_errors=encoding_errors) as csv_file:
             csv_reader = csv.reader(csv_file, quotechar=quotechar, delimiter=delimiter)
             for row in csv_reader:
                 output_table.append(row)
@@ -155,8 +154,8 @@ class CsvKeywords(object):
         returns file CSV content as 1D table of dictionaries
         """
         output_table = []
-        # encoding = osl()._map_encoding(encoding)
-        with open(path) as csv_file:
+
+        with open(path, encoding=encoding, encoding_errors=encoding_errors) as csv_file:
             csv_reader = csv.DictReader(
                 csv_file, quotechar=quotechar, delimiter=delimiter
             )
